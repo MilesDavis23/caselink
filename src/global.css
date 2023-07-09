@@ -1,5 +1,7 @@
 @import url(//db.onlinewebfonts.com/c/69705a6994f3fbe63b0509655a754e19?family=Canela);
 @font-face {font-family: "Canela"; src: url("//db.onlinewebfonts.com/t/69705a6994f3fbe63b0509655a754e19.eot"); src: url("//db.onlinewebfonts.com/t/69705a6994f3fbe63b0509655a754e19.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/69705a6994f3fbe63b0509655a754e19.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/69705a6994f3fbe63b0509655a754e19.woff") format("woff"), url("//db.onlinewebfonts.com/t/69705a6994f3fbe63b0509655a754e19.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/69705a6994f3fbe63b0509655a754e19.svg#Canela") format("svg"); }
+@import url(//db.onlinewebfonts.com/c/76cad44852ba93f820a16d446f80c5e2?family=GT+America+Light);
+@font-face {font-family: "GT America Light"; src: url("//db.onlinewebfonts.com/t/76cad44852ba93f820a16d446f80c5e2.eot"); src: url("//db.onlinewebfonts.com/t/76cad44852ba93f820a16d446f80c5e2.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/76cad44852ba93f820a16d446f80c5e2.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/76cad44852ba93f820a16d446f80c5e2.woff") format("woff"), url("//db.onlinewebfonts.com/t/76cad44852ba93f820a16d446f80c5e2.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/76cad44852ba93f820a16d446f80c5e2.svg#GT America Light") format("svg"); }
 
 body {
     background-color: #DBD5CD;
@@ -13,7 +15,26 @@ header {
     width: 100%;
     top: 0;
 }
+footer {
+    background-color: #12130F;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 170px;
+    font-family: 'GTAmericaLight';
+    font-size: 18px;
+    color: whitesmoke;
+
+}
+
 
 .header-main-text {
+    font-family: 'GTAmericaLight';
+    font-size: 50px;
+    border-bottom: 1px solid black;;
+}
+.link-to-one {
     font-family: 'Canela', sans-serif;
+    font-size: 30px;
 }
