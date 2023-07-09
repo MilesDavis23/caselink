@@ -1,3 +1,5 @@
+@import url(//db.onlinewebfonts.com/c/69705a6994f3fbe63b0509655a754e19?family=Canela);
+@font-face {font-family: "Canela"; src: url("//db.onlinewebfonts.com/t/69705a6994f3fbe63b0509655a754e19.eot"); src: url("//db.onlinewebfonts.com/t/69705a6994f3fbe63b0509655a754e19.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/69705a6994f3fbe63b0509655a754e19.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/69705a6994f3fbe63b0509655a754e19.woff") format("woff"), url("//db.onlinewebfonts.com/t/69705a6994f3fbe63b0509655a754e19.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/69705a6994f3fbe63b0509655a754e19.svg#Canela") format("svg"); }
 .App {
   text-align: center;
 }
