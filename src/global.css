@@ -3,9 +3,7 @@
 @import url(//db.onlinewebfonts.com/c/76cad44852ba93f820a16d446f80c5e2?family=GT+America+Light);
 @font-face {font-family: "GT America Light"; src: url("//db.onlinewebfonts.com/t/76cad44852ba93f820a16d446f80c5e2.eot"); src: url("//db.onlinewebfonts.com/t/76cad44852ba93f820a16d446f80c5e2.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/76cad44852ba93f820a16d446f80c5e2.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/76cad44852ba93f820a16d446f80c5e2.woff") format("woff"), url("//db.onlinewebfonts.com/t/76cad44852ba93f820a16d446f80c5e2.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/76cad44852ba93f820a16d446f80c5e2.svg#GT America Light") format("svg"); }
 
-body {
-    background-color: #DBD5CD;
-  }
+
 
 header {
     display: block;

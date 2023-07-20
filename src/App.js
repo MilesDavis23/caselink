@@ -3,20 +3,26 @@ import {
 BrowserRouter as Router,
 Routes,
 Route,
+Navigate   
 } from 'react-router-dom';
-import './App.css';
+import { 
+  ThemeProvider
+} from '@mui/material';
+import { darkTheme } from './themes/main-theme/darkTheme';
 import LoginPage from './features/login/components/LoginPage';
 
 
-function App(){
+function App() {
+  console.log(darkTheme.palette.text.primary)
   return (
-    <Router>
-      <Routes>
-        <Route path='/login' element={
-          <LoginPage/>
-        }/>
-      </Routes>
-    </Router>
+    <ThemeProvider theme={darkTheme}>
+      <Router>
+        <Routes>
+          <Route path='*' element={<Navigate to='/login' replace />} />
+          <Route path='/login' element={<LoginPage />} />
+        </Routes>
+      </Router>
+    </ThemeProvider>
   );
 };
 
