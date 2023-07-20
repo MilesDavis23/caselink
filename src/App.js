@@ -3,6 +3,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import './Global.css';
 import { Container } from 'react-bootstrap';
+import CaseList from './components/CaseList';
+
+
 
 function App() {
   return (
@@ -12,8 +15,9 @@ function App() {
           <p className='col-6'> caselink. </p>
         </div>
       </header>
+      <div className='d-flex align-items-between'>
       <Container className='d-flex align-items-start'>
-        <div className='link-to-buttons'>
+        <div className='link-to-buttons m-5'>
           <div className='link-to-one d-flex align-items-start'>
             <p> Browse Cases </p>
           </div>
@@ -28,6 +32,10 @@ function App() {
           </div>
         </div>
       </Container>
+      <Container classNamer= 'col d-flex align-elements-start'>
+        <CaseList/>
+      </Container>
+      </div>
       <footer>
         <div className='info-text p-5'>
           <p> @ 2023 </p>

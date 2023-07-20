@@ -38,3 +38,13 @@ footer {
     font-family: 'Canela', sans-serif;
     font-size: 30px;
 }
+
+.caseList {
+    width: 800px;
+
+}
+
+.caseDetails {
+    font-family: 'GTAmericaLight';
+    text-align: start;
+}
