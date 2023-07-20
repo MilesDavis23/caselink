@@ -13,7 +13,7 @@ import LoginPage from './features/login/components/LoginPage';
 
 
 function App() {
-  console.log(darkTheme.palette.text.primary)
+  console.log(darkTheme.palette.background.primary.main)
   return (
     <ThemeProvider theme={darkTheme}>
       <Router>

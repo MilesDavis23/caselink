@@ -1,16 +1,23 @@
 import React from 'react';
 import { Box, useTheme } from '@mui/material'
+import LoginPanel from './Login';
 
 function LoginPage() {
     const theme = useTheme();
-    //console.log(theme.palette)
 
     return (
         <Box
-            sx={{ backgroundColor: theme.palette.background.default, color: theme.palette.text.primary, height: '100vh' }}
+            sx={
+                {
+                    backgroundColor: theme.palette.background.primary.main,
+                    color: theme.palette.text.primary.light,
+                    height: '100vh',
+                    padding: '10px'
+                }
+            }
         >
             <div>
-                Hello!
+                <LoginPanel/>
             </div>
         </Box>
     )
