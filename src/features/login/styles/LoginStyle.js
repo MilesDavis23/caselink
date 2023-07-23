@@ -1,8 +1,7 @@
 /* Style for LoginPanel / paper  */
 const loginPaperStyle = {
     padding: 20,
-    width: 280, 
-    height: 200
+    width: 280
 };
 
 
