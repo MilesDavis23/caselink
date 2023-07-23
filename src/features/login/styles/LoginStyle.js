@@ -1,10 +1,12 @@
-
-
-const loginPanelStyle = {
+/* Style for LoginPanel / paper  */
+const loginPaperStyle = {
     padding: 20,
-    width: 280
+    width: 280, 
+    height: 200
 };
 
+
+
 export {
-    loginPanelStyle
+    loginPaperStyle,
 }

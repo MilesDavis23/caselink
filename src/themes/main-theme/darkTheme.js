@@ -7,7 +7,7 @@ const darkTheme = createTheme({
             primary: {
                 light: '#FFFBFF',
                 main: '#FFFDF7'
-            },
+            }
         },
         background: {
             primary:{
@@ -16,9 +16,9 @@ const darkTheme = createTheme({
 
             }
         }
-    },
+    }
 });
 
 export {
     darkTheme
-}
+} ;
