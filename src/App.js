@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import { darkTheme } from './themes/main-theme/darkTheme';
 import LoginPage from './features/login/components/LoginPage';
+import BrowseCases from './features/lawyer/browse cases/components/BrowseCasesPage';
 
 
 function App() {
@@ -18,8 +19,9 @@ function App() {
     <ThemeProvider theme={darkTheme}>
       <Router>
         <Routes>
-          <Route path='*' element={<Navigate to='/login' replace />} />
           <Route path='/login' element={<LoginPage />} />
+          <Route path='/lawyer' element={<BrowseCases />} />
+          <Route path='*' element={<Navigate to='/lawyer' replace />} />
         </Routes>
       </Router>
     </ThemeProvider>

@@ -13,7 +13,7 @@ const darkTheme = createTheme({
         }, 
         text: {
             primary: '#FFFBFF',
-            secondary: 'FFFDF7'
+            secondary: '#FFFDF7'
         }
     }
 });
