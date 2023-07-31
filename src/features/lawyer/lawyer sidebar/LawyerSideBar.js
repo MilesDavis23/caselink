@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, useTheme, Grid, Button } from '@mui/material'
 
 
-function SideBar() {
+function SideBar( { setMyCases } ) {
     const theme = useTheme()
 
     return(
@@ -12,10 +12,10 @@ function SideBar() {
             }}>
                 <Grid container direction='column' justifyContent='flex-end' alignItems="flex-end" sx={{width: '100%'}} xs={12} > 
                     <Grid item >
-                        <Button variant="text" size='large' sx={{ my: 2 }}> Browse Cases </Button>
+                        <Button variant="text" size='large' sx={{ my: 2 }} onClick={() => { setMyCases(false) } } >  Browse Case  </Button>
                     </Grid>
                     <Grid item>
-                        <Button variant="text" size='large' sx={{ my: 2 }}> My Cases </Button>
+                        <Button variant="text" size='large' sx={{ my: 2 }} onClick={() => { setMyCases(true) } } > My Cases </Button>
                     </Grid>
                     <Grid item>
                         <Button variant="text" size='large' sx={{ my: 2 }}> Notifications </Button>
