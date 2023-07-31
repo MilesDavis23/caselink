@@ -5,7 +5,7 @@ import NavBar from '../../navbar/Navbar';
 import { loginPaperStyle } from '../styles/LoginStyle';
 import { GlobalStyles } from '@mui/material';
 
-function LoginPage() {
+function LoginPage(  ) {
     const theme = useTheme();
 
     return (
