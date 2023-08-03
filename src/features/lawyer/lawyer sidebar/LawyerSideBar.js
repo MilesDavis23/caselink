@@ -1,8 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Box, useTheme, Grid, Button } from '@mui/material'
 
 
-function SideBar( { setMyCases } ) {
+function SideBar( ) {
     const theme = useTheme()
 
     return(
@@ -12,13 +13,13 @@ function SideBar( { setMyCases } ) {
             }}>
                 <Grid container direction='column' justifyContent='flex-end' alignItems="flex-end" sx={{width: '100%'}} xs={12} > 
                     <Grid item >
-                        <Button variant="text" size='large' sx={{ my: 2 }} onClick={() => { setMyCases(false) } } >  Browse Case  </Button>
+                        <Button component={Link} to="/lawyer/browse-cases" variant="text" size='large' sx={{ my: 2 }}  >  Browse Case  </Button>
                     </Grid>
                     <Grid item>
-                        <Button variant="text" size='large' sx={{ my: 2 }} onClick={() => { setMyCases(true) } } > My Cases </Button>
+                        <Button component={Link} to="/lawyer/my-cases" variant="text" size='large' sx={{ my: 2 }}  > My Cases </Button>
                     </Grid>
                     <Grid item>
-                        <Button variant="text" size='large' sx={{ my: 2 }}> Notifications </Button>
+                        <Button component={Link} to="/lawyer/notifications" variant="text" size='large' sx={{ my: 2 }}> Notifications </Button>
                     </Grid>
                     <Grid item>
                         <Button variant="text" size='large' sx={{ my: 2 }}> Profile </Button>
