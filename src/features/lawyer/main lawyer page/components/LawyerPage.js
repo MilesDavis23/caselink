@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import { useTheme, Grid, Box } from '@mui/material'
-import SideBar from "../../lawyer sidebar/LawyerSideBar";
+import SideBar from "../../lawyer sidebar/components/LawyerSideBar";
 
 
 function LawyerPage(){

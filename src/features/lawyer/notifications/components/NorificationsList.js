@@ -7,7 +7,7 @@ function NotificationsList(){
         <>
             <Grid container>
                 <Grid item sx={{padding: 2}}>
-                    <NotificationElement/>
+                    <NotificationElement />
                 </Grid>
             </Grid>
             <Grid container>

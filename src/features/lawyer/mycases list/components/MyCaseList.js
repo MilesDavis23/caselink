@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useTheme, Grid, Box } from '@mui/material'
-import CaseElement from '../case element/components/CaseElement';
+import CaseElement from './CaseElement';
 
 function MyCaseList() {
     return (
