@@ -16,7 +16,7 @@ function NotificationElement() {
                         <Grid item>
                             Notification Id: 242342424
                         </Grid>
-                        <Grid item>
+                        <Grid item sx={{ml: 2}}>
                             Title: Received notification
                         </Grid>
                     </Grid>
