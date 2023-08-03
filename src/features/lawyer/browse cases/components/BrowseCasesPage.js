@@ -1,7 +1,6 @@
 import React from "react";
 import { useState } from "react";
 import { useTheme, Grid, Box } from '@mui/material'
-import NavBar from "../../../navbar/Navbar";
 import SideBar from "../../lawyer sidebar/LawyerSideBar";
 import MyCaseList from "../../mycases list/components/MyCaseList";
 
