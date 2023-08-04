@@ -22,7 +22,7 @@ function SideBar( ) {
                         <Button component={Link} to="/lawyer/notifications" variant="text" size='large' sx={{ my: 2 }}> Notifications </Button>
                     </Grid>
                     <Grid item>
-                        <Button variant="text" size='large' sx={{ my: 2 }}> Profile </Button>
+                        <Button component={Link} to="/lawyer/profile" variant="text" size='large' sx={{ my: 2 }}> Profile </Button>
                     </Grid>
                 </Grid>
             </Box>

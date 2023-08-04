@@ -1,17 +1,53 @@
 import React from "react";
-import { useTheme, Grid } from '@mui/material'
 import MyCaseList from "../../mycases list/components/MyCaseList";
+import CaseElement from "../../mycases list/components/CaseElement";
+import { Typography, Divider, Checkbox, Grid, Select, MenuItem, FormControl, InputLabel } from "@mui/material";
 
-function BrowseCases(){
-    const theme = useTheme();
+function BrowseCases() {
 
     return (
         <>
-            <Grid item xs={8} justifyContent="center" alignItems="center" sx={{ paddingLeft: 0, height: '100%', overflow: 'auto' }}>
-                <Grid container>
-                            <MyCaseList />
-                            <Grid item xs={12}>Item 3</Grid>
-                            <Grid item xs={12}>Item 4</Grid>
+            <Grid container>
+                <Grid item xs={9}> {/* Filter Section */}
+                <Typography variant="h6" sx={{marginY: 3}}>Cases</Typography>
+                    <Divider />
+                    <Typography variant="subtitle1">Civil Law Cases</Typography>
+                    <Divider />
+                    <Grid container>
+                        {/* Cases for Category 1 */}
+                        <Grid item sx={{ padding: 2 }}>
+                            <CaseElement />
+                        </Grid>
+                        <Grid item sx={{ padding: 2 }}>
+                            <CaseElement />
+                        </Grid>
+                        <Grid item sx={{ padding: 2 }}>
+                            <CaseElement />
+                        </Grid>
+                    </Grid>
+                    <Typography variant="subtitle1">Criminal Law cases</Typography>
+                    <Divider />
+                    <Grid container>
+                    <Grid item sx={{ padding: 2 }}>
+                            <CaseElement />
+                        </Grid>
+                        <Grid item sx={{ padding: 2 }}>
+                            <CaseElement />
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <Grid item xs={3}> {/* Cases Section */}
+                <Typography variant="h6" sx={{marginY: 3}}>Filters</Typography>
+                    <Divider />
+                    <FormControl>
+                        <InputLabel> Category </InputLabel>
+                        <Select sx={{width: '250px'}} label="Category">
+                        {/* Categories */}
+                        <MenuItem value="category1"> Property Law </MenuItem>
+                        <MenuItem value="category2"> Corporate Law </MenuItem>
+                        <MenuItem value="category3"> Trademarks </MenuItem>
+                    </Select>
+                    </FormControl>
                 </Grid>
             </Grid>
         </>
