@@ -15,7 +15,7 @@ import NotificationsList from './features/lawyer/notifications/components/Norifi
 import LawyerPage from './features/lawyer/main lawyer page/components/LawyerPage';
 import MyCaseList from './features/lawyer/mycases list/components/MyCaseList';
 import { AuthContext } from './features/login/authentication/AuthContext';
-import { useEffect, useState } from 'react';
+import ProfilePage from './features/lawyer/profile page/components/ProfilePage';
 
 
 
@@ -27,11 +27,13 @@ function App() {
     <ThemeProvider theme={darkTheme}>
       <Router>
         <Routes>
+          <Route path='/' element={isAuthenticated ? <Navigate to='/lawyer' replace /> : <Navigate to ='/login' replace />} />
           <Route path='/login' element={isAuthenticated ? <Navigate to='/lawyer' replace /> : <LoginPage />} />
           <Route path='/lawyer' element={!isAuthenticated ? <Navigate to='/login' replace /> : <LawyerPage />} >
             <Route path="browse-cases" element={<BrowseCases />} />
             <Route path="my-cases" element={<MyCaseList />} />
             <Route path="notifications" element={<NotificationsList />} />
+            <Route path="profile" element={<ProfilePage />} />
           </Route>
         </Routes>
       </Router>
