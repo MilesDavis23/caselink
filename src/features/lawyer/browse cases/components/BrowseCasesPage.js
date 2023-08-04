@@ -1,7 +1,6 @@
 import React from "react";
-import MyCaseList from "../../mycases list/components/MyCaseList";
 import CaseElement from "../../mycases list/components/CaseElement";
-import { Typography, Divider, Checkbox, Grid, Select, MenuItem, FormControl, InputLabel } from "@mui/material";
+import { Typography, Divider, Grid, Select, MenuItem, FormControl, InputLabel } from "@mui/material";
 
 function BrowseCases() {
 

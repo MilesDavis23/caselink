@@ -30,13 +30,13 @@ function CaseElement() {
                         <Grid item>
                             Status:
                         </Grid>
-                        <Grid item sx={{color: '#FF7F11', ml: 2}}>
+                        <Grid item sx={{ color: '#FF7F11', ml: 2 }}>
                             Green
                         </Grid>
                     </Grid>
                 </Typography>
                 <CardActions>
-                    <Button variant="outlined" size='small' sx={{width:'100%'}} > Go To Cases </Button>
+                    <Button variant="outlined" size='small' sx={{ width: '100%' }} > Go To Cases </Button>
                 </CardActions>
             </CardContent>
         </Card>
