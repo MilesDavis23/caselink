@@ -8,15 +8,15 @@ Navigate
 import { 
   ThemeProvider
 } from '@mui/material';
+import { AuthContext } from './features/login/authentication/AuthContext';
 import { darkTheme } from './themes/main-theme/darkTheme';
 import LoginPage from './features/login/components/LoginPage';
 import BrowseCases from './features/lawyer/browse cases/components/BrowseCasesPage';
 import NotificationsList from './features/lawyer/notifications/components/NorificationsList';
 import LawyerPage from './features/lawyer/main lawyer page/components/LawyerPage';
 import MyCaseList from './features/lawyer/mycases list/components/MyCaseList';
-import { AuthContext } from './features/login/authentication/AuthContext';
 import ProfilePage from './features/lawyer/profile page/components/ProfilePage';
-
+import IndividualCasePage from './features/lawyer/individual case page/components/IndividualCasePage';
 
 
 function App() {
@@ -33,6 +33,7 @@ function App() {
             <Route path="browse-cases" element={<BrowseCases />} />
             <Route path="my-cases" element={<MyCaseList />} />
             <Route path="notifications" element={<NotificationsList />} />
+            <Route path="case-page" element={<IndividualCasePage />} />
             <Route path="profile" element={<ProfilePage />} />
           </Route>
         </Routes>
