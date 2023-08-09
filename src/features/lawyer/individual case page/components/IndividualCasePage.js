@@ -9,8 +9,9 @@ import {
     ListItem,
     ListItemIcon,
     ListItemText,
-    Button
+    Button,
 } from '@mui/material';
+import { Link } from 'react-router-dom';
 import LibraryBooksSharpIcon from '@mui/icons-material/LibraryBooksSharp';
 import gandalf from '../../profile page/images/Screenshot 2023-08-04 at 1.28.06.png'
 
@@ -115,7 +116,7 @@ function IndividualCasePage() {
                         <Button variant='contained' sx={{ width: 1 }} > Back </Button>
                     </Grid>
                     <Grid item xs={5} sx={{marginRight: 0}}>
-                        <Button variant='contained' sx={{ width: 1 }}> Add </Button>
+                        <Button component={Link} to="/lawyer/my-cases/" variant='contained' sx={{ width: 1 }}> Add To My Cases </Button>
                     </Grid>
                 </Grid>
             </Container>
