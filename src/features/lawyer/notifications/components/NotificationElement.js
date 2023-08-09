@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -28,7 +29,7 @@ function NotificationElement() {
                     {'please help'}
                 </Typography>
                 <CardActions>
-                    <Button variant="outlined" size='small' sx={{width:'100%'}} > Go To Cases </Button>
+                    <Button component={ Link } to="/lawyer/case-page" variant="outlined" size='small' sx={{width:'100%'}} > Go To Cases </Button>
                 </CardActions>
             </CardContent>
         </Card>
