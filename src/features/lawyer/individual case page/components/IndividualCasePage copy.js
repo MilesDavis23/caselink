@@ -10,11 +10,6 @@ import {
     ListItemIcon,
     ListItemText,
     Button,
-    TextField, 
-    FormControl,
-    Input,
-    InputLabel,
-    InputAdornment
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import LibraryBooksSharpIcon from '@mui/icons-material/LibraryBooksSharp';
@@ -116,31 +111,16 @@ function IndividualCasePage() {
                     </Grid>
                 </Grid>
 
-                <Grid container  sx={{ marginTop: '20px', marginBottom: '20px', border: '1px solid white', borderRadius: '5px' }}>
+                <Grid container>
                     <Grid item xs={12}>
                         <Box sx={{ width: 1, bgcolor: 'background.paper' }}>
                             <Box sx={{ width: 1, borderBottom: '1px solid white', padding: '10px' }} >
                                 <Typography variant="h6" component="div">
-                                    Send Offer
+                                    Uploaded Documents
                                 </Typography>
                             </Box>
-                            <List sx={{ margin: 2 }}  >
-                                <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-                                    <InputLabel htmlFor="standard-adornment-amount">Offer Amount</InputLabel>
-                                    <Input
-                                        id="standard-adornment-amount"
-                                        startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                                    />
-                                </FormControl>
-                                <TextField
-                                    sx={{ width: '100%', margin: 1 }}
-                                    id="outlined-multiline-static"
-                                    label=""
-                                    multiline
-                                    rows={4}
-                                    defaultValue="Your offer goes here..."
-                                />
-                                <Button variant='contained' sx={{ width: 1, margin: 1 }} > Send Offer </Button>
+                            <List sx={{ marginLeft: 5 }}>
+                                
                             </List>
                         </Box>
                     </Grid>

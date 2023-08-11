@@ -37,7 +37,7 @@ function CaseElement() {
                     </Grid>
                 </Typography>
                 <CardActions>
-                    <Button component={Link} to="/lawyer/case-page" variant="outlined" size='small' sx={{ width: '100%' }} > Go To Cases </Button>
+                    <Button component={Link} to="/lawyer/case-page" variant="outlined" size='small' sx={{ width: '100%' }} > Go To Case </Button>
                 </CardActions>
             </CardContent>
         </Card>
