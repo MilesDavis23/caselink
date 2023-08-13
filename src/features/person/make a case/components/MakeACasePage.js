@@ -43,7 +43,7 @@ function MakeACase() {
 
     return (
         <>
-            <Container justifyContent='center' alignItems="" sx={{ padding: 2, width: '70%' }}>
+            <Container justifyContent='center' alignItems="" sx={{ padding: 2, width: '100%' }}>
                 <Grid container justifyContent="space-between" alignItems="center" sx={{ borderBottom: '1px solid white', paddingBottom: 2 }}>
                     <Grid item xs={12}>
                     <TextField
