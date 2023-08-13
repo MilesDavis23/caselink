@@ -9,7 +9,7 @@ import { Grid, Paper, Button, Typography } from '@mui/material';
 function DetailsPanel() {
     return (
         <>
-            <Paper elevation={3} sx={{ padding: 3 }}>
+            <Paper elevation={3} sx={{ padding: 1 }}>
                 <Grid container spacing={2}>
                     <Grid item xs={12} container alignItems="center">
                         <EmailIcon />
