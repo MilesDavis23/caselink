@@ -9,7 +9,6 @@ function NavBar() {
         <AppBar >
                 <Toolbar sx={{ backgroundColor: theme.palette.background.paper, margin: 0,}} >
                     <Typography variant='h6' sx={{ fontFamily: 'Canela', backgroundColor: theme.palette.background.paper }} component='div'>
-                        CaseLink!
                     </Typography>
                 </Toolbar>
         </AppBar>
