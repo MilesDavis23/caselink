@@ -15,6 +15,7 @@ import { Link } from 'react-router-dom';
 import LibraryBooksSharpIcon from '@mui/icons-material/LibraryBooksSharp';
 import gandalf from '../../profile page/images/Screenshot 2023-08-04 at 1.28.06.png'
 
+
 function IndividualCasePage() {
 
     return (
@@ -124,6 +125,11 @@ function IndividualCasePage() {
                             </List>
                         </Box>
                     </Grid>
+                </Grid>
+
+                <Grid container>
+                    <>
+                    </>
                 </Grid>
 
                 <Grid container alignItems="center" justifyContent="space-between" sx={{ width: '100%' }} >
