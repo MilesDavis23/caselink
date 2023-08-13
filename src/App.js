@@ -17,6 +17,8 @@ import LawyerPage from './features/lawyer/main lawyer page/components/LawyerPage
 import MyCaseList from './features/lawyer/mycases list/components/MyCaseList';
 import ProfilePage from './features/lawyer/profile page/components/ProfilePage';
 import IndividualCasePage from './features/lawyer/individual case page/components/IndividualCasePage';
+import MakeACase from './features/person/make a case/components/MakeACasePage';
+import PersonPage from './features/person/main person page/PersonPage';
 
 
 function App() {
@@ -35,6 +37,9 @@ function App() {
             <Route path="notifications" element={<NotificationsList />} />
             <Route path="case-page" element={<IndividualCasePage />} />
             <Route path="profile" element={<ProfilePage />} />
+          </Route>
+          <Route path='/person' element={<PersonPage/>}>
+            <Route path="make-a-case" element={<MakeACase />} />
           </Route>
         </Routes>
       </Router>
