@@ -11,13 +11,13 @@ function ProfilePage(){
 
         <>
             <Grid container justifyContent="center" alignItems="center" sx={{paddingTop: 2}}>
-                <Grid item xs={9} sx={{paddingBottom: 2}}>
+                <Grid item xs={11} sx={{paddingBottom: 2}}>
                     <ProfilePanel />
                 </Grid>
-                <Grid item xs={9} sx={{paddingY: 2}}>
+                <Grid item xs={11} sx={{paddingY: 2}}>
                     <DetailsPanel />
                 </Grid>
-                <Grid item xs={9} sx={{paddingY: 2}}>
+                <Grid item xs={11} sx={{paddingY: 2}}>
                     <LatestReviews />
                 </Grid>
             </Grid>

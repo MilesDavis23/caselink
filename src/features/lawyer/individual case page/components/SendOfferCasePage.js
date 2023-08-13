@@ -52,7 +52,7 @@ function SendOfferCasePage() {
 
     return (
         <>
-            <Container justifyContent='center' alignItems="" sx={{ padding: 2, width: '70%' }}>
+            <Container justifyContent='center' alignItems="" sx={{ padding: 2, width: '100%' }}>
                 <Grid container justifyContent="space-between" alignItems="center" sx={{ borderBottom: '1px solid white', paddingBottom: 2 }}>
                     <Grid item xs={6}>
                         <Typography variant='h5' component="div">
@@ -207,11 +207,8 @@ function SendOfferCasePage() {
                 </Grid>
 
                 <Grid container alignItems="center" justifyContent="space-between" sx={{ width: '100%' }} >
-                    <Grid item xs={5} sx={{ marginRight: 2 }}>
-                        <Button variant='contained' sx={{ width: 1 }} > Back </Button>
-                    </Grid>
-                    <Grid item xs={5} sx={{ marginRight: 0 }}>
-                        <Button component={Link} to="/lawyer/my-cases/" variant='contained' sx={{ width: 1 }}> Add To My Cases </Button>
+                    <Grid item xs={12} sx={{ marginRight: 0 }}>
+                        <Button component={Link} to="/lawyer/my-cases/" variant='contained' sx={{ width: 1 }}> Back </Button>
                     </Grid>
                 </Grid>
             </Container>
