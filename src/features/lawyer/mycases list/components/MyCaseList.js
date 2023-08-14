@@ -75,7 +75,7 @@ function MyCaseList() {
                                 </Grid>
                             </Typography>
                             <CardActions>
-                                <Button component={Link} to="/lawyer/case-page" variant="outlined" size='small' sx={{ width: '100%' }} > Go To Case </Button>
+                                <Button component={Link} to="/lawyer/active-case-page" variant="outlined" size='small' sx={{ width: '100%' }} > Go To Case </Button>
                             </CardActions>
                         </CardContent>
                     </Card>
