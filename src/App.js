@@ -20,6 +20,7 @@ import IndividualCasePage from './features/lawyer/individual case page/component
 import MakeACase from './features/person/make a case/components/MakeACasePage';
 import PersonPage from './features/person/main person page/PersonPage';
 import SendOfferCasePage from './features/lawyer/individual case page/components/SendOfferCasePage';
+import ActiveCasePage from './features/lawyer/individual case page/components/ActiveCase';
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
             <Route path="case-page" element={<IndividualCasePage />} />
             <Route path="profile" element={<ProfilePage />} />
             <Route path="send-offer-case-page" element={<SendOfferCasePage />} />
+            <Route path="active-case-page" element={<ActiveCasePage />} />
           </Route>
           <Route path='/person' element={<PersonPage/>}>
             <Route path="make-a-case" element={<MakeACase />} />
