@@ -20,7 +20,6 @@ import gandalf from '../../../lawyer/profile page/images/Screenshot 2023-08-04 a
 
 function AccpetOfferCasePage() {
 
-
     return (
         <>
             <Container justifyContent='center' alignItems="" sx={{ padding: 2, width: '100%' }}>
@@ -142,6 +141,11 @@ function AccpetOfferCasePage() {
                                     defaultValue=""
                                     variant="outlined"
                                 />
+
+                                <Grid item xs={12} sx={{ margin: 1 }}>
+                                    <Button variant='contained' sx={{ width: 1 }}> Send Message </Button>
+                                </Grid>
+
                             </List>
 
                             <Box sx={{ width: 1, borderBottom: '1px solid white', padding: '10px' }} />

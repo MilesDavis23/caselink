@@ -11,10 +11,7 @@ import {
     ListItemText,
     Button,
     TextField,
-    FormControl,
-    OutlinedInput,
-    MenuItem,
-    Select,
+
     Chip,
     Stepper, 
     Step, 
@@ -23,11 +20,10 @@ import {
 import { useTheme } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 import LibraryBooksSharpIcon from '@mui/icons-material/LibraryBooksSharp';
-import gandalf from '../../profile page/images/Screenshot 2023-08-04 at 1.28.06.png'
-import { MenuProps, getStyles } from '../style/ChipStyle';
+import gandalf from '../../../lawyer/profile page/images/Screenshot 2023-08-04 at 1.28.06.png'
 
 
-function ActiveCasePage() {
+function PersonActiveCasePage() {
 
     /* 'Chip' logic:  */
     const theme = useTheme();
@@ -199,47 +195,32 @@ function ActiveCasePage() {
                     </Grid>
                 </Grid>
 
+
                 <Grid container sx={{ marginTop: '20px', marginBottom: '20px', border: '1px solid white', borderRadius: '5px' }}>
                     <Grid item xs={12}>
                         <Box sx={{ width: 1, bgcolor: 'background.paper' }}>
                             <Box sx={{ width: 1, borderBottom: '1px solid white', padding: '10px' }} >
                                 <Typography variant="h6" component="div">
-                                    Request file upload 
+                                    Request file upload
                                 </Typography>
                             </Box>
                             <List sx={{ margin: 2 }}  >
 
-                                <FormControl sx={{ m: 1, width: '100%' }}>
-                                    <Select
-                                        labelId="demo-multiple-chip-labe"
-                                        id=''
-                                        multiple
-                                        value={personName}
-                                        onChange={handleChange}
-                                        input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-                                        renderValue={(selected) => (
-                                            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                                                {selected.map((value) => (
-                                                    <Chip key={value} label={value} />
-                                                ))}
-                                            </Box>
-                                        )}
-                                        MenuProps={MenuProps}
-                                    >
-                                        {names.map((name) => (
-                                            <MenuItem
-                                                key={name}
-                                                value={name}
-                                                style={getStyles(name, personName, theme)}
-                                            >
-                                                {name}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
+                                {/* Chips representing the requested files */}
+                                <Typography> Files requested to upload: </Typography>
+                                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, marginBottom: 2 }}>
+                                    {names.map((name) => (
+                                        <Chip key={name} label={name} />
+                                    ))}
+                                </Box>
 
+                                {/* Dropbox area */}
+                                <Box sx={{ border: '2px dashed grey', borderRadius: '5px', padding: 2, textAlign: 'center', marginBottom: 2 }}>
+                                    Drop files here
+                                </Box>
 
-                                <Button variant='contained' sx={{ width: 1, margin: 1 }} > Send Offer </Button>
+                                <Button variant='contained' sx={{ width: 1, margin: 1 }} > Upload </Button>
+
                             </List>
                         </Box>
                     </Grid>
@@ -281,11 +262,6 @@ function ActiveCasePage() {
                                 </Grid>
                             </Grid>
                             </Box>
-                            <Grid container > 
-                                <Grid item xs={12} sx={{marigin: 2, padding: 2}} >
-                                    <Button component={Link} to="" variant='contained' sx={{ width: 1 }}> Change Status </Button>
-                                </Grid>
-                            </Grid>
                         </Box>
                     </Grid>
                 </Grid>
@@ -294,10 +270,13 @@ function ActiveCasePage() {
                     <Grid item xs={12} sx={{ margin: 2 }}>
                         <Button component={Link} to="/lawyer/my-cases/" variant='contained' sx={{ width: 1 }}> Back </Button>
                     </Grid>
+                    <Grid item xs={12} sx={{ margin: 2 }}>
+                        <Button component={Link} to="/lawyer/my-cases/" variant='contained' sx={{ width: 1 }}> Withdraw Case </Button>
+                    </Grid>
                 </Grid>
             </Container>
         </>
     )
 };
 
-export default ActiveCasePage;
+export default PersonActiveCasePage;
