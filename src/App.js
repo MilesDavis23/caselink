@@ -21,6 +21,8 @@ import MakeACase from './features/person/make a case/components/MakeACasePage';
 import PersonPage from './features/person/main person page/PersonPage';
 import SendOfferCasePage from './features/lawyer/individual case page/components/SendOfferCasePage';
 import ActiveCasePage from './features/lawyer/individual case page/components/ActiveCase';
+import AccpetOfferCasePage from './features/person/offer received page/components/AcceptOfferPage';
+import PersonNotificationsList from './features/person/person notifications/components/PersonNotifications';
 
 
 function App() {
@@ -44,6 +46,11 @@ function App() {
           </Route>
           <Route path='/person' element={<PersonPage/>}>
             <Route path="make-a-case" element={<MakeACase />} />
+            <Route path="offer-received" element={<AccpetOfferCasePage />} />
+            <Route path="my-cases" />
+            <Route path="active-case-page" />
+            <Route path="profile-page" />
+            <Route path="notifications-page" element={<PersonNotificationsList />} />
           </Route>
         </Routes>
       </Router>

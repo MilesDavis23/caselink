@@ -19,7 +19,7 @@ function PersonSideBar( ) {
                         <Button component={Link} to="/person/my-cases" variant="text" size='large' sx={{ my: 2 }} > My Cases </Button>
                     </Grid>
                     <Grid item>
-                        <Button component={Link} to="/person/make-a-case" variant="text" size='large' sx={{ my: 2 }} > Notifications </Button>
+                        <Button component={Link} to="/person/notifications-page" variant="text" size='large' sx={{ my: 2 }} > Notifications </Button>
                     </Grid>
                     <Grid item>
                         <Button component={Link} to="/lawyer/profile" variant="text" size='large' sx={{ my: 2 }} > Profile </Button>
