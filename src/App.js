@@ -23,6 +23,8 @@ import SendOfferCasePage from './features/lawyer/individual case page/components
 import ActiveCasePage from './features/lawyer/individual case page/components/ActiveCase';
 import AccpetOfferCasePage from './features/person/offer received page/components/AcceptOfferPage';
 import PersonNotificationsList from './features/person/person notifications/components/PersonNotifications';
+import PersonMyCaseList from './features/person/person my cases/components/PersonMyCases';
+import PersonActiveCasePage from './features/person/person active case/components/ActivePersonCasePage';
 
 
 function App() {
@@ -47,10 +49,11 @@ function App() {
           <Route path='/person' element={<PersonPage/>}>
             <Route path="make-a-case" element={<MakeACase />} />
             <Route path="offer-received" element={<AccpetOfferCasePage />} />
-            <Route path="my-cases" />
-            <Route path="active-case-page" />
+            <Route path="my-cases" element={ <PersonMyCaseList/> } />
+            <Route path="active-case-page" element={<PersonActiveCasePage />} />
             <Route path="profile-page" />
             <Route path="notifications-page" element={<PersonNotificationsList />} />
+            <Route path="case-page" element={<IndividualCasePage />} />
           </Route>
         </Routes>
       </Router>
