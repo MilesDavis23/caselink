@@ -25,6 +25,7 @@ import AccpetOfferCasePage from './features/person/offer received page/component
 import PersonNotificationsList from './features/person/person notifications/components/PersonNotifications';
 import PersonMyCaseList from './features/person/person my cases/components/PersonMyCases';
 import PersonActiveCasePage from './features/person/person active case/components/ActivePersonCasePage';
+import SplasherPage from './features/splasher/components/SplasherPage';
 
 
 function App() {
@@ -35,7 +36,8 @@ function App() {
     <ThemeProvider theme={darkTheme}>
       <Router>
         <Routes>
-          <Route path='/' element={isAuthenticated ? <Navigate to='/lawyer' replace /> : <Navigate to ='/login' replace />} />
+          {/* <Route path='/' element={isAuthenticated ? <Navigate to='/lawyer' replace /> : <Navigate to ='/login' replace />} />  */}
+          <Route path='/' element={<SplasherPage />} />
           <Route path='/login' element={isAuthenticated ? <Navigate to='/lawyer' replace /> : <LoginPage />} />
           <Route path='/lawyer' element={!isAuthenticated ? <Navigate to='/login' replace /> : <LawyerPage />} >
             <Route path="browse-cases" element={<BrowseCases />} />
