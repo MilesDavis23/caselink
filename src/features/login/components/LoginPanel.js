@@ -15,9 +15,26 @@ function LoginPanel(){
     };
 
     function handleLogin(){
-        if (email === 'admin'){
-            login()
-        };
+        fetch('http://localhost:3002/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                password: email // Since you're using the email state for the password input
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                login();
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error during login:', error);
+        });
     }
 
     return (

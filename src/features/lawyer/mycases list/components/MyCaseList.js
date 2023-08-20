@@ -9,8 +9,19 @@ import {
     Button, 
 } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { fetchMyCases } from '../test fetch/testFetch';
 
 function MyCaseList() {
+    /* test case  */
+    const [myCase, setMyCase] = React.useState([]);
+
+    React.useEffect(
+        () => {
+            let myCaseEndPoint = 'http://localhost:3002/api/lawyer/my-cases';
+            fetchMyCases(myCaseEndPoint, setMyCase);
+        }, []
+    );
+
     return (
         <>
             <Grid container>
@@ -18,16 +29,16 @@ function MyCaseList() {
                     <Card >
                         <CardContent>
                             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                                id: 45053535
+                             case id: {myCase[0] && myCase[0].case_id}
                             </Typography>
                             <Typography variant='h5' component="div">
-                                Offer Send Case
+                            {myCase[0] && myCase[0].title}
                             </Typography>
                             <Typography sx={{ mb: 1.5 }} color="text.secondary">
                                 Published:
                             </Typography>
                             <Typography variant="body2">
-                                Vivamus eu malesuada neque, vitae tempor nulla. Quisque efficitur elit vitae nulla pulvinar, sed faucibus tellus semper. Nullam sed ultricies leo. Morbi elementum tellus et enim egestas vulputate. Pellentesque rutrum orci sit amet ante eleifend mollis. Ut aliquet nisl felis, eget tempor ipsum hendrerit sit amet. Praesent aliquet elit ut egestas hendrerit. In vitae nunc aliquet, finibus purus a, pellentesque lorem. In magna libero, interdum eget scelerisque non, porta ac nibh. Vestibulum iaculis mi ac libero convallis pretium. Nunc vehicula lectus et sapien dictum, ut venenatis quam gravida. Vivamus elementum egestas eleifend. Sed semper magna vitae tortor aliquam tincidunt. Nulla ut urna tempus, rhoncus orci ac, tempus risus. Donec condimentum lacus dui, eget congue felis elementum bibendum. Nunc blandit tortor congue odio convallis mollis.
+                            {myCase[0] && myCase[0].detailed_description}
                                 <br />
                                 {'please help'}
                             </Typography>
@@ -37,7 +48,7 @@ function MyCaseList() {
                                         Status:
                                     </Grid>
                                     <Grid item sx={{ color: '#FB5607', ml: 2 }}>
-                                        Offer Sent
+                                    {myCase[0] && myCase[0].status}
                                     </Grid>
                                 </Grid>
                             </Typography>
