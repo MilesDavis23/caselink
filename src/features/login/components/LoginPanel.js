@@ -14,6 +14,7 @@ function LoginPanel(){
         console.log(email)
     };
 
+    
     function handleLogin(){
         fetch('http://localhost:3002/login', {
             method: 'POST',
@@ -21,7 +22,7 @@ function LoginPanel(){
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                password: email // Since you're using the email state for the password input
+                password: email 
             })
         })
         .then(response => response.json())
