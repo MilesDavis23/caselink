@@ -26,6 +26,7 @@ import PersonNotificationsList from './features/person/person notifications/comp
 import PersonMyCaseList from './features/person/person my cases/components/PersonMyCases';
 import PersonActiveCasePage from './features/person/person active case/components/ActivePersonCasePage';
 import SplasherPage from './features/splasher/components/SplasherPage';
+import Registration from './features/registration/components/Registration';
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
         <Routes>
           {/* <Route path='/' element={isAuthenticated ? <Navigate to='/lawyer' replace /> : <Navigate to ='/login' replace />} />  */}
           <Route path='/' element={<SplasherPage />} />
+          <Route path='/registration' element={<Registration/>} />
           <Route path='/login' element={isAuthenticated ? <Navigate to='/lawyer' replace /> : <LoginPage />} />
           <Route path='/lawyer' element={!isAuthenticated ? <Navigate to='/login' replace /> : <LawyerPage />} >
             <Route path="browse-cases" element={<BrowseCases />} />
