@@ -28,7 +28,7 @@ function LoginPage(  ) {
             <Box sx={{
                 backgroundColor: theme.palette.background.paper,
                 color: theme.palette.text.secondary,
-                height: '130vh',
+                height: '100vh',
                 overflow: 'auto',
             }}>
                 <Grid container direction='column' justifyContent="center" alignItems="center" sx={{ height: '100%', flexWrap: 'nowrap' }}>

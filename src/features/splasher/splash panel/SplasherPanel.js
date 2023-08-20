@@ -16,7 +16,7 @@ function SplasherPanel(){
                             <Button component={Link} to='/login' variant='outlined' sx={{width:'100%'}} > Got to Login </Button>
                         </Grid>
                         <Grid item xs={12} sx={{width:'100%'}}>
-                            <Button variant='outlined' sx={{width:'100%'}} > Register </Button>
+                            <Button component={Link} to='/registration' variant='outlined' sx={{width:'100%'}} > Register </Button>
                         </Grid>
                     </Grid>
                 </Paper>
