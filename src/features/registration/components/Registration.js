@@ -23,7 +23,6 @@ import { loginPaperStyle } from '../../login/styles/LoginStyle';
 function Registration() {
     const theme = useTheme();
 
-    // States for registration details
     const [username, setUsername] = React.useState('');
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
@@ -31,9 +30,39 @@ function Registration() {
     const [profilePicURL, setProfilePicURL] = React.useState('');
     const [address, setAddress] = React.useState('');
 
-    // Stepper state
+
     const [activeStep, setActiveStep] = React.useState(0);
     const steps = ['Enter Details', 'Upload Profile Picture', 'Confirm Registration'];
+
+    function handleRegistration() {
+        fetch('http://localhost:3002/registration', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username,
+                email,
+                password,
+                role,
+                profilePicURL,
+                address
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(data.message);
+
+            } else {
+                alert('Registration failed. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error during registration:', error);
+        });
+    }
+    
 
     return (
         <>
@@ -153,7 +182,7 @@ function Registration() {
                                     <Typography><strong>Profile Picture URL:</strong> {profilePicURL}</Typography>
                                     <Typography><strong>Address:</strong> {address}</Typography>
                                 </Box>
-                                <Button variant="contained" color="primary">
+                                <Button variant="contained" color="primary" onClick={handleRegistration}>
                                     Confirm & Register
                                 </Button>
                             </>
