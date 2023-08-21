@@ -1,9 +1,10 @@
+import axios from "axios";
 
 /* function for getting fetching data from the my-cases endpoint */
 async function fetchMyCases(endpoint, statefunction) {
-    fetch(endpoint)
-        .then(response => response.json())
-        .then(data => {
+    axios.get(endpoint)
+        .then(response => {
+            const data = response.data
             console.log(data);
             statefunction(data);
         })
@@ -11,6 +12,9 @@ async function fetchMyCases(endpoint, statefunction) {
             console.error('Error fetching the data: ', error)
         })
 };
+
+
+
 
 export {
     fetchMyCases
