@@ -19,6 +19,7 @@ import { useTheme } from '@mui/material/styles';
 import NavBar from '../../navbar/Navbar';
 import { GlobalStyles } from '@mui/material'; // Make sure to import these from the correct paths
 import { loginPaperStyle } from '../../login/styles/LoginStyle';
+import { Link } from 'react-router-dom';
 
 function Registration() {
     const theme = useTheme();
@@ -53,7 +54,7 @@ function Registration() {
         .then(data => {
             if (data.success) {
                 alert(data.message);
-
+                /* currently a ract dom element taking the user to the login section, even if the registration was successfull, and even if not */
             } else {
                 alert('Registration failed. Please try again.');
             }
@@ -182,7 +183,7 @@ function Registration() {
                                     <Typography><strong>Profile Picture URL:</strong> {profilePicURL}</Typography>
                                     <Typography><strong>Address:</strong> {address}</Typography>
                                 </Box>
-                                <Button variant="contained" color="primary" onClick={handleRegistration}>
+                                <Button component={Link} to='/login' variant="contained" color="primary" onClick={handleRegistration}>
                                     Confirm & Register
                                 </Button>
                             </>
