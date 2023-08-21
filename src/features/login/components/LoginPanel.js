@@ -4,8 +4,7 @@ import { Grid, Paper, TextField, Button } from "@mui/material";
 import { loginPaperStyle } from "../styles/LoginStyle";
 import { AuthContext } from "../authentication/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { axios } from "axios";
-import { response } from "express";
+import axios from 'axios'
 
 function LoginPanel(){
     const navigate = useNavigate();

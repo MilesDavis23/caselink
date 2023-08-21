@@ -20,6 +20,7 @@ import NavBar from '../../navbar/Navbar';
 import { GlobalStyles } from '@mui/material'; // Make sure to import these from the correct paths
 import { loginPaperStyle } from '../../login/styles/LoginStyle';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 function Registration() {
     const theme = useTheme();
