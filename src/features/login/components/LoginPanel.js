@@ -4,6 +4,8 @@ import { Grid, Paper, TextField, Button } from "@mui/material";
 import { loginPaperStyle } from "../styles/LoginStyle";
 import { AuthContext } from "../authentication/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { axios } from "axios";
+import { response } from "express";
 
 function LoginPanel(){
     const navigate = useNavigate();
@@ -18,17 +20,17 @@ function LoginPanel(){
 
     
     function handleLogin(){
-        fetch('http://localhost:3002/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                password: email 
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
+        axios.post('http://localhost:3002/login', 
+            { password: email }, 
+            
+            {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        )
+        .then(response => {
+            const data = response.data;
             if (data.success) {
                 if (data.role === 'lawyer') {
                     navigate('/lawyer')

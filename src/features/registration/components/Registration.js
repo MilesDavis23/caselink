@@ -36,22 +36,23 @@ function Registration() {
     const steps = ['Enter Details', 'Upload Profile Picture', 'Confirm Registration'];
 
     function handleRegistration() {
-        fetch('http://localhost:3002/registration', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                username,
-                email,
-                password,
-                role,
-                profilePicURL,
+        axios.post('http://localhost:3002/registration', 
+            {
+                username, 
+                email, 
+                password, 
+                role, 
+                profilePicURL, 
                 address
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
+            }, 
+            {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        )
+        .then(response => {
+            const data = response.data
             if (data.success) {
                 alert(data.message);
                 /* currently a ract dom element taking the user to the login section, even if the registration was successfull, and even if not */

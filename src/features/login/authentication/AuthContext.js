@@ -7,7 +7,7 @@ function AuthProvider( { children } ){
 
     const login = () => {
         setIsAuthenticated(true);
-        console.log(isAuthenticated)
+        console.log(isAuthenticated);
     };
 
     const logout = () => {
