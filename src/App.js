@@ -41,7 +41,7 @@ function App() {
           <Route path='/' element={<SplasherPage />} />
           <Route path='/registration' element={<Registration/>} />
           <Route path='/login' element={isAuthenticated ? <Navigate to='/lawyer' replace /> : <LoginPage />} />
-          <Route path='/lawyer' element={!isAuthenticated ? <Navigate to='/login' replace /> : <LawyerPage />} >
+          <Route path='/lawyer' element={<LawyerPage />} >
             <Route path="browse-cases" element={<BrowseCases />} />
             <Route path="my-cases" element={<MyCaseList />} />
             <Route path="notifications" element={<NotificationsList />} />

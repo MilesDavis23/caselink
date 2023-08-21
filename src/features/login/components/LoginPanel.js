@@ -1,10 +1,12 @@
 import React, { useContext, useState } from "react";
 import {  useTheme } from '@mui/material/styles';
-import { Grid, Paper, TextField, Button, ButtonBase } from "@mui/material";
+import { Grid, Paper, TextField, Button } from "@mui/material";
 import { loginPaperStyle } from "../styles/LoginStyle";
 import { AuthContext } from "../authentication/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function LoginPanel(){
+    const navigate = useNavigate();
     const theme = useTheme();
     const { login } = useContext(AuthContext);
     const [ email, setEmail ] = useState('');
@@ -28,7 +30,14 @@ function LoginPanel(){
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                login();
+                if (data.role === 'lawyer') {
+                    navigate('/lawyer')
+                } else if ( data.role === 'person' ) {
+                    navigate('/person');
+                } else if (data.role === 'admin'){
+
+                }
+
             } else {
                 alert(data.message);
             }
