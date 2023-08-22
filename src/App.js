@@ -25,7 +25,7 @@ import AccpetOfferCasePage from './features/person/offer received page/component
 import PersonNotificationsList from './features/person/person notifications/components/PersonNotifications';
 import PersonMyCaseList from './features/person/person my cases/components/PersonMyCases';
 import PersonActiveCasePage from './features/person/person active case/components/ActivePersonCasePage';
-import SplasherPage from './features/splasher/components/SplasherPage';
+import SplasherPage from './features/splash/components/SplasherPage';
 import Registration from './features/registration/components/Registration';
 
 

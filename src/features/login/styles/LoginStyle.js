@@ -3,7 +3,7 @@
 /* Style for LoginPanel / paper  */
 const loginPaperStyle = {
     padding: 15,
-    width: 355 /* set this for the whole login wodth  */
+    width: '130%' /* set this for the whole login wodth  */
 };
 
 /* Login panel text style */
