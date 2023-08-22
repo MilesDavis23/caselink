@@ -49,7 +49,8 @@ function Registration() {
             {
                 headers: {
                     'Content-Type': 'application/json'
-                }
+                },
+                withCredentials: true
             }
         )
         .then(response => {
@@ -91,9 +92,15 @@ function Registration() {
                 overflow: 'auto',
             }}>
                 <Grid container direction='column' justifyContent="center" alignItems="center" sx={{ height: '100%', flexWrap: 'nowrap' }}>
-                    <Grid item style={{ ...loginPaperStyle, fontFamily: 'Canela', fontSize: '50px' }} textAlign='center'>
-                        <h1>Welcome!</h1>
+
+                    <Grid container direction='column' alignItems="flex-start" sx={{ width: '100%',  marginLeft: '250px' }}>
+                        <Grid item style={loginPaperStyle} >
+                            <h1 style={{ fontFamily: 'Canela', fontSize: '35px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', width: '100%'  }}> 
+                                Please follow the step to complete the registration! 
+                            </h1>
+                        </Grid>
                     </Grid>
+
                     <Grid item sx={{ marginBottom: "30px", width: '80%', border: '1px solid white', borderRadius: '5px', padding: 2 }}>
                         <Stepper activeStep={activeStep} alternativeLabel sx={{ marginBottom: 2 }}>
                             {steps.map((label) => (
@@ -149,7 +156,7 @@ function Registration() {
                                     onChange={(e) => setAddress(e.target.value)}
                                     sx={{ marginBottom: 2 }}
                                 />
-                                <Button variant="contained" color="primary" onClick={() => setActiveStep((prev) => prev + 1)}>
+                                <Button variant="contained" color="primary" onClick={() => setActiveStep((prev) => prev + 1)} sx={{ width: '100%' }}>
                                     Next
                                 </Button>
                             </>
@@ -158,7 +165,7 @@ function Registration() {
                         {activeStep === 1 && (
                             <>
                                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
-                                    <Avatar src={profilePicURL} sx={{ width: 60, height: 60 }} />
+                                    <Avatar src={profilePicURL} sx={{ width: 160, height: 160 }} />
                                     <TextField
                                         fullWidth
                                         variant="outlined"
@@ -166,7 +173,7 @@ function Registration() {
                                         value={profilePicURL}
                                         onChange={(e) => setProfilePicURL(e.target.value)}
                                     />
-                                    <Button variant="contained" color="primary" onClick={() => setActiveStep((prev) => prev + 1)}>
+                                    <Button variant="contained" color="primary" onClick={() => setActiveStep((prev) => prev + 1)} sx={{ width: '100%' }}>
                                         Next
                                     </Button>
                                 </Box>
@@ -176,7 +183,7 @@ function Registration() {
                         {activeStep === 2 && (
                             <>
                                 <Typography variant="h6" component="div" sx={{ marginBottom: 2 }}>
-                                    Confirm your registration details and proceed.
+                                    Confrim and proceed to login.
                                 </Typography>
                                 <Box sx={{ marginBottom: 2 }}>
                                     <Typography><strong>Username:</strong> {username}</Typography>
@@ -185,7 +192,7 @@ function Registration() {
                                     <Typography><strong>Profile Picture URL:</strong> {profilePicURL}</Typography>
                                     <Typography><strong>Address:</strong> {address}</Typography>
                                 </Box>
-                                <Button component={Link} to='/login' variant="contained" color="primary" onClick={handleRegistration}>
+                                <Button component={Link} to='/login' variant="contained" color="primary" onClick={handleRegistration} sx={{ width: '100%' }} >
                                     Confirm & Register
                                 </Button>
                             </>

@@ -25,7 +25,8 @@ function LoginPanel(){
             {
                 headers: {
                     'Content-Type': 'application/json'
-                }
+                },
+                withCredentials: true
             }
         )
         .then(response => {
@@ -33,7 +34,7 @@ function LoginPanel(){
             if (data.success) {
                 if (data.role === 'lawyer') {
                     navigate('/lawyer')
-                } else if ( data.role === 'person' ) {
+                } else if ( data.role === 'client' ) {
                     navigate('/person');
                 } else if (data.role === 'admin'){
 
