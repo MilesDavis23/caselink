@@ -27,6 +27,7 @@ import PersonMyCaseList from './features/person/person my cases/components/Perso
 import PersonActiveCasePage from './features/person/person active case/components/ActivePersonCasePage';
 import SplasherPage from './features/splash/components/SplasherPage';
 import Registration from './features/registration/components/Registration';
+import ResetPasswordSteps from './features/reset password/components/ResetFlow';
 
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
           {/* <Route path='/' element={isAuthenticated ? <Navigate to='/lawyer' replace /> : <Navigate to ='/login' replace />} />  */}
           <Route path='/' element={<SplasherPage />} />
           <Route path='/registration' element={<Registration/>} />
+          <Route path='/reset-password' element={<ResetPasswordSteps/>} />
           <Route path='/login' element={isAuthenticated ? <Navigate to='/lawyer' replace /> : <LoginPage />} />
           <Route path='/lawyer' element={<LawyerPage />} >
             <Route path="browse-cases" element={<BrowseCases />} />
