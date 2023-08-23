@@ -17,7 +17,7 @@ import {
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import NavBar from '../../navbar/Navbar';
-import { GlobalStyles } from '@mui/material'; // Make sure to import these from the correct paths
+import { GlobalStyles } from '@mui/material'; 
 import { loginPaperStyle } from '../../login/styles/LoginStyle';
 import { Link } from 'react-router-dom';
 import axios from 'axios';

@@ -3,6 +3,7 @@ import { Grid } from '@mui/material';
 import ProfilePanel from './ProfilePanel';
 import DetailsPanel from './DetailsPanel';
 import LatestReviews from './ReviewsPanel';
+import ResetPasswordPanel from './ResetPasswordPanel';
 
 
 function ProfilePage(){
@@ -19,6 +20,9 @@ function ProfilePage(){
                 </Grid>
                 <Grid item xs={11} sx={{paddingY: 2}}>
                     <LatestReviews />
+                </Grid>
+                <Grid item xs={11} sx={{paddingY: 2}}>
+                    <ResetPasswordPanel />
                 </Grid>
             </Grid>
         </>
