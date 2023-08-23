@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Grid, Paper, Button, Link } from '@mui/material';
+import { Grid, Paper, Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 
 function ResetPasswordPanel() {
