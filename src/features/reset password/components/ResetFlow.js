@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     Box,
     Button,
@@ -17,23 +17,33 @@ import {
 import { useTheme } from '@mui/material/styles';
 import { GlobalStyles } from '@mui/material';
 import { loginPaperStyle } from '../../login/styles/LoginStyle';
+import { initiatePasswordReset, handleResetPassword } from '../functions/initiateEmail';
 import { Link } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom'
 
 function ResetPasswordSteps() {
     const theme = useTheme();
+    const [ searchParams ] = useSearchParams();
+    const token = searchParams.get('token');
 
-    const [password, setPassword] = React.useState('');
-    const [rePassword, setRePassword] = React.useState('');
+    /* capture the email: */
     const [email, setEmail] = React.useState('');
+
+    /* capture the password: */
+    const [password, setPassword] = React.useState('');
+    const [rePassword, setRePassword] = React.useState(''); 
 
     /* stepper logic:  */
     const [activeStep, setActiveStep] = React.useState(0);
-    const steps = ['Enter e-mail', 'Enter new password', 'Confirm Registration'];
 
-    function handlerResetPassword() {
-        /* stuff for reseting password comes here */
-    };
+    /* handle uniqe page: */
+    useEffect(() => {
+        if (token) {
+            setActiveStep(2);
+        }
+    },[token]);
 
+    const steps = ['Enter e-mail', 'Check your e-mails!',  'Enter new password', 'Confirm Registration'];
 
     return (
         <>
@@ -59,7 +69,7 @@ function ResetPasswordSteps() {
                             ))}
                         </Stepper>
 
-                        {activeStep === 0 && (
+                        {activeStep === 0 && !token && (
                             <>
                                 <TextField
                                     fullWidth
@@ -69,7 +79,7 @@ function ResetPasswordSteps() {
                                     onChange={(e) => setEmail(e.target.value)}
                                     sx={{ marginBottom: 2 }}
                                 />
-                                <Button variant="contained" color="primary" onClick={() => setActiveStep((prev) => prev + 1)} sx={{ width: '100%' }}>
+                                <Button variant="contained" color="primary" onClick={() => initiatePasswordReset(setActiveStep, email)} sx={{ width: '100%' }}>
                                     Next
                                 </Button>
                             </>
@@ -77,45 +87,57 @@ function ResetPasswordSteps() {
 
                         {activeStep === 1 && (
                             <>
-                                <TextField
-                                    fullWidth
-                                    variant="outlined"
-                                    label="Enter new password"
-                                    sx={{marginBottom: 2}}
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                />
+                                                                
+                                <Typography varaitn='h6' component='div' sx={{ marginBottom: 2 }}>
+                                    Check your email!
+                                </Typography>
 
-                                <TextField
-                                    fullWidth
-                                    variant="outlined"
-                                    label="Enter new password again"
-                                    sx={{marginBottom: 2}}
-                                    valu={password}
-                                    onChange={(e) => setRePassword(e.target.value)}
-                                />
-
-                                <Button variant="contained" color="primary" onClick={() => setActiveStep((prev) => prev + 1)} sx={{ width: '100%', marginBottom: 1 }}>
-                                    Next
-                                </Button>
-
-
-                                <Button variant="contained" color="primary" onClick={() => setActiveStep((prev) => prev - 1)} sx={{ width: '100%' }}>
+                                <Button variant="contained" color="primary" onClick={() => setActiveStep((prev) => prev - 1)}  sx={{ width: '100%' }}>
                                     Back
                                 </Button>
                             </>
                         )}
 
-                        {activeStep === 2 && (
+                        {activeStep === 2 && token && (
+
+                                <>
+                                    <TextField
+                                        fullWidth
+                                        variant="outlined"
+                                        label="Enter new password"
+                                        sx={{ marginBottom: 2 }}
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                    />
+
+                                    <TextField
+                                        fullWidth
+                                        variant="outlined"
+                                        label="Enter new password again"
+                                        sx={{ marginBottom: 2 }}
+                                        value={rePassword}
+                                        onChange={(e) => setRePassword(e.target.value)}
+                                    />
+
+                                    <Button variant="contained" color="primary" onClick={() => handleResetPassword(setActiveStep, token, password)} sx={{ width: '100%', marginBottom: 1 }}>
+                                        Next
+                                    </Button>
+
+                                </>
+
+                            ) 
+
+                        }
+
+                        {activeStep === 3 && (
                             <>
                                 <Typography variant="h6" component="div" sx={{ marginBottom: 2 }}>
                                     Confrim and proceed to login.
                                 </Typography>
 
-                                <Button component={Link} to='/login' variant="contained" color="primary" onClick={handlerResetPassword} sx={{ width: '100%', marginBottom: 1 }} >
-                                    Confirm & Register
+                                <Button component={Link} to='/login' variant="contained" color="primary"  sx={{ width: '100%', marginBottom: 1 }} >
+                                    Confirm & Go To Login
                                 </Button>
-
 
                                 <Button variant="contained" color="primary" onClick={() => setActiveStep((prev) => prev - 1)} sx={{ width: '100%' }}>
                                     Back
