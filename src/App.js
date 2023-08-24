@@ -41,6 +41,7 @@ function App() {
           {/* <Route path='/' element={isAuthenticated ? <Navigate to='/lawyer' replace /> : <Navigate to ='/login' replace />} />  */}
           <Route path='/' element={<SplasherPage />} />
           <Route path='/registration' element={<Registration/>} />
+          <Route path='/password-reset' element={<ResetPasswordSteps/>} />
           <Route path='/reset-password' element={<ResetPasswordSteps/>} />
           <Route path='/login' element={isAuthenticated ? <Navigate to='/lawyer' replace /> : <LoginPage />} />
           <Route path='/lawyer' element={<LawyerPage />} >
