@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import {  useTheme } from '@mui/material/styles';
-import { Grid, Paper, TextField, Button } from "@mui/material";
+import { Grid, Paper, TextField, Button, CircularProgress } from "@mui/material";
 import { loginPaperStyle } from "../styles/LoginStyle";
 import { AuthContext } from "../authentication/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -11,16 +11,29 @@ function LoginPanel(){
     const theme = useTheme();
     const { login } = useContext(AuthContext);
     const [ email, setEmail ] = useState('');
+    const [ password, setPassword ] = useState('')
+    const [ showPassword, setShowPassword ] = useState(false)
+    const [ loading, setLoading ] = useState(false);
+    const [ error, setError ] = useState('');
 
-    const handleTextInputChange = (event) => {
-        setEmail(event.target.value)
+    /* handling the input changes:  */
+    const handleEmailInputChange = (event) => {
+        setEmail(event.target.value);
         console.log(email)
     };
 
+    const handlePasswordInputChange = (event) => {
+        setPassword(event.target.value);
+    };
     
     function handleLogin(){
+        setLoading(true);
         axios.post('http://localhost:3002/login', 
-            { password: email }, 
+            {
+                email, 
+                password: showPassword ? password: undefined
+
+            },
             
             {
                 headers: {
@@ -30,8 +43,11 @@ function LoginPanel(){
             }
         )
         .then(response => {
+            setLoading(false);
             const data = response.data;
-            if (data.success) {
+            if (data.message === 'Email is valid.') {
+                setShowPassword(true);
+            } else if (data.success) {
                 if (data.role === 'lawyer') {
                     navigate('/lawyer')
                 } else if ( data.role === 'client' ) {
@@ -45,9 +61,11 @@ function LoginPanel(){
             }
         })
         .catch(error => {
+            setLoading(false);
             console.error('Error during login:', error);
+            setError('An error occurred during login. ');
         });
-    }
+    };
 
     return (
         <>
@@ -55,19 +73,28 @@ function LoginPanel(){
                 <Paper elevation={10} sx={{ background: theme.palette.background.paper,  }} style={loginPaperStyle}>
                     <Grid container direction="column" justifyContent="center" alignItems='center' spacing={2} >
                         <Grid item sx={{width:'100%'}}>
-                            <TextField id="" sx={{width:'100%'}} label="Email address" variant="outlined" value={email} onChange={handleTextInputChange}></TextField>
+                            <TextField  sx={{width:'100%'}} label="Email address" variant="outlined" value={email} onChange={handleEmailInputChange}></TextField>
                         </Grid>
-                        <Grid item xs={12} sx={{width:'100%'}}>
-                            <Button variant='outlined' sx={{width:'100%'}} onClick={handleLogin} > LOGIN </Button>
+                        {showPassword && (
+                                <Grid item sx={{ width: '100%' }}>
+                                    <TextField sx={{width: '100%'}} label=" Enter Password" variant="outlined" type="password" value={password} onChange={handlePasswordInputChange} />
+                                </Grid>
+                        )}
+                        <Grid item xs={12} sx={{ width: '100%' }}>
+                            <Button variant='outlined' sx={{ width: '100%' }} onClick={handleLogin} disabled={loading}>
+                                {loading ? <CircularProgress size={24} /> : 'LOGIN'}
+                            </Button>
                         </Grid>
-                        <Grid item xs={12} sx={{width:'100%'}}>
-                            <Button variant='outlined' sx={{width:'100%'}} > REGISTER </Button>
-                        </Grid>
+                        {error && !showPassword && (
+                            <Grid item xs={12} sx={{ width: '100%'}}>
+                                <span style={{ color: 'red' }}> {error} </span>
+                            </Grid>
+                        )}
                     </Grid>
                 </Paper>
             </Grid>
         </>
-    )
+    );
 };
 
 export default LoginPanel;
