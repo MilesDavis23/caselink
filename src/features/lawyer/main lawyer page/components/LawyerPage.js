@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import { useTheme, Grid, Box, useMediaQuery, IconButton } from '@mui/material'
 import SideBar from "../../lawyer sidebar/components/LawyerSideBar";
+import PresistentLawyerDrawer from "../../lawyer drawer/Drawer";
 import LawyerDrawer from "../mobile/components/LawyerDrawer";
 import MenuIcon from '@mui/icons-material/Menu'
 
@@ -9,11 +10,16 @@ import MenuIcon from '@mui/icons-material/Menu'
 function LawyerPage(){
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-    const [ drawerOpen, setDrawerOpen ] = useState(false);
+    const [ open, setOpen ] = React.useState(false);
 
-    const handleDrawerView = () => {
-        setDrawerOpen(!drawerOpen);
+    const handleDrawerOpen = () => {
+        setOpen(true);
     };
+
+    const handleDrawerClose = () => {
+        setOpen(false);
+    };
+
 
     return(
         <>
@@ -25,33 +31,34 @@ function LawyerPage(){
             }}>
                 {isMobile ? (
                     <>
-                    <IconButton onClick={handleDrawerView}>
-                        <MenuIcon />
-                    </IconButton>
-                    <LawyerDrawer open={drawerOpen} onClose={handleDrawerView} />
-                    <Outlet />
+                        <IconButton onClick={handleDrawerView}>
+                            <MenuIcon />
+                        </IconButton>
+                        <LawyerDrawer open={drawerOpen} onClose={handleDrawerView} />
+                        <Outlet />
                     </>
                 ) : (
-                    <Grid container sx={{ height: '100%' }}>
-                        <Grid item xs={3} >
-                            <Grid container sx={{ borderRight: '0.5px solid #FFFDF7', paddingRight: 2, height: '100%' }}>
-                                <Grid item xs={12}  >
-                                    <SideBar />
+                    <>
+                        <PresistentLawyerDrawer open={open} handleDrawerClose={handleDrawerClose}/>
+                        <Grid container justifyContent='center' sx={{ height: '100%' }}>
+                            <Grid item sx={6} >
+                                <IconButton
+                                    color="inherit"
+                                    aria-label="open drawer"
+                                    onClick={handleDrawerOpen}
+                                    edge="start"
+                                    sx={{ mr: 2, ...(open && { display: '' }), marginTop: 2 }}
+                                >
+                                    <MenuIcon />
+                                </IconButton>
+                            </Grid>
+                            <Grid item xs={6} justifyContent="center" alignItems="center" sx={{ paddingLeft: 1, height: '100%', overflow: 'auto' }}>
+                                <Grid container>
+                                    <Outlet />
                                 </Grid>
                             </Grid>
                         </Grid>
-                        <Grid item xs={6} justifyContent="center" alignItems="center" sx={{ paddingLeft: 1, height: '100%', overflow: 'auto' }}>
-                            <Grid container>
-                                <Outlet />
-                            </Grid>
-                        </Grid>
-                        <Grid item xs={3} >
-                            <Grid container sx={{ borderLeft: '0.5px solid #FFFDF7', paddingRight: 2, height: '100%' }}>
-                                <Grid item xs={12}  >
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                    </Grid>
+                    </>
                 )}
             </Box>
         </>
