@@ -21,6 +21,8 @@ import { GlobalStyles } from '@mui/material';
 import { loginPaperStyle } from '../../login/styles/LoginStyle';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import useRequest from '../../../functions/useRequest';
+import registerUser from '../functions/axios';
 
 function Registration() {
     const theme = useTheme();
@@ -36,35 +38,16 @@ function Registration() {
     const [activeStep, setActiveStep] = React.useState(0);
     const steps = ['Enter Details', 'Upload Profile Picture', 'Confirm Registration'];
 
-    function handleRegistration() {
-        axios.post('http://localhost:3002/registration', 
-            {
-                username, 
-                email, 
-                password, 
-                role, 
-                profilePicURL, 
-                address
-            }, 
-            {
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                withCredentials: true
-            }
-        )
-        .then(response => {
-            const data = response.data
-            if (data.success) {
-                alert(data.message);
-                /* currently a ract dom element taking the user to the login section, even if the registration was successfull, and even if not */
-            } else {
-                alert('Registration failed. Please try again.');
-            }
-        })
-        .catch(error => {
-            console.error('Error during registration:', error);
-        });
+    const { execute: executeRegistration, loading, error } = useRequest(registerUser);
+
+    const handleRegistration = async() => {
+        const data = await executeRegistration(username, email, password, role, profilePicURL, address);
+        if (data.success) {
+            alert(data.message);
+            /* currently a ract dom element taking the user to the login section, even if the registration was successfull, and even if not */
+        } else {
+            alert('Registration failed. Please try again.');
+        }
     }
     
 
