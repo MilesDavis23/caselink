@@ -6,7 +6,6 @@ import {
     Grid,
     InputLabel,
     MenuItem,
-    OutlinedInput,
     Select,
     Stepper,
     Step,
@@ -20,9 +19,8 @@ import NavBar from '../../navbar/Navbar';
 import { GlobalStyles } from '@mui/material'; 
 import { loginPaperStyle } from '../../login/styles/LoginStyle';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-import useRequest from '../../../functions/useRequest';
-import registerUser from '../functions/axios';
+import useRequest from '../../../functions/custom hooks/useRequest';
+import registerUser from '../functions/fetch';
 
 function Registration() {
     const theme = useTheme();

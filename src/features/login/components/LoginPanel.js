@@ -4,7 +4,8 @@ import { Grid, Paper, TextField, Button, CircularProgress } from "@mui/material"
 import { loginPaperStyle } from "../styles/LoginStyle";
 import { AuthContext } from "../authentication/AuthContext";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios'
+import useRequest from "../../../functions/custom hooks/useRequest";
+import loginUser from "../functions/fetch";
 
 function LoginPanel(){
     const navigate = useNavigate();
@@ -13,8 +14,7 @@ function LoginPanel(){
     const [ email, setEmail ] = useState('');
     const [ password, setPassword ] = useState('')
     const [ showPassword, setShowPassword ] = useState(false)
-    const [ loading, setLoading ] = useState(false);
-    const [ error, setError ] = useState('');
+    const { execute: executeLogin, loading, error } = useRequest(loginUser)
 
     /* handling the input changes:  */
     const handleEmailInputChange = (event) => {
@@ -26,25 +26,11 @@ function LoginPanel(){
         setPassword(event.target.value);
     };
     
-    function handleLogin(){
-        setLoading(true);
-        axios.post('http://localhost:3002/login', 
-            {
-                email, 
-                password: showPassword ? password: undefined
-
-            },
-            
-            {
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                withCredentials: true
-            }
-        )
-        .then(response => {
-            setLoading(false);
-            const data = response.data;
+    const handleLogin = async () => {
+        const data = await executeLogin(email, password, showPassword);
+        if (data.message === 'Email is valid.') {
+            setShowPassword(true);
+        } else if (data.success) {
             if (data.message === 'Email is valid.') {
                 setShowPassword(true);
             } else if (data.success) {
@@ -59,12 +45,7 @@ function LoginPanel(){
             } else {
                 alert(data.message);
             }
-        })
-        .catch(error => {
-            setLoading(false);
-            console.error('Error during login:', error);
-            setError('An error occurred during login. ');
-        });
+        }
     };
 
     return (
