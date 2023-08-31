@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import { useTheme, Grid, Box, useMediaQuery, IconButton } from '@mui/material'
-import SideBar from "../../lawyer sidebar/components/LawyerSideBar";
+import { GlobalStyles } from "@mui/material";
 import PresistentLawyerDrawer from "../../lawyer drawer/Drawer";
 import LawyerDrawer from "../mobile/components/LawyerDrawer";
 import MenuIcon from '@mui/icons-material/Menu'
@@ -23,6 +23,21 @@ function LawyerPage(){
 
     return(
         <>
+            <GlobalStyles styles={{
+                /* This is the global style for the scroll bar. Current set up makes it dissapear */
+                '*::-webkit-scrollbar': {
+                    width: '0px',
+                },
+                '*::-webkit-scrollbar-track': {
+                    background: '#f1f1f1',
+                },
+                '*::-webkit-scrollbar-thumb': {
+                    background: '#888',
+                },
+                '*::-webkit-scrollbar-thumb:hover': {
+                    background: '#555',
+                },
+            }} />
             <Box sx={{
                 backgroundColor: theme.palette.background.paper,
                 color: theme.palette.text.secondary,
