@@ -36,7 +36,7 @@ function Registration() {
     const [activeStep, setActiveStep] = React.useState(0);
     const steps = ['Enter Details', 'Upload Profile Picture', 'Confirm Registration'];
 
-    const { execute: executeRegistration, loading, error } = useRequest(registerUser);
+    const { execute: executeRegistration } = useRequest(registerUser);
 
     const handleRegistration = async() => {
         const data = await executeRegistration(username, email, password, role, profilePicURL, address);

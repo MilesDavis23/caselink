@@ -1,8 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import {  useTheme } from '@mui/material/styles';
 import { Grid, Paper, TextField, Button, CircularProgress } from "@mui/material";
 import { loginPaperStyle } from "../styles/LoginStyle";
-import { AuthContext } from "../authentication/AuthContext";
 import { useNavigate } from "react-router-dom";
 import useRequest from "../../../functions/custom hooks/useRequest";
 import loginUser from "../functions/fetch";
@@ -10,7 +9,6 @@ import loginUser from "../functions/fetch";
 function LoginPanel(){
     const navigate = useNavigate();
     const theme = useTheme();
-    const { login } = useContext(AuthContext);
     const [ email, setEmail ] = useState('');
     const [ password, setPassword ] = useState('')
     const [ showPassword, setShowPassword ] = useState(false)
