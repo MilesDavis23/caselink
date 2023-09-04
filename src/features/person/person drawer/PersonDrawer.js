@@ -6,11 +6,10 @@ import { Link } from 'react-router-dom';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import Drawer from '@mui/material/Drawer';
-import CssBaseline from '@mui/material/CssBaseline';
-import Divider from '@mui/material/Divider';
+import CssBaseline from '@mui/material/CssBaseline';import Divider from '@mui/material/Divider';
 import { IconButton } from '@mui/material';
 
-const drawerWidth = 370; 
+const drawerWidth = 370;
 
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
@@ -19,12 +18,13 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
-  }));  
+  }));
 
-function PresistentLawyerDrawer( {open , handleDrawerClose} ){
+
+  function PresistentLawyerDrawer( {open, handleDrawerClose} ) {
     const theme = useTheme();
     return (
-        <Box sx={{ display: 'flex', width: '100%' }}>
+            <Box sx={{ display: 'flex', width: '100%' }}>
             <CssBaseline />
             <Drawer
                 sx={{
@@ -45,23 +45,23 @@ function PresistentLawyerDrawer( {open , handleDrawerClose} ){
                     </IconButton>
                 </DrawerHeader>
                 <Divider />
-                <Grid container direction='column' justifyContent='flex-start' alignItems="flex-end" sx={{ width: '100%' }} xs={12} >
+                <Grid container direction='column' justifyContent='flex-start' alignItems="flex-end" sx={{width: '100%'}} xs={12} > 
                     <Grid item >
-                        <Button component={Link} to="/lawyer/browse-cases" variant="text" size='large' sx={{ my: 2 }}  >  Browse Case  </Button>
+                        <Button component={Link} to="/person/make-a-case" variant="text" size='large' sx={{ my: 2 }}  > Make A Case </Button>
                     </Grid>
                     <Grid item>
-                        <Button component={Link} to="/lawyer/my-cases" variant="text" size='large' sx={{ my: 2 }}  > My Cases </Button>
+                        <Button component={Link} to="/person/my-cases" variant="text" size='large' sx={{ my: 2 }} > My Cases </Button>
                     </Grid>
                     <Grid item>
-                        <Button component={Link} to="/lawyer/notifications" variant="text" size='large' sx={{ my: 2 }}> Notifications </Button>
+                        <Button component={Link} to="/person/notifications-page" variant="text" size='large' sx={{ my: 2 }} > Notifications </Button>
                     </Grid>
                     <Grid item>
-                        <Button component={Link} to="/lawyer/profile" variant="text" size='large' sx={{ my: 2 }}> Profile </Button>
+                        <Button component={Link} to="/lawyer/profile" variant="text" size='large' sx={{ my: 2 }} > Profile </Button>
                     </Grid>
                 </Grid>
             </Drawer>
         </Box>
     )
-}
+};
 
 export default PresistentLawyerDrawer;

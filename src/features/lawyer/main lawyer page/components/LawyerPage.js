@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Outlet } from "react-router-dom";
 import { useTheme, Grid, Box, useMediaQuery, IconButton } from '@mui/material'
 import { GlobalStyles } from "@mui/material";
@@ -46,10 +46,10 @@ function LawyerPage(){
             }}>
                 {isMobile ? (
                     <>
-                        <IconButton onClick={handleDrawerView}>
+                        <IconButton onClick={handleDrawerOpen}>
                             <MenuIcon />
                         </IconButton>
-                        <LawyerDrawer open={drawerOpen} onClose={handleDrawerView} />
+                        <LawyerDrawer open={open} onClose={handleDrawerOpen} />
                         <Outlet />
                     </>
                 ) : (
@@ -62,7 +62,7 @@ function LawyerPage(){
                                     aria-label="open drawer"
                                     onClick={handleDrawerOpen}
                                     edge="start"
-                                    sx={{ mr: 2, ...(open && { display: '' }), marginTop: 2 }}
+                                    sx={{ mr: 2, ...(open && { display: 'none' }), marginTop: 2 }}
                                 >
                                     <MenuIcon />
                                 </IconButton>
