@@ -33,6 +33,7 @@ function ActiveCasePage() {
     const theme = useTheme();
     const [personName, setPersonName] = React.useState([]);
 
+    /* Chip names:  */
     const names = [
         'Rental Contract',
         'ID Copy',
@@ -58,9 +59,7 @@ function ActiveCasePage() {
 
     /* stepper: */
     const steps = ['Offer Sent', 'Offer Accepted', 'Procedure Started', 'Case Resolved'];
-
-    const [activeStep, setActiveStep] = React.useState(2); // Assuming 'Procedure Started' is the current active step
-
+    const [activeStep] = React.useState(2); //when this will actually come to work, have to add the setter function. 
 
 
     return (

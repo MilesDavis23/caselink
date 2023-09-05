@@ -111,12 +111,6 @@ function IndividualCasePage() {
                         </Box>
                     </Grid>
                 </Grid>
-
-                <Grid container>
-                    <>
-                    </>
-                </Grid>
-
                 <Grid container alignItems="center" justifyContent="space-between" sx={{ width: '100%' }} >
                     <Grid item xs={5} sx={{marginRight: 2}}>
                         <Button variant='contained' sx={{ width: 1 }} > Back </Button>
