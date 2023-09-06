@@ -6,13 +6,13 @@ function BrowseCases() {
 
     return (
         <>
-            <Grid container >
-                <Grid item xs={12} sx={{ marginBottom: 2}}> 
+            <Grid container sx={{width: '100%'}}>
+                <Grid item xs={12} sx={{ marginBottom: 2, width: '100%' }}> 
                     <Typography variant="h6" sx={{ marginY: 3 }}>Filters</Typography>
                     <Divider />
-                    <FormControl>
+                    <FormControl sx={{ width: '100%'}}>
                         <InputLabel> Category </InputLabel>
-                        <Select sx={{ width: '250px' }} label="Category">
+                        <Select sx={{ width: '100%' }} label="Category">
                             <MenuItem value="category1"> Property Law </MenuItem>
                             <MenuItem value="category2"> Corporate Law </MenuItem>
                             <MenuItem value="category3"> Trademarks </MenuItem>

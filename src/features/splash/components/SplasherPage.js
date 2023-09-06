@@ -31,17 +31,17 @@ function SplasherPage(  ) {
                 overflow: 'auto',
             }}>
                 <Grid container sx={{ height: '100%' }}>
-                    <Grid item xs={8} >
+                    <Grid item xs={7} >
                         <Grid container direction='column' justifyContent='center' alignItems='center' sx={{ height: '100%', flexWrap:'nowrap' }}>
                             <Grid item>
-                                <Grid item  style={loginPaperStyle} textAlign='center' > 
+                                <Grid item  style={{ padding: 0}} textAlign='center' > 
                                     <h1 style={{ fontFamily: 'Canela', fontSize: '150px' }}> CaseLink! </h1>
                                 </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid item xs={4} >
-                        <Grid container direction='column' justifyContent='center' alignItems='center' sx={{ height: '100%', flexWrap: 'nowrap', paddingRight: '50px' }}>
+                    <Grid item xs={5} >
+                        <Grid container direction='column' justifyContent='center' alignItems='center' sx={{ height: '100%', flexWrap: 'nowrap', paddingRight: '300px' }}>
                             <Grid item>
                                 <Grid item style={{ ...loginPaperStyle, fontFamily: 'Canela', fontSize: '50px' }} textAlign='center' >
                                     <h1> Welcome to CaseLink! </h1>

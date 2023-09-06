@@ -53,7 +53,7 @@ function LoginPanel(){
                     <Grid container direction="column" justifyContent="center" alignItems='center' spacing={2} >
                         <Grid item sx={{width:'100%'}}>
                             <TextField  sx={{width:'100%'}} label="Email address" variant="outlined" value={email} onChange={handleEmailInputChange}></TextField>
-                        </Grid>
+                        </Grid>  
                         {showPassword && (
                                 <Grid item sx={{ width: '100%' }}>
                                     <TextField sx={{width: '100%'}} label=" Enter Password" variant="outlined" type="password" value={password} onChange={handlePasswordInputChange} />

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Box, useTheme, Grid, Button, Drawer, IconButton } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
+import { Box, useTheme, Grid, Button, Drawer } from '@mui/material';
+
 
 function LawyerDrawer({ open, onClose }) {
     const theme = useTheme();
@@ -31,6 +31,6 @@ function LawyerDrawer({ open, onClose }) {
             </Box>
         </Drawer>
     );
-}
+}; 
 
 export default LawyerDrawer;
