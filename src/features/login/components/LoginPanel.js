@@ -17,7 +17,7 @@ function LoginPanel(){
     /* handling the input changes:  */
     const handleEmailInputChange = (event) => {
         setEmail(event.target.value);
-        console.log(email)
+        console.log(email) 
     };
 
     const handlePasswordInputChange = (event) => {
