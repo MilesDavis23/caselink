@@ -25,7 +25,7 @@ function MyCaseList() {
     return (
         <>
             <Grid container>
-                <Grid item sx={{ padding: 2 }}>
+                <Grid item sx={{ padding: 2, width: '100%' }} >
                     <Card >
                         <CardContent>
                             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { useTheme, Grid, Box, useMediaQuery, IconButton } from '@mui/material'
 import { GlobalStyles } from "@mui/material";
 import PresistentLawyerDrawer from "../../lawyer drawer/Drawer";
@@ -11,6 +11,9 @@ function LawyerPage(){
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const [ open, setOpen ] = React.useState(false);
+    /* Adding  a state to trach the Browse Cases page */
+    const currentpath = useLocation()
+    const isBrowseCases = currentpath.pathname === "/lawyer/browse-cases"
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -52,6 +55,34 @@ function LawyerPage(){
                         <LawyerDrawer open={open} onClose={handleDrawerOpen} />
                         <Outlet />
                     </>
+                ) : isBrowseCases ? (
+                <Grid container sx={{ height: '100%' }}>    
+                    <Grid item xs={3}>
+                        <Grid container sx={{ borderRight: '0.5px solid #FFFDF7', paddingRight: 2, height: '100%' }}>
+                        <IconButton
+                                    color="inherit"
+                                    aria-label="open drawer"
+                                    onClick={handleDrawerOpen}
+                                    edge="start"
+                                    sx={{ mr: 2, ...(open && { display: 'none' }), marginTop: 2 }}
+                                >
+                                    <MenuIcon />
+                                </IconButton>
+                        </Grid>
+                    </Grid>
+                    <Grid item xs={6} justifyContent="center" alignItems="center" sx={{ paddingLeft: 1, height: '100%', overflow: 'auto' }}>
+                        <Grid container>
+                            <Outlet />
+                        </Grid>
+                    </Grid>
+                    <Grid item xs={3}>
+                        <Grid container sx={{ borderLeft: '0.5px solid #FFFDF7', paddingRight: 2, height: '100%' }}>
+                            <Grid item xs={12}>
+                                {/* You can add any component or content here */}
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
                 ) : (
                     <>
                         <PresistentLawyerDrawer open={open} handleDrawerClose={handleDrawerClose}/>
