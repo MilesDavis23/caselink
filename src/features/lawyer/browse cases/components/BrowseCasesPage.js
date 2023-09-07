@@ -1,6 +1,6 @@
 import React from "react";
 import CaseElement from "../../mycases list/components/CaseElement";
-import { Typography, Divider, Grid, Select, MenuItem, FormControl, InputLabel } from "@mui/material";
+import { Typography, Divider, Grid } from "@mui/material";
 
 function BrowseCases() {
 
@@ -8,16 +8,7 @@ function BrowseCases() {
         <>
             <Grid container sx={{width: '100%'}}>
                 <Grid item xs={12} sx={{ marginBottom: 2, width: '100%' }}> 
-                    <Typography variant="h6" sx={{ marginY: 3 }}>Filters</Typography>
-                    <Divider />
-                    <FormControl sx={{ width: '100%'}}>
-                        <InputLabel> Category </InputLabel>
-                        <Select sx={{ width: '100%' }} label="Category">
-                            <MenuItem value="category1"> Property Law </MenuItem>
-                            <MenuItem value="category2"> Corporate Law </MenuItem>
-                            <MenuItem value="category3"> Trademarks </MenuItem>
-                        </Select>
-                    </FormControl>
+
                 </Grid>
             </Grid>
 
