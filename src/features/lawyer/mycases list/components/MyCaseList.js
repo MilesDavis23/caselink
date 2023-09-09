@@ -47,7 +47,7 @@ function MyCaseList() {
                                     <Grid item>
                                         Status:
                                     </Grid>
-                                    <Grid item sx={{ color: '#FB5607', ml: 2 }}>
+                                    <Grid item sx={{ color: '#3EC300', ml: 2 }}>
                                     {myCase[0] && myCase[0].status}
                                     </Grid>
                                 </Grid>

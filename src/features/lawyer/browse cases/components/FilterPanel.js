@@ -1,76 +1,79 @@
 
 import React, { useState } from "react";
-import { Box, Select, MenuItem, FormControl, InputLabel, TextField, Chip, Input } from '@mui/material'
+import { Box, Select, MenuItem, FormControl, InputLabel, TextField, Chip, Input, Typography } from '@mui/material'
+import { MenuProps, getStyles } from "../../individual case page/style/ChipStyle";
+import { useTheme } from "@mui/material";
 
 
 function FilterPanel() {
-    const [ caseType, setCaseType ] = useState('');
-    const [ tags, setTags ] = useState([]);
+    /* Chip tags: */
+    const theme = useTheme();
+    const [personName, setPersonName] = React.useState([]);
+    const names = [
+        'Due payment',
+        'ASAP',
+        'English speaking',
 
-    const handleCaseTypeChange = (event) => {
-        setCaseType(event.target.value);
-    };
-
-    const handleTagsChange = (event) => {
-        setTags(event.target.value.split(','));
-    };
+    ];
+    const handleChange = (event) => {
+        const {
+            target: { value },
+        } = event;
+        setPersonName(
+            typeof value === 'string' ? value.split(',') : value,
+        )
+    }
 
     return (
+        <Box sx={{ width: '320px', mt: 2 /* now its set to a static 320px, but has to change it to dynamic layout, with mediaQuery */ }}  >
 
-            <Box sx={{ width: '100%', mt: 2 }}>
-                {/* Dropdown for Case Types */}
-                <FormControl fullWidth variant="filled" sx={{ mb: 2 }}>
-                    <InputLabel>Case Type</InputLabel>
-                    <Select
-                        value={caseType}
-                        onChange={handleCaseTypeChange}
-                    >
-                        <MenuItem value="civil">Civil</MenuItem>
-                        <MenuItem value="criminal">Criminal</MenuItem>
-                        {/* Add more case types as needed */}
-                    </Select>
-                </FormControl>
+            <FormControl fullWidth variant="filled" sx={{ mb: 2 }}>
+                <InputLabel>Upload Date</InputLabel>
+                <Select>
+                    <MenuItem value="latest">Latest</MenuItem>
+                    <MenuItem value="oldest">Oldest</MenuItem>
+                </Select>
+            </FormControl>
 
-                {/* Filter based on Upload Date */}
-                <FormControl fullWidth variant="filled" sx={{ mb: 2 }}>
-                    <InputLabel>Upload Date</InputLabel>
-                    <Select>
-                        <MenuItem value="latest">Latest</MenuItem>
-                        <MenuItem value="oldest">Oldest</MenuItem>
-                    </Select>
-                </FormControl>
+            {/* Search Field */}
+            <TextField
+                fullWidth
+                variant="outlined"
+                label="Search"
+                sx={{ mb: 2 }}
+            />
 
-                {/* Search Field */}
-                <TextField
-                    fullWidth
-                    variant="filled"
-                    label="Search"
-                    sx={{ mb: 2 }}
-                />
+            {/* Tags (Chips) Selection */}
 
-                {/* Tags (Chips) Selection */}
-                <FormControl fullWidth variant="filled">
-                    <InputLabel>Tags</InputLabel>
-                    <Select
-                        multiple
-                        value={tags}
-                        onChange={handleTagsChange}
-                        input={<Input />}
-                        renderValue={(selected) => (
-                            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                                {selected.map((value) => (
-                                    <Chip key={value} label={value} />
-                                ))}
-                            </Box>
-                        )}
-                    >
-                        {/* Add your tags here */}
-                        <MenuItem value="Tag1">Tag1</MenuItem>
-                        <MenuItem value="Tag2">Tag2</MenuItem>
-                        <MenuItem value="Tag3">Tag3</MenuItem>
-                    </Select>
-                </FormControl>
-            </Box>
+            <FormControl sx={{ width: '100%' }}>
+                <Select
+                    labelId="demo-multiple-chip-labe"
+                    id=''
+                    multiple
+                    value={personName}
+                    onChange={handleChange}
+                    input={<Input id="select-multiple-chip" label="Chip" />}
+                    renderValue={(selected) => (
+                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, overflow: 'auto' }}>
+                            {selected.map((value) => (
+                                <Chip key={value} label={value} />
+                            ))}
+                        </Box>
+                    )}
+                    MenuProps={MenuProps}
+                >
+                    {names.map((name) => (
+                        <MenuItem
+                            key={name}
+                            value={name}
+                            style={getStyles(name, personName, theme)}
+                        >
+                            {name}
+                        </MenuItem>
+                    ))}
+                </Select>
+            </FormControl>
+        </Box>
 
     );
 }

@@ -62,7 +62,6 @@ function LawyerPage() {
                             <Grid container sx={{ height: '100%' }}>
                                 <Grid item xs={3} >
                                     <Grid container alignItems="flex-start" sx={{ marginLeft: '30px', borderRight: '0 solid #FFFDF7', paddingRight: 2, height: '100%' }}>
-                                        {/* Nested Grid container for IconButton and FilterPanel */}
                                         <div>
                                             <div >
                                                 <Grid container justifyContent="space-between">

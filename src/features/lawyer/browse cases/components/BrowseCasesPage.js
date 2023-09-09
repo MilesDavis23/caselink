@@ -1,6 +1,6 @@
 import React from "react";
 import CaseElement from "../../mycases list/components/CaseElement";
-import { Typography, Divider, Grid } from "@mui/material";
+import {  Divider, Grid } from "@mui/material";
 
 function BrowseCases() {
 
@@ -14,7 +14,6 @@ function BrowseCases() {
 
             <Grid container>
                 <Grid item xs={12}> {/* Filter Section */}
-                    <Typography variant="subtitle1">Civil Law Cases</Typography>
                     <Divider />
                     <Grid container>
                         {/* Cases for Category 1 */}
@@ -28,7 +27,6 @@ function BrowseCases() {
                             <CaseElement />
                         </Grid>
                     </Grid>
-                    <Typography variant="subtitle1">Criminal Law cases</Typography>
                     <Divider />
                     <Grid container>
                         <Grid item sx={{ padding: 2 }}>
