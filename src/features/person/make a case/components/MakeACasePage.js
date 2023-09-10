@@ -15,13 +15,15 @@ import {
     InputLabel
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import useRequest from '../../../../functions/useRequest';
+import createACase from '../functions/axios';
 import { MenuProps, getStyles } from '../../../lawyer/individual case page/style/ChipStyle';
-
 
 
 function MakeACase() {
     const theme = useTheme();
     const { control, handleSubmit, register } = useForm();
+    const { execute, loading, data, error } = useRequest(createACase);
 
 
     /* 'Chip' logic:  */
@@ -41,8 +43,13 @@ function MakeACase() {
         );
     };
 
-    const onSubmit = (data) => {
-        console.log(data)
+    const onSubmit = async (data) => {
+        try {
+            const response = await execute(1, data.title, data.problemDescription, 'empty', 'empty', 'empty', 'empty' );
+            console.log('Case created.', response)
+        } catch (error) {
+            console.error('Error creating case:', error )
+        }
     };
 
     const containerWidth = '100%'
