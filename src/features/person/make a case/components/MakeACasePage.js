@@ -45,11 +45,11 @@ function MakeACase() {
         console.log(data)
     };
 
-    const containerWidth = '385%'
+    const containerWidth = '100%'
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <Container justifyContent='center' alignItems="" sx={{ padding: 2, width: containerWidth }}>
+            <Container justifyContent='center' alignItems="" sx={{ padding: 2, width: containerWidth, maxWidth: false }}>
                 <Grid container justifyContent="space-between" alignItems="center" sx={{ borderBottom: '1px solid white', paddingBottom: 2 }}>
                     <Grid item sx={12}>
                         <Controller
@@ -59,10 +59,10 @@ function MakeACase() {
                             render={({ field }) => (
                                 <TextField
                                     {...field}
-                                    sx={{ width: '100%', margin: 0 }}
+                                    fullWidth
                                     id="outlined-multiline-static"
                                     label=""
-                                    multiline
+                                    variant='outlined'
                                     rows={1}
                                     placeholder="Enter title..."
                                 />
@@ -80,6 +80,7 @@ function MakeACase() {
                             render={({ field }) => (
                                 <TextField
                                     {...field}
+                                    fullWidth
                                     sx={{ width: '100%', margin: 0 }}
                                     id="outlined-multiline-static"
                                     label=""

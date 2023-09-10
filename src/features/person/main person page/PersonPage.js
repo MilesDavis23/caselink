@@ -50,27 +50,41 @@ function PersonPage() {
                         <Outlet />
                     </>
                 ) : (
-                    <>
-                        <PresistentPersonDrawer open={open} handleDrawerClose={handleDrawerClose}/>
-                        <Grid container justifyContent='center' sx={{ height: '100%' }}>
-                            <Grid item sx={6} >
-                                <IconButton
-                                    color="inherit"
-                                    aria-label="open drawer"
-                                    onClick={handleDrawerOpen}
-                                    edge="start"
-                                    sx={{ mr: 2, ...(open && { display: 'none' }), marginTop: 2 }}
-                                >
-                                    <MenuIcon />
-                                </IconButton>
-                            </Grid>
-                            <Grid item xs={6} justifyContent="center" alignItems="center" sx={{ paddingLeft: 1, height: '100%', overflow: 'auto' }}>
-                                <Grid container>
-                                    <Outlet />
+                        <>
+                            <PresistentPersonDrawer open={open} handleDrawerClose={handleDrawerClose} />
+                            <Grid container sx={{ height: '100%' }}>
+                                <Grid item xs={3} >
+                                    <Grid container alignItems="flex-start" sx={{ marginLeft: '30px', borderRight: '0 solid #FFFDF7', paddingRight: 2, height: '100%' }}>
+                                        {/* Nested Grid container for IconButton and FilterPanel */}
+                                        <div>
+                                            <div style={{ marginLeft: '250px' }}>
+                                                <IconButton
+                                                    color="inherit"
+                                                    aria-label="open drawer"
+                                                    onClick={handleDrawerOpen}
+                                                    edge="start"
+                                                    sx={{ mr: 2, ...(open && { display: 'none' }), marginTop: 2 }}
+                                                >
+                                                    <MenuIcon />
+                                                </IconButton>
+                                            </div>
+                                        </div>
+                                    </Grid>
+                                </Grid>
+                                <Grid item xs={6} justifyContent="center" alignItems="center" sx={{ paddingLeft: 1, height: '100%', overflow: 'auto', }}>
+                                    <Grid container>
+                                        <Outlet />
+                                    </Grid>
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <Grid container sx={{ borderLeft: '0 solid #FFFDF7', paddingRight: 2, height: '100%' }}>
+                                        <Grid item xs={12}>
+                                            {/* You can add any component or content here */}
+                                        </Grid>
+                                    </Grid>
                                 </Grid>
                             </Grid>
-                        </Grid>
-                    </>
+                        </>
                 )}
             </Box>
         </>
