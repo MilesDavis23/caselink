@@ -2,18 +2,12 @@ import * as React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import {
     Grid,
-    Container,
-    Typography,
-    Box,
     Button,
     TextField,
     FormControl,
     Select,
-    Input, 
     Chip,
     MenuItem,
-    InputLabel,
-    ListItem,
     Paper
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
@@ -42,7 +36,14 @@ function MakeACase() {
 
     const onSubmit = async (data) => {
         try {
-            const response = await execute(1, data.title, data.problemDescription, 'empty', 'empty', 'empty', 'empty' );
+            const response = await execute(
+                1, 
+                data.title, 
+                data.shortDescription,
+                data.longDescription, 
+                JSON.stringify(data.categories), 
+            );
+            console.log(data)
             console.log('Case created.', response)
         } catch (error) {
             console.error('Error creating case:', error )
@@ -59,7 +60,6 @@ function MakeACase() {
                         <Controller
                             name="title"
                             control={control}
-
                             defaultValue=""
                             render={({ field }) => (
                                 <TextField
@@ -79,7 +79,7 @@ function MakeACase() {
                 <Grid container sx={{ paddingY: 2, borderBottom: '1px solid white' }}>
                     <Grid item xs={12}>
                         <Controller
-                            name="problemDescription"
+                            name="shortDescription"
                             control={control}
                             defaultValue=""
                             render={({ field }) => (
@@ -101,7 +101,7 @@ function MakeACase() {
                 <Grid container sx={{ paddingY: 2, borderBottom: '1px solid white' }}>
                     <Grid item xs={12}>
                         <Controller
-                            name="problemDescription"
+                            name="longDescription"
                             control={control}
                             defaultValue=""
                             render={({ field }) => (
@@ -160,7 +160,7 @@ function MakeACase() {
                     </Grid>
                     <Grid item xs={12}>
                         <Controller
-                            name="selectedCategories"
+                            name="categories"
                             control={control}
                             defaultValue={[]}
                             render={({ field }) => (
@@ -184,190 +184,3 @@ function MakeACase() {
 };
 
 export default MakeACase;
-
-
-
-/*
-
-                <Grid container sx={{ marginTop: '20px', marginBottom: '20px', border: '1px solid white', borderRadius: '5px' }}>
-                    <Grid item xs={12}>
-                        <Box sx={{ width: 1, bgcolor: 'background.paper' }}>
-                            <Box sx={{ width: 1, borderBottom: '1px solid white', padding: '10px' }}>
-                                <Typography variant="h6" component="div">
-                                    Upload Documents
-                                </Typography>
-                            </Box>
-                            <Controller
-                                name="documents"
-                                control={control}
-                                defaultValue={[]}
-                                render={({ field }) => (
-                                    <FormControl sx={{ m: 0, width: '100%' }}>
-                                        <InputLabel htmlFor="select-multiple-chip" style={{ visibility: 'hidden' }}>Hidden Label</InputLabel>
-                                        <Select
-                                            {...field}
-                                            id="select-multiple-chip"
-                                            multiple
-                                            input={<Input label="Chip" />}
-                                            renderValue={(selected) => (
-                                                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                                                    {selected.map((value) => (
-                                                        <Chip key={value} label={value} />
-                                                    ))}
-                                                </Box>
-                                            )}
-                                            MenuProps={MenuProps}
-                                        >
-                                            {names.map((name) => (
-                                                <MenuItem
-                                                    key={name}
-                                                    value={name}
-                                                    style={getStyles(name, personName, theme)}
-                                                >
-                                                    {name}
-                                                </MenuItem>
-                                            ))}
-                                        </Select>
-                                    </FormControl>
-                                )}
-                            />
-                        </Box>
-                    </Grid>
-                </Grid>
-
-*/
-
-
-
-
-
-
-
-
-/*
-
-        <form onSubmit={handleSubmit(onSubmit)} sx={{ width: '100%'}}>
-            <Container sx={{ padding: 2, width: '100%', maxWidth: false }}>
-                <Grid container justifyContent="space-between" alignItems="center" sx={{  paddingBottom: 2 }}>
-                    <Grid item xs={12}>
-                        <Controller
-                            name="title"
-                            control={control}
-                            defaultValue=""
-                            render={({ field }) => (
-                                <TextField
-                                    {...field}
-                                    fullWidth
-                                    id="outlined-multiline-static"
-                                    label=""
-                                    variant='standard'
-                                    rows={1}
-                                    placeholder="Enter title..."
-                                />
-                            )}
-                        />
-                    </Grid>
-                </Grid>
-
-                <Grid container sx={{ paddingY: 2, borderBottom: '1px solid white' }}>
-                    <Grid item xs={12}>
-                        <Controller
-                            name="problemDescription"
-                            control={control}
-                            defaultValue=""
-                            render={({ field }) => (
-                                <TextField
-                                    {...field}
-                                    fullWidth
-                                    sx={{ width: '100%', margin: 0 }}
-                                    id="outlined-multiline-static"
-                                    label=""
-                                    multiline
-                                    rows={4}
-                                    placeholder="Explain your problem in a few words. "
-                                />
-                            )}
-                        />
-                    </Grid>
-                </Grid>
-
-                <Grid container sx={{ paddingY: 2, borderBottom: '1px solid white' }}>
-                    <Grid item xs={12}>
-                        <Controller
-                            name="problemDescription"
-                            control={control}
-                            defaultValue=""
-                            render={({ field }) => (
-                                <TextField
-                                    {...field}
-                                    fullWidth
-                                    sx={{ width: '100%', margin: 0 }}
-                                    id="outlined-multiline-static"
-                                    label=""
-                                    multiline
-                                    rows={6}
-                                    placeholder="Explain your problem in detail..."
-                                />
-                            )}
-                        />
-                    </Grid>
-                </Grid>
-
-                <Grid container sx={{ paddingY: 2 }}>
-                    <Grid item xs={12}>
-                        <Paper
-                            sx={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                flexWrap: 'wrap',
-                                listStyle: 'none',
-                                p: 0.5,
-                                m: 1,
-                            }}
-                            component="ul"
-                        >
-                            {chipData.map((data) => (
-                                <ListItem key={data.key} sx={{ display: 'flex' }}>
-                                    <Chip
-                                        label={data.label}
-                                        onDelete={handleDelete(data)}
-                                    />
-                                </ListItem>
-                            ))}
-                        </Paper>
-                    </Grid>
-
-                    <Grid item xs={12}>
-                        <FormControl fullWidth>
-                            <Select onChange={handleCategoryChange}>
-                                {categories.map((category) => (
-                                    <MenuItem key={category} value={category}>
-                                        {category}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Controller
-                            name="selectedCategories"
-                            control={control}
-                            defaultValue={[]}
-                            render={({ field }) => (
-                                <input type="hidden" {...field} value={JSON.stringify(chipData.map(chip => chip.label))}/>
-                            )}
-                        />
-                    </Grid>
-                </Grid>
-
-                <Grid container alignItems="center" justifyContent="space-between" sx={{ width: '100%' }}>
-                    <Grid item xs={12} sx={{ marginRight: 0 }}>
-                        <Button type="submit" variant='contained' sx={{ width: 1 }}>
-                            Submit Case
-                        </Button>
-                    </Grid>
-                </Grid>
-            </Container>
-        </form>
-
-*/
