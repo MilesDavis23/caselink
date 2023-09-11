@@ -9,15 +9,16 @@ import {
     TextField,
     FormControl,
     Select,
-    OutlinedInput, 
+    Input, 
     Chip,
     MenuItem,
-    InputLabel
+    InputLabel,
+    ListItem,
+    Paper
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import useRequest from '../../../../functions/useRequest';
 import createACase from '../functions/axios';
-import { MenuProps, getStyles } from '../../../lawyer/individual case page/style/ChipStyle';
 
 
 function MakeACase() {
@@ -27,20 +28,16 @@ function MakeACase() {
 
 
     /* 'Chip' logic:  */
-    const [personName, setPersonName] = React.useState([]);
-    const names = [
-        'Rental Contract',
-        'ID Copy',
-        'Authorization',
-        'Copy of passport'
-    ];
-    const handleChange = (event) => {
-        const {
-            target: { value },
-        } = event;
-        setPersonName(
-            typeof value === 'string' ? value.split(',') : value,
-        );
+    const [chipData, setChipData] = React.useState([]);
+    const categories = ['Criminal', 'Civil', 'Propery Law', 'Sports Law', 'Human Rigths',]
+    const handleCategoryChange = (event) => {
+        const selectedCategory = event.target.value;
+        if (!chipData.some(chip => chip.label === selectedCategory)) {
+            setChipData(prev => [...prev, { key: Date.now(), label: selectedCategory }]);
+        }
+    }; /* closure: */
+    const handleDelete = (chipToDelete) => () => {
+        setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
     };
 
     const onSubmit = async (data) => {
@@ -52,16 +49,17 @@ function MakeACase() {
         }
     };
 
-    const containerWidth = '100%'
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <Container justifyContent='center' alignItems="" sx={{ padding: 2, width: containerWidth, maxWidth: false }}>
-                <Grid container justifyContent="space-between" alignItems="center" sx={{ borderBottom: '1px solid white', paddingBottom: 2 }}>
-                    <Grid item sx={12}>
+        <>
+            <form onSubmit={handleSubmit(onSubmit)} style={{ width: '100%', marginTop: 20 }}>
+
+                <Grid container justifyContent="space-between" alignItems="center" sx={{ paddingBottom: 2 }}>
+                    <Grid item sx={{ width: '100%' }} xs={12}>
                         <Controller
                             name="title"
                             control={control}
+
                             defaultValue=""
                             render={({ field }) => (
                                 <TextField
@@ -69,7 +67,7 @@ function MakeACase() {
                                     fullWidth
                                     id="outlined-multiline-static"
                                     label=""
-                                    variant='outlined'
+                                    variant='standard'
                                     rows={1}
                                     placeholder="Enter title..."
                                 />
@@ -92,12 +90,104 @@ function MakeACase() {
                                     id="outlined-multiline-static"
                                     label=""
                                     multiline
-                                    placeholder="Explain your problem..."
+                                    rows={4}
+                                    placeholder="Explain your problem in a few words. "
                                 />
                             )}
                         />
                     </Grid>
                 </Grid>
+
+                <Grid container sx={{ paddingY: 2, borderBottom: '1px solid white' }}>
+                    <Grid item xs={12}>
+                        <Controller
+                            name="problemDescription"
+                            control={control}
+                            defaultValue=""
+                            render={({ field }) => (
+                                <TextField
+                                    {...field}
+                                    fullWidth
+                                    sx={{ width: '100%', margin: 0 }}
+                                    id="outlined-multiline-static"
+                                    label=""
+                                    multiline
+                                    rows={6}
+                                    placeholder="Explain your problem in detail..."
+                                />
+                            )}
+                        />
+                    </Grid>
+                </Grid>
+
+                <Grid container sx={{ paddingY: 2 }}>
+                    <Grid item xs={12}>
+                        {chipData.length > 0 && (
+                               <Paper
+                               sx={{
+                                   display: 'flex',
+                                   justifyContent: 'flex-start', // Align chips to the start
+                                   flexWrap: 'wrap',
+                                   listStyle: 'none',
+                                   p: 0.5,
+                                   m: 1,
+                               }}
+                               component="ul"
+                           >
+                               {chipData.map((data) => (
+                                   <li key={data.key} sx={{ margin: 1 }}> 
+                                       <Chip
+                                           sx={{marginRight: 1}}
+                                           label={data.label}
+                                           onDelete={handleDelete(data)}
+                                       />
+                                   </li>
+                               ))}
+                           </Paper>
+                        )} 
+                    </Grid>
+
+                    <Grid item xs={12}>
+                        <FormControl fullWidth>
+                            <Select onChange={handleCategoryChange}>
+                                {categories.map((category) => (
+                                    <MenuItem key={category} value={category}>
+                                        {category}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Controller
+                            name="selectedCategories"
+                            control={control}
+                            defaultValue={[]}
+                            render={({ field }) => (
+                                <input type="hidden" {...field} value={JSON.stringify(chipData.map(chip => chip.label))} />
+                            )}
+                        />
+                    </Grid>
+                </Grid>
+
+                <Grid container alignItems="center" justifyContent="space-between" sx={{ width: '100%' }}>
+                    <Grid item xs={12} sx={{ marginRight: 0 }}>
+                        <Button type="submit" variant='contained' sx={{ width: 1 }}>
+                            Submit Case
+                        </Button>
+                    </Grid>
+                </Grid>
+
+            </form>
+        </>
+    )
+};
+
+export default MakeACase;
+
+
+
+/*
 
                 <Grid container sx={{ marginTop: '20px', marginBottom: '20px', border: '1px solid white', borderRadius: '5px' }}>
                     <Grid item xs={12}>
@@ -118,7 +208,7 @@ function MakeACase() {
                                             {...field}
                                             id="select-multiple-chip"
                                             multiple
-                                            input={<OutlinedInput label="Chip" />}
+                                            input={<Input label="Chip" />}
                                             renderValue={(selected) => (
                                                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                                     {selected.map((value) => (
@@ -145,6 +235,131 @@ function MakeACase() {
                     </Grid>
                 </Grid>
 
+*/
+
+
+
+
+
+
+
+
+/*
+
+        <form onSubmit={handleSubmit(onSubmit)} sx={{ width: '100%'}}>
+            <Container sx={{ padding: 2, width: '100%', maxWidth: false }}>
+                <Grid container justifyContent="space-between" alignItems="center" sx={{  paddingBottom: 2 }}>
+                    <Grid item xs={12}>
+                        <Controller
+                            name="title"
+                            control={control}
+                            defaultValue=""
+                            render={({ field }) => (
+                                <TextField
+                                    {...field}
+                                    fullWidth
+                                    id="outlined-multiline-static"
+                                    label=""
+                                    variant='standard'
+                                    rows={1}
+                                    placeholder="Enter title..."
+                                />
+                            )}
+                        />
+                    </Grid>
+                </Grid>
+
+                <Grid container sx={{ paddingY: 2, borderBottom: '1px solid white' }}>
+                    <Grid item xs={12}>
+                        <Controller
+                            name="problemDescription"
+                            control={control}
+                            defaultValue=""
+                            render={({ field }) => (
+                                <TextField
+                                    {...field}
+                                    fullWidth
+                                    sx={{ width: '100%', margin: 0 }}
+                                    id="outlined-multiline-static"
+                                    label=""
+                                    multiline
+                                    rows={4}
+                                    placeholder="Explain your problem in a few words. "
+                                />
+                            )}
+                        />
+                    </Grid>
+                </Grid>
+
+                <Grid container sx={{ paddingY: 2, borderBottom: '1px solid white' }}>
+                    <Grid item xs={12}>
+                        <Controller
+                            name="problemDescription"
+                            control={control}
+                            defaultValue=""
+                            render={({ field }) => (
+                                <TextField
+                                    {...field}
+                                    fullWidth
+                                    sx={{ width: '100%', margin: 0 }}
+                                    id="outlined-multiline-static"
+                                    label=""
+                                    multiline
+                                    rows={6}
+                                    placeholder="Explain your problem in detail..."
+                                />
+                            )}
+                        />
+                    </Grid>
+                </Grid>
+
+                <Grid container sx={{ paddingY: 2 }}>
+                    <Grid item xs={12}>
+                        <Paper
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                flexWrap: 'wrap',
+                                listStyle: 'none',
+                                p: 0.5,
+                                m: 1,
+                            }}
+                            component="ul"
+                        >
+                            {chipData.map((data) => (
+                                <ListItem key={data.key} sx={{ display: 'flex' }}>
+                                    <Chip
+                                        label={data.label}
+                                        onDelete={handleDelete(data)}
+                                    />
+                                </ListItem>
+                            ))}
+                        </Paper>
+                    </Grid>
+
+                    <Grid item xs={12}>
+                        <FormControl fullWidth>
+                            <Select onChange={handleCategoryChange}>
+                                {categories.map((category) => (
+                                    <MenuItem key={category} value={category}>
+                                        {category}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Controller
+                            name="selectedCategories"
+                            control={control}
+                            defaultValue={[]}
+                            render={({ field }) => (
+                                <input type="hidden" {...field} value={JSON.stringify(chipData.map(chip => chip.label))}/>
+                            )}
+                        />
+                    </Grid>
+                </Grid>
+
                 <Grid container alignItems="center" justifyContent="space-between" sx={{ width: '100%' }}>
                     <Grid item xs={12} sx={{ marginRight: 0 }}>
                         <Button type="submit" variant='contained' sx={{ width: 1 }}>
@@ -154,8 +369,5 @@ function MakeACase() {
                 </Grid>
             </Container>
         </form>
-    )
-};
 
-export default MakeACase;
-
+*/

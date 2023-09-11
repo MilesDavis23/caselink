@@ -45,7 +45,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
                     </IconButton>
                 </DrawerHeader>
                 <Divider />
-                <Grid container direction='column' justifyContent='flex-start' alignItems="flex-end" sx={{width: '100%'}} xs={12} > 
+                <Grid container direction='column' justifyContent='flex-start' alignItems="flex-end" sx={{width: '100%'}} > 
                     <Grid item >
                         <Button component={Link} to="/person/make-a-case" variant="text" size='large' sx={{ my: 2 }}  > Make A Case </Button>
                     </Grid>
