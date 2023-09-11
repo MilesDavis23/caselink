@@ -17,21 +17,26 @@ import createACase from '../functions/axios';
 
 function MakeACase() {
     const theme = useTheme();
-    const { control, handleSubmit, register } = useForm();
+    const { control, handleSubmit, setValue, watch } = useForm();
     const { execute, loading, data, error } = useRequest(createACase);
-
+    const watchedCategories = watch("categories")
+    console.log(watchedCategories)
 
     /* 'Chip' logic:  */
     const [chipData, setChipData] = React.useState([]);
-    const categories = ['Criminal', 'Civil', 'Propery Law', 'Sports Law', 'Human Rigths',]
+    const categories = ['Criminal', 'Civil', 'Propery Law', 'Sports Law', 'Human Rigths']
     const handleCategoryChange = (event) => {
         const selectedCategory = event.target.value;
         if (!chipData.some(chip => chip.label === selectedCategory)) {
-            setChipData(prev => [...prev, { key: Date.now(), label: selectedCategory }]);
+            const newChipData = [...chipData, { key: Date.now(), label: selectedCategory }];
+            setChipData(newChipData);
+            setValue("categories", newChipData.map(chip => chip.label));
         }
     }; /* closure: */
     const handleDelete = (chipToDelete) => () => {
-        setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
+        const newChipData = chipData.filter((chip) => chip.key !== chipToDelete.key);
+        setChipData(newChipData);
+        setValue("categories", newChipData.map(chip => chip.label));
     };
 
     const onSubmit = async (data) => {
@@ -123,28 +128,29 @@ function MakeACase() {
                 <Grid container sx={{ paddingY: 2 }}>
                     <Grid item xs={12}>
                         {chipData.length > 0 && (
-                               <Paper
-                               sx={{
-                                   display: 'flex',
-                                   justifyContent: 'flex-start', // Align chips to the start
-                                   flexWrap: 'wrap',
-                                   listStyle: 'none',
-                                   p: 0.5,
-                                   m: 1,
-                               }}
-                               component="ul"
-                           >
-                               {chipData.map((data) => (
-                                   <li key={data.key} sx={{ margin: 1 }}> 
-                                       <Chip
-                                           sx={{marginRight: 1}}
-                                           label={data.label}
-                                           onDelete={handleDelete(data)}
-                                       />
-                                   </li>
-                               ))}
-                           </Paper>
-                        )} 
+                            <Paper
+                                sx={{
+                                    widt: '100%',
+                                    display: 'flex',
+                                    justifyContent: 'flex-start', // Align chips to the start
+                                    flexWrap: 'wrap',
+                                    listStyle: 'none',
+                                    p: 0.5,
+                                    m: 1,
+                                }}
+                                component="ul"
+                            >
+                                {chipData.map((data) => (
+                                    <li key={data.key} sx={{ margin: 1 }}>
+                                        <Chip
+                                            sx={{ marginRight: 1 }}
+                                            label={data.label}
+                                            onDelete={handleDelete(data)}
+                                        />
+                                    </li>
+                                ))}
+                            </Paper>
+                        )}
                     </Grid>
 
                     <Grid item xs={12}>
@@ -164,11 +170,12 @@ function MakeACase() {
                             control={control}
                             defaultValue={[]}
                             render={({ field }) => (
-                                <input type="hidden" {...field} value={JSON.stringify(chipData.map(chip => chip.label))} />
+                                <input type="hidden" {...field} />
                             )}
                         />
                     </Grid>
                 </Grid>
+
 
                 <Grid container alignItems="center" justifyContent="space-between" sx={{ width: '100%' }}>
                     <Grid item xs={12} sx={{ marginRight: 0 }}>
