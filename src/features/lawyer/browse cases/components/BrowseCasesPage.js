@@ -5,7 +5,6 @@ import { useTheme } from "@mui/material/styles";
 import useRequest from "../../../../functions/useRequest";
 import getAllCases from "../functions/axios";
 
-
 function BrowseCases() {
     const theme = useTheme();
     const { execute, data, loading, error } = useRequest(getAllCases);
