@@ -42,7 +42,6 @@ function MakeACase() {
     const onSubmit = async (data) => {
         try {
             const response = await execute(
-                1, 
                 data.title, 
                 data.shortDescription,
                 data.longDescription, 
