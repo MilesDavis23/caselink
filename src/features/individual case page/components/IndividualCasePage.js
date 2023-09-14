@@ -13,18 +13,36 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import LibraryBooksSharpIcon from '@mui/icons-material/LibraryBooksSharp';
-import gandalf from '../../profile page/images/Screenshot 2023-08-04 at 1.28.06.png'
+import gandalf from '../../lawyer/profile page/images/Screenshot 2023-08-04 at 1.28.06.png'
+import { useTheme } from 'styled-components';
+import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import useRequest from '../../../functions/custom hooks/useRequest';
+import getCase from '../functions/axios';
 
 
 function IndividualCasePage() {
-
+    const { caseId } = useParams();
+    const theme = useTheme();
+    const { execute, loading, data, error }  = useRequest(() => getCase(caseId));
+    console.log(data)
+    useEffect(() => { execute() }, [caseId]);
+    if (loading) {
+        return <p> Loading... </p>
+    } 
+    if (error) {
+        return <p> Error: {error.message} </p>
+    }
     return (
         <>
             <Container justifyContent='center' alignItems="" sx={{ padding: 2, width: '100%' }}>
                 <Grid container justifyContent="space-between" alignItems="center" sx={{ borderBottom: '1px solid white', paddingBottom: 2 }}>
                     <Grid item xs={6}>
                         <Typography variant='h5' component="div">
-                            Someone stole my cat
+                            {data && data[0].title}
+                        </Typography>
+                        <Typography sx={{ fontSize: 10 }} color="text.secondary" gutterBottom>
+                            case id: {data && data[0].case_id}
                         </Typography>
                     </Grid>
                     <Grid item xs={6} container justifyContent="flex-end" alignItems="center">
@@ -42,40 +60,7 @@ function IndividualCasePage() {
                 <Grid container sx={{ paddingY: 2, borderBottom: '1px solid white' }}>
                     <Grid item>
                         <Typography variant="body2">
-                            Vivamus eu malesuada neque, vitae tempor nulla.
-                            Quisque efficitur elit vitae nulla pulvinar, sed faucibus tellus semper.
-                            Nullam sed ultricies leo. Morbi elementum tellus et enim egestas vulputate.
-                            Pellentesque rutrum orci sit amet ante eleifend mollis. Ut aliquet nisl felis, eget tempor ipsum hendrerit sit amet.
-                            Praesent aliquet elit ut egestas hendrerit. In vitae nunc aliquet, finibus purus a, pellentesque lorem.
-                            In magna libero, interdum eget scelerisque non, porta ac nibh. Vestibulum iaculis mi ac libero convallis pretium.
-                            Nunc vehicula lectus et sapien dictum, ut venenatis quam gravida.
-                            Vivamus elementum egestas eleifend. Sed semper magna vitae tortor aliquam tincidunt.
-                            Nulla ut urna tempus, rhoncus orci ac, tempus risus. Donec condimentum lacus dui, eget congue felis elementum bibendum.
-                            Nunc blandit tortor congue odio convallis mollis.
-                            <Box sx={{ padding: 1 }}></Box>
-                            {'So this is part is very importan.'}
-                            <Box sx={{ padding: 2 }}></Box>
-                            Vivamus eu malesuada neque, vitae tempor nulla.
-                            Quisque efficitur elit vitae nulla pulvinar, sed faucibus tellus semper.
-                            Nullam sed ultricies leo. Morbi elementum tellus et enim egestas vulputate.
-                            Pellentesque rutrum orci sit amet ante eleifend mollis. Ut aliquet nisl felis, eget tempor ipsum hendrerit sit amet.
-                            Praesent aliquet elit ut egestas hendrerit. In vitae nunc aliquet, finibus purus a, pellentesque lorem.
-                            In magna libero, interdum eget scelerisque non, porta ac nibh. Vestibulum iaculis mi ac libero convallis pretium.
-                            Nunc vehicula lectus et sapien dictum, ut venenatis quam gravida.
-                            Vivamus elementum egestas eleifend. Sed semper magna vitae tortor aliquam tincidunt.
-                            Nulla ut urna tempus, rhoncus orci ac, tempus risus. Donec condimentum lacus dui, eget congue felis elementum bibendum.
-                            Nunc blandit tortor congue odio convallis mollis.
-                            <Box sx={{ padding: 0.5 }}></Box>
-                            Vivamus eu malesuada neque, vitae tempor nulla.
-                            Quisque efficitur elit vitae nulla pulvinar, sed faucibus tellus semper.
-                            Nullam sed ultricies leo. Morbi elementum tellus et enim egestas vulputate.
-                            Pellentesque rutrum orci sit amet ante eleifend mollis. Ut aliquet nisl felis, eget tempor ipsum hendrerit sit amet.
-                            Praesent aliquet elit ut egestas hendrerit. In vitae nunc aliquet, finibus purus a, pellentesque lorem.
-                            In magna libero, interdum eget scelerisque non, porta ac nibh. Vestibulum iaculis mi ac libero convallis pretium.
-                            Nunc vehicula lectus et sapien dictum, ut venenatis quam gravida.
-                            Vivamus elementum egestas eleifend. Sed semper magna vitae tortor aliquam tincidunt.
-                            Nulla ut urna tempus, rhoncus orci ac, tempus risus. Donec condimentum lacus dui, eget congue felis elementum bibendum.
-                            Nunc blandit tortor congue odio convallis mollis.
+                            {data && data[0].detailed_description}
                         </Typography>
                     </Grid>
                 </Grid>

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import CaseElement from "../../mycases list/components/CaseElement";
 import { Divider, Grid } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import useRequest from "../../../../functions/useRequest";
+import useRequest from "../../../../functions/custom hooks/useRequest";
 import getAllCases from "../functions/axios";
 
 function BrowseCases() {
