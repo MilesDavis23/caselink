@@ -19,20 +19,23 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import useRequest from '../../../functions/custom hooks/useRequest';
 import getCase from '../functions/axios';
+import useAddToMyCases from '../functions/useAddToMyCases';
 
 
 function IndividualCasePage() {
     const { caseId } = useParams();
     const theme = useTheme();
     const { execute, loading, data, error }  = useRequest(() => getCase(caseId));
+    const { isLoading, added, apiError, addToMyCases } = useAddToMyCases()
     console.log(data)
     useEffect(() => { execute() }, [caseId]);
     if (loading) {
         return <p> Loading... </p>
-    } 
+    }; 
     if (error) {
         return <p> Error: {error.message} </p>
-    }
+    };
+
     return (
         <>
             <Container justifyContent='center' alignItems="" sx={{ padding: 2, width: '100%' }}>
@@ -101,8 +104,10 @@ function IndividualCasePage() {
                         <Button variant='contained' sx={{ width: 1 }} > Back </Button>
                     </Grid>
                     <Grid item xs={5} sx={{marginRight: 0}}>
-                        <Button component={Link} to="/lawyer/my-cases/" variant='contained' sx={{ width: 1 }}> Add To My Cases </Button>
+                        <Button component={Link} to="/lawyer/my-cases/" onClick={() => addToMyCases(caseId)} variant='contained' sx={{ width: 1 }}> {isLoading ? 'Adding...' : 'Add To My Cases'} </Button>
                     </Grid>
+                    {added && <p> Case added to your list!</p>}
+                    {apiError && <p>Error: {apiError}</p>}
                 </Grid>
             </Container>
         </>
