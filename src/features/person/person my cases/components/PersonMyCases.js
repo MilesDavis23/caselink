@@ -5,7 +5,7 @@ import {
 } from '@mui/material';
 import CaseElement from '../../../lawyer/mycases list/components/CaseElement';
 import { useTheme } from 'styled-components';
-import useRequest from '../../../../functions/useRequest';
+import useRequest from '../../../../functions/custom hooks/useRequest';
 import getAllMyCases from '../functions/axios';
 
 function PersonMyCaseList() {

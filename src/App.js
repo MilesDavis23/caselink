@@ -16,7 +16,7 @@ import NotificationsList from './features/lawyer/notifications/components/Norifi
 import LawyerPage from './features/lawyer/main lawyer page/components/LawyerPage';
 import MyCaseList from './features/lawyer/mycases list/components/MyCaseList';
 import ProfilePage from './features/lawyer/profile page/components/ProfilePage';
-import IndividualCasePage from './features/lawyer/individual case page/components/IndividualCasePage';
+import IndividualCasePage from './features/individual case page/components/IndividualCasePage';
 import MakeACase from './features/person/make a case/components/MakeACasePage';
 import PersonPage from './features/person/main person page/PersonPage';
 import SendOfferCasePage from './features/lawyer/individual case page/components/SendOfferCasePage';
@@ -60,7 +60,7 @@ function App() {
             <Route path="active-case-page" element={<PersonActiveCasePage />} />
             <Route path="profile-page" />
             <Route path="notifications-page" element={<PersonNotificationsList />} />
-            <Route path="case-page" element={<IndividualCasePage />} />
+            <Route path="case-page/:caseId" element={<IndividualCasePage />} />
           </Route>
         </Routes>
       </Router>
