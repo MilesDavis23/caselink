@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import * as React from 'react';
 import {
     Grid,
     Container,
@@ -10,15 +10,6 @@ import {
     ListItemIcon,
     ListItemText,
     Button,
-    TextField,
-    FormControl,
-    Input,
-    InputLabel,
-    InputAdornment,
-    OutlinedInput,
-    MenuItem,
-    Select,
-    Chip,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import LibraryBooksSharpIcon from '@mui/icons-material/LibraryBooksSharp';
@@ -26,54 +17,24 @@ import gandalf from '../../lawyer/profile page/images/Screenshot 2023-08-04 at 1
 import { useTheme } from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useQuery } from '../../lawyer/mycases list/funtions/checkLink';
 import useRequest from '../../../functions/custom hooks/useRequest';
 import getCase from '../functions/axios';
 import useAddToMyCases from '../functions/useAddToMyCases';
-import getToken from '../../../functions/handle token/ getToken';
-import decodeToken from '../../../functions/handle token/decodeToken';
 
 
 function IndividualCasePage() {
-    /* check the end of the url */
-    const query = useQuery();
-    const from = query.get('from');
-
     const { caseId } = useParams();
     const theme = useTheme();
-    const { execute, loading, data, error } = useRequest(() => getCase(caseId));
+    const { execute, loading, data, error }  = useRequest(() => getCase(caseId));
     const { isLoading, added, apiError, addToMyCases } = useAddToMyCases()
-    const [isLawyer, setIsLawyer] = useState(false);
-    const [isStatusCorrect, setIsStatusCorrect] = useState(false);
-    /* state for checking if we are coming from my cases or not, as a lawyer */
-    const [isFromMyCases, setIsFromMyCases] = useState(false);
+    console.log(data)
     useEffect(() => { execute() }, [caseId]);
-    /* check if lawyer: */
-    const jwtoken = getToken('authToken');
-    const payload = decodeToken(jwtoken);
-    const userRole = payload.role;
-    useEffect(() => {
-        if (userRole === 'lawyer') {
-            setIsLawyer(true);
-        }
-        if (data) {
-            setIsStatusCorrect(data[0].status === 'added');
-        }
-        if (from === 'mycases') {
-            setIsFromMyCases(true);
-        }
-    }, [caseId, userRole, data, from]);
     if (loading) {
         return <p> Loading... </p>
-    };
+    }; 
     if (error) {
         return <p> Error: {error.message} </p>
     };
-
-
-    /* Preciously on this project:
-    modifed this component, to check the cookie for lawyer role / .status, so the offer panel appears, 
-    if both are coorect  */
 
     return (
         <>
@@ -115,7 +76,7 @@ function IndividualCasePage() {
                                     Uploaded Documents
                                 </Typography>
                             </Box>
-                            <List sx={{ marginLeft: 5 }}>
+                            <List sx={{marginLeft: 5}}>
                                 <ListItem disablePadding>
                                     <ListItemIcon>
                                         <LibraryBooksSharpIcon />
@@ -138,45 +99,11 @@ function IndividualCasePage() {
                         </Box>
                     </Grid>
                 </Grid>
-
-                {isLawyer && isStatusCorrect && isFromMyCases &&
-                    <Grid container sx={{ marginTop: '20px', marginBottom: '20px', border: '1px solid white', borderRadius: '5px' }}>
-                        <Grid item xs={12}>
-                            <Box sx={{ width: 1, bgcolor: 'background.paper' }}>
-                                <Box sx={{ width: 1, borderBottom: '1px solid white', padding: '10px' }} >
-                                    <Typography variant="h6" component="div">
-                                        Send Offer
-                                    </Typography>
-                                </Box>
-                                <List sx={{ margin: 2 }}  >
-                                    <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-                                        <InputLabel htmlFor="standard-adornment-amount">Offer Amount</InputLabel>
-                                        <Input
-                                            id="standard-adornment-amount"
-                                            startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                                        />
-                                    </FormControl>
-                                    <TextField
-                                        sx={{ width: '100%', margin: 1 }}
-                                        id="outlined-multiline-static"
-                                        label=""
-                                        multiline
-                                        rows={4}
-                                        defaultValue="Your offer goes here..."
-                                    />
-
-                                    <Button variant='contained' sx={{ width: 1, margin: 1 }} > Send Offer </Button>
-                                </List>
-                            </Box>
-                        </Grid>
-                    </Grid>
-                }
-
                 <Grid container alignItems="center" justifyContent="space-between" sx={{ width: '100%' }} >
-                    <Grid item xs={5} sx={{ marginRight: 2 }}>
+                    <Grid item xs={5} sx={{marginRight: 2}}>
                         <Button variant='contained' sx={{ width: 1 }} > Back </Button>
                     </Grid>
-                    <Grid item xs={5} sx={{ marginRight: 0 }}>
+                    <Grid item xs={5} sx={{marginRight: 0}}>
                         <Button component={Link} to="/lawyer/my-cases/" onClick={() => addToMyCases(caseId)} variant='contained' sx={{ width: 1 }}> {isLoading ? 'Adding...' : 'Add To My Cases'} </Button>
                     </Grid>
                     {added && <p> Case added to your list! </p>}
