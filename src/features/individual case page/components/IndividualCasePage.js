@@ -27,18 +27,21 @@ import { useTheme } from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useQuery } from '../../lawyer/mycases list/funtions/checkLink';
+import { useForm, Controller } from 'react-hook-form'
 import useRequest from '../../../functions/custom hooks/useRequest';
-import getCase from '../functions/axios';
+import { getCase, submitOffer } from '../functions/axios';
 import useAddToMyCases from '../functions/useAddToMyCases';
 import getToken from '../../../functions/handle token/ getToken';
 import decodeToken from '../../../functions/handle token/decodeToken';
+
 
 
 function IndividualCasePage() {
     /* check the end of the url */
     const query = useQuery();
     const from = query.get('from');
-
+    /* useForm for getting the offer data from the user */
+    const { control, handleSubmit, setValue, getValue } = useForm();
     const { caseId } = useParams();
     const theme = useTheme();
     const { execute, loading, data, error } = useRequest(() => getCase(caseId));
@@ -47,6 +50,8 @@ function IndividualCasePage() {
     const [isStatusCorrect, setIsStatusCorrect] = useState(false);
     /* state for checking if we are coming from my cases or not, as a lawyer */
     const [isFromMyCases, setIsFromMyCases] = useState(false);
+    /* sending the offer as a lawyer: */
+    const { execute: sendOfferRequest, loadingOffer, offer, offerError } = useRequest(submitOffer);
     useEffect(() => { execute() }, [caseId]);
     /* check if lawyer: */
     const jwtoken = getToken('authToken');
@@ -59,10 +64,22 @@ function IndividualCasePage() {
         if (data) {
             setIsStatusCorrect(data[0].status === 'added');
         }
+        /* check if the site is reached from mycases */
         if (from === 'mycases') {
             setIsFromMyCases(true);
         }
     }, [caseId, userRole, data, from]);
+    /* helper function for form submit needed to offer send */
+    const sendOffer = async (formData) => {
+        const { offerAmmount, offerDescription } = formData;
+
+        try {
+            await sendOfferRequest(caseId, payload.userId, offerDescription, offerAmmount)
+            console.log('offer sent successfully');
+        } catch (error) {
+            console.log('Error sending form data: ', error);
+        }
+    }
     if (loading) {
         return <p> Loading... </p>
     };
@@ -70,9 +87,6 @@ function IndividualCasePage() {
         return <p> Error: {error.message} </p>
     };
     console.log(isLawyer)
-    /* Preciously on this project:
-    modifed this component, to check the cookie for lawyer role / .status, so the offer panel appears, 
-    if both are coorect  */
 
     return (
         <>
@@ -138,38 +152,57 @@ function IndividualCasePage() {
                     </Grid>
                 </Grid>
 
-                {isLawyer && isStatusCorrect && isFromMyCases &&
-                    <Grid container sx={{ marginTop: '20px', marginBottom: '20px', border: '1px solid white', borderRadius: '5px' }}>
-                        <Grid item xs={12}>
-                            <Box sx={{ width: 1, bgcolor: 'background.paper' }}>
-                                <Box sx={{ width: 1, borderBottom: '1px solid white', padding: '10px' }} >
-                                    <Typography variant="h6" component="div">
-                                        Send Offer
-                                    </Typography>
-                                </Box>
-                                <List sx={{ margin: 2 }}  >
-                                    <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-                                        <InputLabel htmlFor="standard-adornment-amount">Offer Amount</InputLabel>
-                                        <Input
-                                            id="standard-adornment-amount"
-                                            startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                {isLawyer && isStatusCorrect && isFromMyCases && 
+                    <form onSubmit={handleSubmit(sendOffer)}>
+                        <Grid container sx={{ marginTop: '20px', marginBottom: '20px', border: '1px solid white', borderRadius: '5px' }}>
+                            <Grid item xs={12}>
+                                <Box sx={{ width: 1, bgcolor: 'background.paper' }}>
+                                    <Box sx={{ width: 1, borderBottom: '1px solid white', padding: '10px' }} >
+                                        <Typography variant="h6" component="div">
+                                            Send Offer
+                                        </Typography>
+                                    </Box>
+                                    <List sx={{ margin: 2 }}  >
+                                        <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+                                            <Controller
+                                                name="offerAmmount"
+                                                control={control}
+                                                defaultValue=""
+                                                render={({ field }) => (
+                                                    <Input
+                                                        {...field}
+                                                        id="standard-adornment-amount"
+                                                        startAdornment={<InputAdornment position="start"> $ </InputAdornment>}
+                                                    />
+                                                )}
+                                            />
+                                        </FormControl>
+                                        <Controller
+                                            name="offerDescription"
+                                            control={control}
+                                            defaultValue="Your offer goes here..."
+                                            render={({ field }) => (
+                                                <TextField
+                                                    {...field}
+                                                    sx={{ width: '100%', margin: 1 }}
+                                                    id="outlined-multiline-static"
+                                                    label=""
+                                                    multiline
+                                                    rows={4}
+                                                />
+                                            )}
                                         />
-                                    </FormControl>
-                                    <TextField
-                                        sx={{ width: '100%', margin: 1 }}
-                                        id="outlined-multiline-static"
-                                        label=""
-                                        multiline
-                                        rows={4}
-                                        defaultValue="Your offer goes here..."
-                                    />
 
-                                    <Button variant='contained' sx={{ width: 1, margin: 1 }} > Send Offer </Button>
-                                </List>
-                            </Box>
+                                        <Button variant='contained' sx={{ width: 1, margin: 1 }} > Send Offer </Button>
+                                    </List>
+                                </Box>
+                            </Grid>
                         </Grid>
-                    </Grid>
+
+                    </form>
                 }
+
+
                 <Grid container alignItems="center" justifyContent="space-between" sx={{ width: '100%' }} >
                     <Grid item xs={5} sx={{ marginRight: 2, width: '100%' }}>
                         {isLawyer ? (
