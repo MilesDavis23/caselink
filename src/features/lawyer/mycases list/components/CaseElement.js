@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -10,12 +10,16 @@ import getColor from '../funtions/getStatusColor';
 import { getLinkBasedOnRole } from '../funtions/getLink';
 import { useIsFromBrowseCases } from '../funtions/checkLink';
 
-function CaseElement( {data} ) {
+function CaseElement({ data }) {
+    const [isBrowseCasesPage, setIsBrowseCasesPage] = useState(false);
     const areWeAtBrowseCases = useIsFromBrowseCases();
+
+    useEffect(() => {
+        setIsBrowseCasesPage(areWeAtBrowseCases);
+    }, [areWeAtBrowseCases]);
 
     const cookie = 'authToken';
     const link = getLinkBasedOnRole(cookie);
-
     return (
         <Card >
             <CardContent>
@@ -34,7 +38,7 @@ function CaseElement( {data} ) {
                     {'please help'}
                 </Typography>
 
-                {data.status && !areWeAtBrowseCases && (
+                {data.status && !isBrowseCasesPage && (
                     <Typography>
                         <Grid container>
                             {/* need a different element for browse cases */}
@@ -49,8 +53,8 @@ function CaseElement( {data} ) {
                 )}
 
                 <CardActions>
-                    {!areWeAtBrowseCases && <Button component={Link} to={`${link}/${data && data.case_id}?from=mycases`} variant="outlined" size='small' sx={{ width: '100%' }} > Go To Case </Button>}
-                    {areWeAtBrowseCases && <Button component={Link} to={`${link}/${data && data.case_id}`} variant="outlined" size='small' sx={{ width: '100%' }} > Go To Case </Button>}
+                    {!isBrowseCasesPage && <Button component={Link} to={`${link}/${data && data.case_id}?from=mycases`} variant="outlined" size='small' sx={{ width: '100%' }} > Go To Case </Button>}
+                    {isBrowseCasesPage && <Button component={Link} to={`${link}/${data && data.case_id}`} variant="outlined" size='small' sx={{ width: '100%' }} > Go To Case </Button>}
                 </CardActions>
             </CardContent>
         </Card>
