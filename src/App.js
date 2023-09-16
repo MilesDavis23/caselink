@@ -48,7 +48,7 @@ function App() {
             <Route path="browse-cases" element={<BrowseCases />} />
             <Route path="my-cases" element={<MyCaseList />} />
             <Route path="notifications" element={<NotificationsList />} />
-            <Route path="case-page" element={<IndividualCasePage />} />
+            <Route path="case-page/:caseId" element={<IndividualCasePage />} />
             <Route path="profile" element={<ProfilePage />} />
             <Route path="send-offer-case-page" element={<SendOfferCasePage />} />
             <Route path="active-case-page" element={<ActiveCasePage />} />
