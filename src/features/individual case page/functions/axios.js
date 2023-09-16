@@ -11,4 +11,23 @@ const getCase = (caseId) => {
     )
 };
 
-export default getCase;
+const submitOffer = (caseId, ofereeId, offerDescription, offerAmmount) => {
+    return axios.post(``, 
+    {
+        caseId, 
+        ofereeId, 
+        offerDescription, 
+        offerAmmount
+    },
+    {
+        headers: {
+            'Content-type': 'application/json'
+        }, 
+        withCredentials: true
+    });
+}
+
+export {
+    getCase, 
+    submitOffer
+};
