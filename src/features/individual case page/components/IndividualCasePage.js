@@ -69,8 +69,7 @@ function IndividualCasePage() {
     if (error) {
         return <p> Error: {error.message} </p>
     };
-
-
+    console.log(isLawyer)
     /* Preciously on this project:
     modifed this component, to check the cookie for lawyer role / .status, so the offer panel appears, 
     if both are coorect  */
@@ -171,14 +170,48 @@ function IndividualCasePage() {
                         </Grid>
                     </Grid>
                 }
-
                 <Grid container alignItems="center" justifyContent="space-between" sx={{ width: '100%' }} >
-                    <Grid item xs={5} sx={{ marginRight: 2 }}>
-                        <Button variant='contained' sx={{ width: 1 }} > Back </Button>
+                    <Grid item xs={5} sx={{ marginRight: 2, width: '100%' }}>
+                        {isLawyer ? (
+                            isFromMyCases ? (
+                                <Button
+                                    component={Link}
+                                    to="/lawyer/my-cases/"
+                                    variant='contained'
+                                    sx={{ width: '100%', margin: 2 }}
+                                >
+                                    Back
+                                </Button>
+                            ) : (
+                                <Button
+                                    component={Link}
+                                    to="/lawyer/browse-cases"
+                                    variant='contained'
+                                    sx={{ width: '100%', margin: 2 }}
+                                >
+                                    Back
+                                </Button>
+                            )
+                        ) : (
+                            <Button component={Link} to="/person/my-cases" variant='contained' sx={{ width: '100%', margin: 2 }}>
+                                Back
+                            </Button>
+                        )}
                     </Grid>
-                    <Grid item xs={5} sx={{ marginRight: 0 }}>
-                        <Button component={Link} to="/lawyer/my-cases/" onClick={() => addToMyCases(caseId)} variant='contained' sx={{ width: 1 }}> {isLoading ? 'Adding...' : 'Add To My Cases'} </Button>
-                    </Grid>
+
+                    {!isFromMyCases &&
+                        <Grid item xs={5} sx={{ marginRight: 0, width: '100%' }}>
+                            <Button
+                                component={Link}
+                                to="/lawyer/my-cases/"
+                                onClick={() => addToMyCases(caseId)}
+                                variant='contained'
+                                sx={{ width: '100%' }}
+                            >
+                                {isLoading ? 'Adding...' : 'Add To My Cases'}
+                            </Button>
+                        </Grid>
+                    }
                     {added && <p> Case added to your list! </p>}
                     {apiError && <p> Error: {apiError} </p>}
                 </Grid>
