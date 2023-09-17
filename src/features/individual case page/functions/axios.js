@@ -12,7 +12,7 @@ const getCase = (caseId) => {
 };
 
 const submitOffer = (caseId, ofereeId, offerDescription, offerAmmount) => {
-    return axios.post(``, 
+    return axios.post(`http://localhost:3002/lawyer/send-offer`, 
     {
         caseId, 
         ofereeId, 
@@ -27,7 +27,16 @@ const submitOffer = (caseId, ofereeId, offerDescription, offerAmmount) => {
     });
 }
 
+/* No need to send userId, becasue it can easily be get from  */
+const getOffersForUser = () => {
+    return axios.get(`http://localhost:3002/person/checkOffer`,
+    {
+        withCredentials: true
+    })
+};
+
 export {
     getCase, 
-    submitOffer
+    submitOffer,
+    getOffersForUser
 };
