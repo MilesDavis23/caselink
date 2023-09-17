@@ -49,6 +49,7 @@ function MakeACase() {
             );
             console.log(data)
             console.log('Case created.', response)
+            console.log(data.categories)
         } catch (error) {
             console.error('Error creating case:', error )
         }

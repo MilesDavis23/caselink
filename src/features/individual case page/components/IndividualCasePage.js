@@ -29,7 +29,8 @@ import { useEffect } from 'react';
 import { useQuery } from '../../lawyer/mycases list/funtions/checkLink';
 import { useForm, Controller } from 'react-hook-form'
 import useRequest from '../../../functions/custom hooks/useRequest';
-import { getCase, submitOffer } from '../functions/axios';
+import { getCase, submitOffer, getOffersForUser } from '../functions/axios';
+import { declineOffer, acceptOffer } from '../../person/accept offer/functions/handleOffers';
 import useAddToMyCases from '../functions/useAddToMyCases';
 import getToken from '../../../functions/handle token/ getToken';
 import decodeToken from '../../../functions/handle token/decodeToken';
@@ -52,22 +53,26 @@ function IndividualCasePage() {
     const [isFromMyCases, setIsFromMyCases] = useState(false);
     /* sending the offer as a lawyer: */
     const { execute: sendOfferRequest, loadingOffer, offer, offerError } = useRequest(submitOffer);
+    /* useRequest to fetch the  offers for a specific case and show it to Person: */
+    const {  execute: fetchOffers, loading: loadingOffers, data: offersData, error: offersError } = useRequest(getOffersForUser);
+    useEffect(() => { fetchOffers() }, []);
     useEffect(() => { execute() }, [caseId]);
     /* check if lawyer: */
     const jwtoken = getToken('authToken');
     const payload = decodeToken(jwtoken);
     const userRole = payload.role;
+    
     useEffect(() => {
         if (userRole === 'lawyer') {
             setIsLawyer(true);
-        }
+        };
         if (data) {
             setIsStatusCorrect(data[0].status === 'added');
-        }
+        };
         /* check if the site is reached from mycases */
         if (from === 'mycases') {
             setIsFromMyCases(true);
-        }
+        };
     }, [caseId, userRole, data, from]);
     /* helper function for form submit needed to offer send */
     const sendOffer = async (formData) => {
@@ -86,7 +91,10 @@ function IndividualCasePage() {
     if (error) {
         return <p> Error: {error.message} </p>
     };
-    console.log(isLawyer)
+
+    console.log(offersData);
+    console.log(payload)
+
 
     return (
         <>
@@ -152,7 +160,7 @@ function IndividualCasePage() {
                     </Grid>
                 </Grid>
 
-                {isLawyer && isStatusCorrect && isFromMyCases && 
+                {isLawyer && isStatusCorrect && isFromMyCases &&
                     <form onSubmit={handleSubmit(sendOffer)}>
                         <Grid container sx={{ marginTop: '20px', marginBottom: '20px', border: '1px solid white', borderRadius: '5px' }}>
                             <Grid item xs={12}>
@@ -168,6 +176,7 @@ function IndividualCasePage() {
                                                 name="offerAmmount"
                                                 control={control}
                                                 defaultValue=""
+                                                rules={{ required: true }}
                                                 render={({ field }) => (
                                                     <Input
                                                         {...field}
@@ -193,7 +202,7 @@ function IndividualCasePage() {
                                             )}
                                         />
 
-                                        <Button variant='contained' sx={{ width: 1, margin: 1 }} > Send Offer </Button>
+                                        <Button variant='contained' type='submit' sx={{ width: 1, margin: 1 }} > Send Offer </Button>
                                     </List>
                                 </Box>
                             </Grid>
@@ -201,7 +210,31 @@ function IndividualCasePage() {
 
                     </form>
                 }
-
+                {!isLawyer && (offersData && offersData.length > 0 ? (
+                    <Grid container sx={{ marginTop: '20px', marginBottom: '20px', border: '1px solid white', borderRadius: '5px' }}>
+                        <Grid item xs={12}>
+                            <Box sx={{ width: 1, bgcolor: 'background.paper' }}>
+                                <Box sx={{ width: 1, borderBottom: '1px solid white', padding: '10px' }} >
+                                    <Typography variant="h6" component="div">
+                                        Review Offer
+                                    </Typography>
+                                </Box>
+                                <List sx={{ margin: 2 }}>
+                                    <ListItem>
+                                        <ListItemText primary="Offer Amount:" secondary={`$ ${offersData[0].offerPrice}`} />
+                                    </ListItem>
+                                    <ListItem>
+                                        <ListItemText primary="Offer Description:" secondary={offersData[0].offerDetails} />
+                                    </ListItem>
+                                    <Button variant='contained' sx={{ width: 1, margin: 1 }} onClick={() => acceptOffer(payload.userId)} > Accept Offer </Button>
+                                    <Button variant='outlined' sx={{ width: 1, margin: 1 }} onClick={() => declineOffer(payload.userId)} > Decline Offer </Button>
+                                </List>
+                            </Box>
+                        </Grid>
+                    </Grid>
+                ) : (
+                    <p> No offers yet </p>
+                ))}
 
                 <Grid container alignItems="center" justifyContent="space-between" sx={{ width: '100%' }} >
                     <Grid item xs={5} sx={{ marginRight: 2, width: '100%' }}>
