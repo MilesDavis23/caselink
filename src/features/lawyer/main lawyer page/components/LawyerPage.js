@@ -25,7 +25,6 @@ function LawyerPage() {
         setOpen(false);
     };
 
-
     return (
         <>
             <GlobalStyles styles={{
@@ -58,100 +57,106 @@ function LawyerPage() {
                         <Outlet />
                     </>
                 ) : isBrowseCases ? (
-                        <>
-                            <NavBar position="static" />
-                            <PresistentLawyerDrawer open={open} handleDrawerClose={handleDrawerClose} />
-                            <Grid container sx={{ height: '100%' }}>
-                                <Grid item xs={3} >
-                                    <Grid container alignItems="flex-start" sx={{ marginLeft: '30px', borderRight: '0 solid #FFFDF7', paddingRight: 2, height: '100%' }}>
-                                        <div>
-                                            <div >
-                                                <Grid container justifyContent="space-between">
-                                                    <Grid item>
-                                                        <Typography variant="h6" sx={{ marginY: 3 }}>Filters</Typography>
-                                                    </Grid>
-                                                    <Grid item>
-                                                        <IconButton
-                                                            color="inherit"
-                                                            aria-label="open drawer"
-                                                            onClick={handleDrawerOpen}
-                                                            edge="start"
-                                                            sx={{ mr: 2, ...(open && { display: 'none' }), marginTop: 2 }}
-                                                        >
-                                                            <MenuIcon />
-                                                        </IconButton>
-                                                    </Grid>
-                                                </Grid>
-                                            </div>
-
-                                            <div>
-                                                <Divider />
-                                                <FormControl sx={{ width: '100%' }}>
-                                                    <InputLabel> Category </InputLabel>
-                                                    <Select sx={{ width: '100%' }} label="Category">
-                                                        <MenuItem value="category1"> Property Law </MenuItem>
-                                                        <MenuItem value="category2"> Corporate Law </MenuItem>
-                                                        <MenuItem value="category3"> Trademarks </MenuItem>
-                                                    </Select>
-                                                </FormControl>
-                                            </div>
-
-                                            <div>
-                                                <FilterPanel />
-                                            </div>
-
+                    <>
+                        <PresistentLawyerDrawer open={open} handleDrawerClose={handleDrawerClose} />
+                        <Grid container sx={{ height: '100%' }}>
+                            <Grid item xs={3} >
+                                <Grid container alignItems="flex-start" sx={{ marginLeft: '30px', borderRight: '0 solid #FFFDF7', paddingRight: 2, height: '100%' }}>
+                                    {/* Nested Grid container for IconButton and FilterPanel */}
+                                    <div>
+                                        <div style={{ marginLeft: '250px' }}>
+                                            <IconButton
+                                                color="inherit"
+                                                aria-label="open drawer"
+                                                onClick={handleDrawerOpen}
+                                                edge="start"
+                                                sx={{ mr: 2, ...(open && { display: 'none' }), marginTop: 2 }}
+                                            >
+                                                <MenuIcon />
+                                            </IconButton>
                                         </div>
-                                    </Grid>
+                                    </div>
                                 </Grid>
-                                <Grid item xs={6} justifyContent="center" alignItems="center" sx={{ paddingLeft: 1, height: '100%', overflow: 'auto' }}>
-                                    <Grid container>
-                                        <Outlet />
-                                    </Grid>
+                            </Grid>
+                            <Grid item xs={6} justifyContent="center" alignItems="center" sx={{ paddingLeft: 1, height: '100%', overflow: 'auto' }}>
+                                <Grid container>
+                                    <Outlet />
                                 </Grid>
-                                <Grid item xs={3}>
-                                    <Grid container sx={{ borderLeft: '0 solid #FFFDF7', paddingRight: 2, height: '100%' }}>
-                                        <Grid item xs={12}>
-                                            {/* You can add any component or content here */}
+                            </Grid>
+                            <Grid item xs={3}>
+                                <Grid container sx={{ borderLeft: '0 solid #FFFDF7', paddingRight: 2, height: '100%' }}>
+                                    <Grid item xs={12}>
+                                        {/* You can add any component or content here */}
+                                        <Grid item xs={3} >
+                                            <Grid container alignItems="flex-start" sx={{ marginLeft: '30px', borderRight: '0 solid #FFFDF7', paddingRight: 2, height: '100%' }}>
+                                                <div>
+                                                    <div >
+                                                        <Grid container justifyContent="space-between">
+                                                            <Grid item>
+                                                                <Typography variant="h6" sx={{ marginY: 3 }}>Filters</Typography>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </div>
+
+                                                    <div>
+                                                        <Divider />
+                                                        <FormControl sx={{ width: '100%' }}>
+                                                            <InputLabel> Category </InputLabel>
+                                                            <Select sx={{ width: '100%' }} label="Category">
+                                                                <MenuItem value="category1"> Property Law </MenuItem>
+                                                                <MenuItem value="category2"> Corporate Law </MenuItem>
+                                                                <MenuItem value="category3"> Trademarks </MenuItem>
+                                                            </Select>
+                                                        </FormControl>
+                                                    </div>
+
+                                                    <div>
+                                                        <FilterPanel />
+                                                    </div>
+
+                                                </div>
+                                            </Grid>
                                         </Grid>
                                     </Grid>
                                 </Grid>
                             </Grid>
-                        </>
+                        </Grid>
+                    </>
                 ) : (
                     <>
-                            <PresistentLawyerDrawer open={open} handleDrawerClose={handleDrawerClose} />
-                            <Grid container sx={{ height: '100%' }}>
-                                <Grid item xs={3} >
-                                    <Grid container alignItems="flex-start" sx={{marginLeft: '30px', borderRight: '0 solid #FFFDF7', paddingRight: 2, height: '100%' }}>
-                                        {/* Nested Grid container for IconButton and FilterPanel */}
-                                        <div>
-                                            <div style={{marginLeft: '250px' }}>
-                                                <IconButton
-                                                    color="inherit"
-                                                    aria-label="open drawer"
-                                                    onClick={handleDrawerOpen}
-                                                    edge="start"
-                                                    sx={{ mr: 2, ...(open && { display: 'none' }), marginTop: 2 }}
-                                                >
-                                                    <MenuIcon />
-                                                </IconButton>
-                                            </div>
+                        <PresistentLawyerDrawer open={open} handleDrawerClose={handleDrawerClose} />
+                        <Grid container sx={{ height: '100%' }}>
+                            <Grid item xs={3} >
+                                <Grid container alignItems="flex-start" sx={{ marginLeft: '30px', borderRight: '0 solid #FFFDF7', paddingRight: 2, height: '100%' }}>
+                                    {/* Nested Grid container for IconButton and FilterPanel */}
+                                    <div>
+                                        <div style={{ marginLeft: '250px' }}>
+                                            <IconButton
+                                                color="inherit"
+                                                aria-label="open drawer"
+                                                onClick={handleDrawerOpen}
+                                                edge="start"
+                                                sx={{ mr: 2, ...(open && { display: 'none' }), marginTop: 2 }}
+                                            >
+                                                <MenuIcon />
+                                            </IconButton>
                                         </div>
-                                    </Grid>
+                                    </div>
                                 </Grid>
-                                <Grid item xs={6} justifyContent="center" alignItems="center" sx={{ paddingLeft: 1, height: '100%', overflow: 'auto' }}>
-                                    <Grid container>
-                                        <Outlet />
-                                    </Grid>
+                            </Grid>
+                            <Grid item xs={6} justifyContent="center" alignItems="center" sx={{ paddingLeft: 1, height: '100%', overflow: 'auto' }}>
+                                <Grid container>
+                                    <Outlet />
                                 </Grid>
-                                <Grid item xs={3}>
-                                    <Grid container sx={{ borderLeft: '0 solid #FFFDF7', paddingRight: 2, height: '100%' }}>
-                                        <Grid item xs={12}>
-                                            {/* You can add any component or content here */}
-                                        </Grid>
+                            </Grid>
+                            <Grid item xs={3}>
+                                <Grid container sx={{ borderLeft: '0 solid #FFFDF7', paddingRight: 2, height: '100%' }}>
+                                    <Grid item xs={12}>
+                                        {/* You can add any component or content here */}
                                     </Grid>
                                 </Grid>
                             </Grid>
+                        </Grid>
                     </>
                 )}
             </Box>

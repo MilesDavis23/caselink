@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import LibraryBooksSharpIcon from '@mui/icons-material/LibraryBooksSharp';
-import gandalf from '../../../lawyer/profile page/images/Screenshot 2023-08-04 at 1.28.06.png'
+import gandalf from '../../../profile page/images/Screenshot 2023-08-04 at 1.28.06.png'
 
 
 

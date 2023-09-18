@@ -24,7 +24,6 @@ function LoginPage(  ) {
                     background: '#555',
                 },
             }}/>
-            <NavBar />
             <Box sx={{
                 backgroundColor: theme.palette.background.paper,
                 color: theme.palette.text.secondary,

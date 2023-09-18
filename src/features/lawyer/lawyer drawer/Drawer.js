@@ -10,7 +10,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import { IconButton } from '@mui/material';
 
-const drawerWidth = 370; 
+const drawerWidth = 345; 
 
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
@@ -56,7 +56,7 @@ function PresistentLawyerDrawer( {open , handleDrawerClose} ){
                         <Button component={Link} to="/lawyer/notifications" variant="text" size='large' sx={{ my: 2 }}> Notifications </Button>
                     </Grid>
                     <Grid item>
-                        <Button component={Link} to="/lawyer/profile" variant="text" size='large' sx={{ my: 2 }}> Profile </Button>
+                        <Button component={Link} to="/person/person-profile" variant="text" size='large' sx={{ my: 2 }}> Profile </Button>
                     </Grid>
                 </Grid>
             </Drawer>
