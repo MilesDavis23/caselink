@@ -1,12 +1,14 @@
 import {  useTheme } from '@mui/material/styles';
 import { logOut } from '../login/functions/logoutFunction';
 import { AppBar, Toolbar, Typography, Avatar, IconButton, Menu, MenuItem  } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import useRequest from '../../functions/custom hooks/useRequest';
 import getUserData from './functions/axios';
 
 import { useEffect, useState } from 'react';
 
 function NavBar() {
+    const navigate = useNavigate();
     const {execute, data, loadin, error} = useRequest(getUserData)
     useEffect(() => { execute() },[]);
     /* This is the menubar:  */
@@ -16,11 +18,15 @@ function NavBar() {
     };
     const handleMenuClose = (event) => { 
         if(event.target.textContent === 'Logout') {
-
             logOut()
         }
+
+        if (data && data[0].role  === 'lawyer' && event.target.textContent === 'Profile') {
+            navigate('/lawyer/lawyer-profile');
+        } else if (data && data[0].role  === 'client' && event.target.textContent === 'Profile') {
+            navigate('/person/person-profile');
+        }
         setAnchorEl(null);
-        logOut()
     };
     const theme = useTheme();
     console.log(data)
@@ -34,7 +40,7 @@ function NavBar() {
                         CaseLink!
                     </Typography>
                     <div style={{ marginLeft: 'auto' }}> {/* This pushes the user segment to the right */}
-                    <IconButton onClick={handleMenuOpen}>
+                    <IconButton onClick={handleMenuOpen} sx={{marginRight: '270px' }}>
                         <Avatar src={profileImgUrl || 'default_image_url'} /> {/* Replace with your user avatar URL */}
                     </IconButton>
                     <Menu
