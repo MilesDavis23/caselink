@@ -6,6 +6,7 @@ import PresistentLawyerDrawer from "../../lawyer drawer/Drawer";
 import LawyerDrawer from "../mobile/components/LawyerDrawer";
 import FilterPanel from "../../browse cases/components/FilterPanel";
 import MenuIcon from '@mui/icons-material/Menu'
+import NavBar from "../../../navbar/Navbar";
 
 
 function LawyerPage() {
@@ -58,6 +59,7 @@ function LawyerPage() {
                     </>
                 ) : isBrowseCases ? (
                         <>
+                            <NavBar position="static" />
                             <PresistentLawyerDrawer open={open} handleDrawerClose={handleDrawerClose} />
                             <Grid container sx={{ height: '100%' }}>
                                 <Grid item xs={3} >

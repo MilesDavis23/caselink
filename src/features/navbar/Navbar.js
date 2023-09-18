@@ -6,9 +6,10 @@ function NavBar() {
     const theme = useTheme();
 
     return (
-        <AppBar >
+        <AppBar component="nav" position='static' >
                 <Toolbar sx={{ backgroundColor: theme.palette.background.paper, margin: 0,}} >
                     <Typography variant='h6' sx={{ fontFamily: 'Canela', backgroundColor: theme.palette.background.paper }} component='div'>
+                        Hello!
                     </Typography>
                 </Toolbar>
         </AppBar>
