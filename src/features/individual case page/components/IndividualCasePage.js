@@ -54,7 +54,7 @@ function IndividualCasePage() {
     /* sending the offer as a lawyer: */
     const { execute: sendOfferRequest, loadingOffer, offer, offerError } = useRequest(submitOffer);
     /* useRequest to fetch the  offers for a specific case and show it to Person: */
-    const {  execute: fetchOffers, loading: loadingOffers, data: offersData, error: offersError } = useRequest(getOffersForUser);
+    const {  execute: fetchOffers, loading: loadingOffers, data: offersData, error: offersError } = useRequest(() => getOffersForUser(caseId));
     useEffect(() => { fetchOffers() }, []);
     useEffect(() => { execute() }, [caseId]);
     /* check if lawyer: */
@@ -73,7 +73,7 @@ function IndividualCasePage() {
         if (from === 'mycases') {
             setIsFromMyCases(true);
         };
-    }, [caseId, userRole, data, from]);
+    }, [caseId, userRole, data, from, isStatusCorrect]);
     /* helper function for form submit needed to offer send */
     const sendOffer = async (formData) => {
         const { offerAmmount, offerDescription } = formData;
@@ -92,9 +92,7 @@ function IndividualCasePage() {
         return <p> Error: {error.message} </p>
     };
 
-    console.log(offersData);
-    console.log(payload)
-
+    console.log(offersData)
 
     return (
         <>
@@ -210,7 +208,7 @@ function IndividualCasePage() {
 
                     </form>
                 }
-                {!isLawyer && (offersData && offersData.length > 0 ? (
+                {!isLawyer && isStatusCorrect && (offersData && offersData.length > 0 && offersData[0].offerStatus !== 'declined' ? (
                     <Grid container sx={{ marginTop: '20px', marginBottom: '20px', border: '1px solid white', borderRadius: '5px' }}>
                         <Grid item xs={12}>
                             <Box sx={{ width: 1, bgcolor: 'background.paper' }}>
@@ -226,8 +224,8 @@ function IndividualCasePage() {
                                     <ListItem>
                                         <ListItemText primary="Offer Description:" secondary={offersData[0].offerDetails} />
                                     </ListItem>
-                                    <Button variant='contained' sx={{ width: 1, margin: 1 }} onClick={() => acceptOffer(payload.userId)} > Accept Offer </Button>
-                                    <Button variant='outlined' sx={{ width: 1, margin: 1 }} onClick={() => declineOffer(payload.userId)} > Decline Offer </Button>
+                                    <Button variant='contained' sx={{ width: 1, margin: 1 }} onClick={() => acceptOffer(offersData[0].offerID, payload.userId, caseId)} > Accept Offer </Button>
+                                    <Button variant='outlined' sx={{ width: 1, margin: 1 }} onClick={() => declineOffer(offersData[0].offerID, payload.userId, caseId)} > Decline Offer </Button>
                                 </List>
                             </Box>
                         </Grid>

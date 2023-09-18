@@ -28,8 +28,8 @@ const submitOffer = (caseId, ofereeId, offerDescription, offerAmmount) => {
 }
 
 /* No need to send userId, becasue it can easily be get from  */
-const getOffersForUser = () => {
-    return axios.get(`http://localhost:3002/person/checkOffer`,
+const getOffersForUser = (caseId) => {
+    return axios.get(`http://localhost:3002/person/checkOffer?caseId=${caseId}`,
     {
         withCredentials: true
     })
