@@ -20,7 +20,6 @@ import {
 import { useTheme } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 import LibraryBooksSharpIcon from '@mui/icons-material/LibraryBooksSharp';
-import gandalf from '../../../lawyer/profile page/images/Screenshot 2023-08-04 at 1.28.06.png'
 
 
 function PersonActiveCasePage() {
@@ -70,7 +69,7 @@ function PersonActiveCasePage() {
                     </Grid>
                     <Grid item xs={6} container justifyContent="flex-end" alignItems="center">
                         <Grid item>
-                            <Avatar src={gandalf} sx={{ width: 30, height: 30, marginRight: 2 }}></Avatar>
+                            <Avatar sx={{ width: 30, height: 30, marginRight: 2 }}></Avatar>
                         </Grid>
                         <Grid item>
                             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>

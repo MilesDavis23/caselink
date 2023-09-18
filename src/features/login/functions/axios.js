@@ -14,4 +14,5 @@ const loginUser = (email, password, showPassword) => {
     })
 };
 
-export default loginUser
+export default loginUser;
+
