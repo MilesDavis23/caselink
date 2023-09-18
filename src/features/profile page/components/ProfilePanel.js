@@ -1,10 +1,20 @@
-import * as React from 'react';
+import React, { useEffect} from 'react';
 import profilePicture from '../images/profile/spike-spiegel-189.jpg'
 import { Avatar, Grid, Paper, Typography, Button  } from '@mui/material';
+import useRequest from '../../../functions/custom hooks/useRequest';
+import getUserData from '../../navbar/functions/axios';
 
 
 function ProfilePanel() {
-
+    const { execute, loading, data, error } = useRequest(getUserData)
+    useEffect(() => { execute() }, []);
+    if (loading) {
+        return <p> Loading.. </p>
+    }
+    if (error) {
+        return <p> Error: {error.message} </p>
+    }
+    console.log(data);
     return (
 
         <>
@@ -15,7 +25,7 @@ function ProfilePanel() {
                             <Grid item xs={12}  >
                                 <Avatar
                                     alt="Profile Picture"
-                                    src={profilePicture}
+                                    src={data && data[0].profile_img_url}
                                     sx={{ width: 166, height: 166, }}
                                 />
                             </Grid>
@@ -25,7 +35,7 @@ function ProfilePanel() {
                         <Grid container>
                             <Grid item xs={12} style={{ textAlign: 'justify' }} >
                                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                                    dr. Spike Speagel
+                                    {data && data[0].username}
                                 </Typography>
                                 <Typography variant="body1" sx={{ height: '50%', width: '100%', mt: 3 }}>
                                     Vivamus eu malesuada neque, vitae.
