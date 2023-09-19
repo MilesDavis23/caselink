@@ -65,7 +65,6 @@ function Registration() {
                     background: '#555',
                 },
             }} />
-            <NavBar />
             <Box sx={{
                 backgroundColor: theme.palette.background.paper,
                 color: theme.palette.text.secondary,
@@ -74,15 +73,8 @@ function Registration() {
             }}>
                 <Grid container direction='column' justifyContent="center" alignItems="center" sx={{ height: '100%', flexWrap: 'nowrap' }}>
 
-                    <Grid container direction='column' alignItems="flex-start" sx={{ width: '100%',  marginLeft: '250px' }}>
-                        <Grid item style={loginPaperStyle} >
-                            <h1 style={{ fontFamily: 'Canela', fontSize: '35px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', width: '100%'  }}> 
-                                Please follow the step to complete the registration! 
-                            </h1>
-                        </Grid>
-                    </Grid>
-
                     <Grid item sx={{ marginBottom: "30px", width: '80%', border: '1px solid white', borderRadius: '5px', padding: 2 }}>
+
                         <Stepper activeStep={activeStep} alternativeLabel sx={{ marginBottom: 2 }}>
                             {steps.map((label) => (
                                 <Step key={label}>
@@ -186,3 +178,13 @@ function Registration() {
 }
 
 export default Registration;
+
+
+/*
+                         <div justfiyContent="center" >
+                            <p style={{ fontFamily: 'Canela', fontSize: '25px', textOverflow: 'ellipsis', width: '100%', marginLeft: 10 }}>
+                                Please follow the steps to complete the registration.
+                            </p>
+                            
+                        </div>
+ */
