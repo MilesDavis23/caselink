@@ -22,6 +22,7 @@ import PersonActiveCasePage from '../features/person/person active case/componen
 import SplasherPage from '../features/splash/components/SplasherPage';
 import Registration from '../features/registration/components/Registration';
 import ResetPasswordSteps from '../features/reset password/components/ResetFlow';
+import HomePage from '../features/home page/components/HomePage';
 import NavBar from '../features/navbar/Navbar';
 
 const MainContent = () => {
@@ -47,6 +48,7 @@ const MainContent = () => {
                         <Route path="lawyer-profile" element={<ProfilePage />} />
                         <Route path="send-offer-case-page" element={<SendOfferCasePage />} />
                         <Route path="active-case-page" element={<ActiveCasePage />} />
+                        <Route path="home-page" element={<HomePage/>} />
                     </Route>
                     <Route path='/person' element={<PersonPage />}>
                         <Route path="make-a-case" element={<MakeACase />} />
@@ -56,6 +58,7 @@ const MainContent = () => {
                         <Route path="person-profile" element={<ProfilePage />} />
                         <Route path="notifications-page" element={<PersonNotificationsList />} />
                         <Route path="case-page/:caseId" element={<IndividualCasePage />} />
+                        <Route path="home-page" element={<HomePage/>} />
                     </Route>
                 </Routes>
             </div>

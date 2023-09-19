@@ -13,7 +13,7 @@ const getColor = (status) => {
             return { color: '#FFBC0A', textShadow: glowEffect + '#FFBC0A' };
         case 'closed':
             return { color: '#C5283D', textShadow: glowEffect + '#C5283D' }; // cardinal
-    }
+    };
 };
 
 export default getColor;
