@@ -19,6 +19,7 @@ import {
     MenuItem,
     Select,
     Chip,
+    Alert
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import LibraryBooksSharpIcon from '@mui/icons-material/LibraryBooksSharp';
@@ -231,7 +232,7 @@ function IndividualCasePage() {
                         </Grid>
                     </Grid>
                 ) : (
-                    <p> No offers yet </p>
+                    <Alert severity="info" sx={{margin: 2, widht: '100%'}}> No offer received yet. </Alert>
                 ))}
 
                 <Grid container alignItems="center" justifyContent="space-between" sx={{ width: '100%' }} >
@@ -242,7 +243,7 @@ function IndividualCasePage() {
                                     component={Link}
                                     to="/lawyer/my-cases/"
                                     variant='contained'
-                                    sx={{ width: '100%', margin: 2 }}
+                                    sx={{ width: '230%', margin: 2 }}
                                 >
                                     Back
                                 </Button>
@@ -257,7 +258,7 @@ function IndividualCasePage() {
                                 </Button>
                             )
                         ) : (
-                            <Button component={Link} to="/person/my-cases" variant='contained' sx={{ width: '100%', margin: 2 }}>
+                            <Button component={Link} to="/person/my-cases" variant='contained' sx={{ width: '230%', margin: 2 }}>
                                 Back
                             </Button>
                         )}

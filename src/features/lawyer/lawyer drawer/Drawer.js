@@ -56,7 +56,7 @@ function PresistentLawyerDrawer( {open , handleDrawerClose} ){
                         <Button component={Link} to="/lawyer/notifications" variant="text" size='large' sx={{ my: 2 }}> Notifications </Button>
                     </Grid>
                     <Grid item>
-                        <Button component={Link} to="/person/person-profile" variant="text" size='large' sx={{ my: 2 }}> Profile </Button>
+                        <Button component={Link} to="/lawyer/lawyer-profile" variant="text" size='large' sx={{ my: 2 }}> Profile </Button>
                     </Grid>
                 </Grid>
             </Drawer>
