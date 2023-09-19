@@ -29,7 +29,7 @@ const declineOffer = async (offerId, userId, caseId) => {
             status: 'declined'
         });
         if (response.data.success) {
-            alert(response.data.message);  // Display a simple alert with the message
+            //alert(response.data.message);  // Display a simple alert with the message
         } else {
             alert('Failed to update offer status. Please try again.');
         }

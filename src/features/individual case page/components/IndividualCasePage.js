@@ -13,12 +13,7 @@ import {
     TextField,
     FormControl,
     Input,
-    InputLabel,
     InputAdornment,
-    OutlinedInput,
-    MenuItem,
-    Select,
-    Chip,
     Alert
 } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -49,7 +44,11 @@ function IndividualCasePage() {
     const { execute, loading, data, error } = useRequest(() => getCase(caseId));
     const { isLoading, added, apiError, addToMyCases } = useAddToMyCases()
     const [isLawyer, setIsLawyer] = useState(false);
+    /* check if status is active: */
+    const [ activeStatus, setActiveStatue ] = useState(false);
     const [isStatusCorrect, setIsStatusCorrect] = useState(false);
+    /* check for offer sent success:  */
+    const [ successfullySent, setSuccessfullySent] = useState(false);
     /* state for checking if we are coming from my cases or not, as a lawyer */
     const [isFromMyCases, setIsFromMyCases] = useState(false);
     /* sending the offer as a lawyer: */
@@ -68,19 +67,29 @@ function IndividualCasePage() {
             setIsLawyer(true);
         };
         if (data) {
-            setIsStatusCorrect(data[0].status === 'added');
-        };
+            setIsStatusCorrect(data[0].status === 'added' || 'offer sent');
+        } 
+        /* check if status is active:  */
+        if (data) {
+            setActiveStatue(data[0].status === 'active');
+        }
         /* check if the site is reached from mycases */
         if (from === 'mycases') {
             setIsFromMyCases(true);
         };
-    }, [caseId, userRole, data, from, isStatusCorrect]);
+        if (data && data[0].status === 'offer sent') {
+            setSuccessfullySent(true);
+        }
+    }, [caseId, userRole, data, from, isStatusCorrect, successfullySent, activeStatus]);
     /* helper function for form submit needed to offer send */
     const sendOffer = async (formData) => {
         const { offerAmmount, offerDescription } = formData;
 
         try {
-            await sendOfferRequest(caseId, payload.userId, offerDescription, offerAmmount)
+            const offerSentSuccessfully = await sendOfferRequest(caseId, payload.userId, offerDescription, offerAmmount)
+            if(offerSentSuccessfully) {
+                setSuccessfullySent(true);
+            }
             console.log('offer sent successfully');
         } catch (error) {
             console.log('Error sending form data: ', error);
@@ -93,7 +102,6 @@ function IndividualCasePage() {
         return <p> Error: {error.message} </p>
     };
 
-    console.log(offersData)
 
     return (
         <>
@@ -159,7 +167,7 @@ function IndividualCasePage() {
                     </Grid>
                 </Grid>
 
-                {isLawyer && isStatusCorrect && isFromMyCases &&
+                {isLawyer && isStatusCorrect && isFromMyCases && !successfullySent &&
                     <form onSubmit={handleSubmit(sendOffer)}>
                         <Grid container sx={{ marginTop: '20px', marginBottom: '20px', border: '1px solid white', borderRadius: '5px' }}>
                             <Grid item xs={12}>
@@ -209,7 +217,19 @@ function IndividualCasePage() {
 
                     </form>
                 }
-                {!isLawyer && isStatusCorrect && (offersData && offersData.length > 0 && offersData[0].offerStatus !== 'declined' ? (
+                {isLawyer && isStatusCorrect && isFromMyCases && successfullySent && 
+
+                    <>
+                        <Alert severity='success' sx={{ margin: 1 }}> Offer has been sent to the user! </Alert>
+                        <Alert severity='info' sx={{ margin: 1 }}> Offer is still pending. </Alert>
+                    </>
+
+
+                }
+
+
+                {/* This respnsible for showing the status to the user.  */}
+                {!activeStatus && !isLawyer && isStatusCorrect && (offersData && offersData.length > 0 && offersData[0].offerStatus !== 'declined' ? (
                     <Grid container sx={{ marginTop: '20px', marginBottom: '20px', border: '1px solid white', borderRadius: '5px' }}>
                         <Grid item xs={12}>
                             <Box sx={{ width: 1, bgcolor: 'background.paper' }}>
@@ -234,6 +254,8 @@ function IndividualCasePage() {
                 ) : (
                     <Alert severity="info" sx={{margin: 2, widht: '100%'}}> No offer received yet. </Alert>
                 ))}
+
+                {activeStatus && <Alert severity='success' sx={{margin: 2, width: '100%'}}> You have succesfully accpeted an offer, now the case is active! </Alert> }
 
                 <Grid container alignItems="center" justifyContent="space-between" sx={{ width: '100%' }} >
                     <Grid item xs={5} sx={{ marginRight: 2, width: '100%' }}>

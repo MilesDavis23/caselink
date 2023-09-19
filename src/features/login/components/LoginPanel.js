@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {  useTheme } from '@mui/material/styles';
 import { Grid, Paper, TextField, Button, CircularProgress, Typography, Alert } from "@mui/material";
 import { loginPaperStyle } from "../styles/LoginStyle";
@@ -13,6 +13,7 @@ function LoginPanel(){
     const [ email, setEmail ] = useState('');
     const [ password, setPassword ] = useState('')
     const [ showPassword, setShowPassword ] = useState(false)
+    const [ passwordIncorrect, setPasswordIncorrect ] = useState(false);
     const { execute: executeLogin, loading, error } = useRequest(loginUser)
 
     /* handling the input changes:  */
@@ -23,6 +24,7 @@ function LoginPanel(){
 
     const handlePasswordInputChange = (event) => {
         setPassword(event.target.value);
+        setPasswordIncorrect(false);
     };
     
     const handleLogin = async () => {
@@ -42,19 +44,29 @@ function LoginPanel(){
                 }
 
             } else {
-                alert(data.message);
+                if (error && error.message === 'Invalid password.') {
+                    setPasswordIncorrect(true);
+                } else {
+                    alert(data.message);
+                }
             }
         }
     };
-    console.log(error)
+    useEffect(() => {
+        if (error && error.message === 'Invalid password.') {
+            setPasswordIncorrect(true);
+        }
+    }, [error]);
+
+
 
     return (
         <>
             <Grid align='center'>
-                <Paper elevation={10} sx={{ background: theme.palette.background.paper,  }} style={loginPaperStyle}>
+                <Paper elevation={10} sx={{ background: theme.palette.background.paper }} style={loginPaperStyle}>
                     <Grid container direction="column" justifyContent="center" alignItems='center' spacing={2} >
-                        {!showPassword && <Typography variant="p" sx={{ fontFamily: 'Canela', zIndex: 1, fontSize: 30}}> Enter e-mail. </Typography> }
-                        {showPassword && <Typography variant="p" sx={{ fontFamily: 'Canela', zIndex: 1, fontSize: 30}}> Enter password. </Typography> }
+                        {!showPassword && <Typography variant="p" sx={{ fontFamily: 'Canela', zIndex: 1, fontSize: 40}}> welcome back! </Typography> }
+                        {showPassword && <Typography variant="p" sx={{ fontFamily: 'Canela', zIndex: 1, fontSize: 30}}> enter your password: </Typography> }
                         <Grid item sx={{width:'100%'}}>
                             <TextField  sx={{width:'100%'}} label="Email address" variant="outlined" value={email} onChange={handleEmailInputChange}></TextField>
                         </Grid>  
@@ -68,7 +80,12 @@ function LoginPanel(){
                                 {loading ? <CircularProgress size={24} /> : 'LOGIN'}
                             </Button>
                         </Grid>
-                        {error && !showPassword || error && showPassword && (
+                        {error && !showPassword && (
+                            <Grid item xs={12} sx={{ width: '100%', marginTop: 2, zIndex: 1 }}>
+                                <Alert severity="error">{error.message}</Alert>
+                            </Grid>
+                        )}
+                        {passwordIncorrect && showPassword && (
                             <Grid item xs={12} sx={{ width: '100%', marginTop: 2, zIndex: 1 }}>
                                 <Alert severity="error">{error.message}</Alert>
                             </Grid>

@@ -30,7 +30,7 @@ const MainContent = () => {
 
     return (
         <>
-            {location.pathname !== '/' && location.pathname !=='/login' && <NavBar />}
+            {location.pathname !== '/' && location.pathname !=='/login' && location.pathname !== '/registration' && location.pathname !== '/reset-password' && <NavBar />}
             <div style={{ paddingTop: (location.pathname === '/' || location.pathname === '/login' || location.pathname === '/registration') ? 0 : 49 }}>
                 <Routes>
                     {/* <Route path='/' element={isAuthenticated ? <Navigate to='/lawyer' replace /> : <Navigate to ='/login' replace />} />  */}

@@ -9,6 +9,8 @@ import Grid from '@mui/material/Grid';
 import getColor from '../funtions/getStatusColor';
 import { getLinkBasedOnRole } from '../funtions/getLink';
 import { useIsFromBrowseCases } from '../funtions/checkLink';
+import decodeToken from '../../../../functions/handle token/decodeToken';
+import getToken from '../../../../functions/handle token/ getToken';
 
 function CaseElement({ data }) {
     const [isBrowseCasesPage, setIsBrowseCasesPage] = useState(false);
@@ -20,6 +22,24 @@ function CaseElement({ data }) {
 
     const cookie = 'authToken';
     const link = getLinkBasedOnRole(cookie);
+    /* check user: */
+    const jwtoken = getToken('authToken');
+    const payload = decodeToken(jwtoken);
+    const userRole = payload.role;
+
+    let clinetStatus;
+    if (userRole === 'client') {
+        if (data && data.status === 'added'){
+            clinetStatus = 'submitted'
+        } else if ( data && data.status === 'offer sent'){
+            clinetStatus = 'offer received'
+        } else {
+            clinetStatus = data.status
+        }
+    }
+
+    console.log(userRole === 'client')
+    
     return (
         <Card >
             <CardContent>
@@ -46,7 +66,7 @@ function CaseElement({ data }) {
                                 Status:
                             </Grid>
                             <Grid item sx={{ ...getColor(data.status), ml: 2 }}>
-                                {data.status}
+                                {userRole === 'client' ? clinetStatus : data.status}
                             </Grid>
                         </Grid>
                     </Typography>
