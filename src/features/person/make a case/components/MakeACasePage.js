@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useForm, Controller } from 'react-hook-form';
 import {
     Grid,
     Button,
@@ -8,17 +7,23 @@ import {
     Select,
     Chip,
     MenuItem,
-    Paper
+    Paper,
+    Alert
 } from '@mui/material';
+import { useState } from 'react';
 import { useTheme } from '@mui/material/styles';
+import { useForm, Controller } from 'react-hook-form';
 import useRequest from '../../../../functions/custom hooks/useRequest';
 import createACase from '../functions/axios';
+import { AltRoute } from '@mui/icons-material';
+
 
 
 function MakeACase() {
     const theme = useTheme();
-    const { control, handleSubmit, setValue, watch } = useForm();
+    const { control, handleSubmit, setValue, watch, formState: { errors }} = useForm();
     const { execute, loading, data, error } = useRequest(createACase);
+    const [generalError, setGeneralError] = useState(null);
     const watchedCategories = watch("categories")
     console.log(watchedCategories)
 
@@ -40,6 +45,11 @@ function MakeACase() {
     };
 
     const onSubmit = async (data) => {
+        if (Object.keys(errors).length > 0) {
+            // There are validation errors
+            setGeneralError("Please correct the errors before submitting.");
+            return;
+        }
         try {
             const response = await execute(
                 data.title, 
@@ -52,20 +62,23 @@ function MakeACase() {
             console.log(data.categories)
         } catch (error) {
             console.error('Error creating case:', error )
+            setGeneralError(error.message || "An unexpected error occurred.");
         }
     };
 
 
+
     return (
         <>
-            <form onSubmit={handleSubmit(onSubmit)} style={{ width: '100%', marginTop: 20 }}>
 
+            <form onSubmit={handleSubmit(onSubmit)} style={{ width: '100%', marginTop: 20 }}>
                 <Grid container justifyContent="space-between" alignItems="center" sx={{ paddingBottom: 2 }}>
                     <Grid item sx={{ width: '100%' }} xs={12}>
                         <Controller
                             name="title"
                             control={control}
                             defaultValue=""
+                            rules={{ required: true, minLength: 1 }}
                             render={({ field }) => (
                                 <TextField
                                     {...field}
@@ -74,10 +87,13 @@ function MakeACase() {
                                     label=""
                                     variant='standard'
                                     rows={1}
-                                    placeholder="Enter title..."
+                                    placeholder={field.value ? "" : "Enter title"}
                                 />
                             )}
                         />
+                    {errors?.title && errors.title.type === "required" && <Alert severity="error" sx={{margin: 2}}>This field is required</Alert>}
+                    {errors?.title && errors.title.type === "minLength" && <Alert severity="error" sx={{margin: 2}}> Title must be longer. </Alert>}
+
                     </Grid>
                 </Grid>
 
@@ -87,6 +103,7 @@ function MakeACase() {
                             name="shortDescription"
                             control={control}
                             defaultValue=""
+                            rules={{ required: true, minLength: 10 }}
                             render={({ field }) => (
                                 <TextField
                                     {...field}
@@ -96,10 +113,14 @@ function MakeACase() {
                                     label=""
                                     multiline
                                     rows={4}
-                                    placeholder="Explain your problem in a few words. "
+                                    placeholder={field.value ? "" : "Sum up what happened..."}
                                 />
                             )}
                         />
+
+                    {errors?.shortDescription && errors.shortDescription.type === "required" && <Alert severity="error" sx={{margin: 2}}> This field is required. </Alert>}
+                    {errors?.shortDescription && errors.shortDescription.type === "minLength" && <Alert severity="error" sx={{margin: 2}}> Title must be longer. </Alert>}
+
                     </Grid>
                 </Grid>
 
@@ -109,6 +130,7 @@ function MakeACase() {
                             name="longDescription"
                             control={control}
                             defaultValue=""
+                            rules={{ required: true, minLength: 50 }}
                             render={({ field }) => (
                                 <TextField
                                     {...field}
@@ -118,10 +140,13 @@ function MakeACase() {
                                     label=""
                                     multiline
                                     rows={6}
-                                    placeholder="Explain your problem in detail..."
+                                    placeholder={field.value ? "" : "Explain your problem in detail..."}
                                 />
                             )}
                         />
+                    {errors?.longDescription && errors.longDescription.type === "required" && <Alert severity="error" sx={{margin: 2}}> This field is required. </Alert>}
+                    {errors?.longDescription && errors.longDescription.type === "minLength" && <Alert severity="error" sx={{margin: 2}}> Title must be longer. </Alert>}
+
                     </Grid>
                 </Grid>
 
@@ -151,6 +176,7 @@ function MakeACase() {
                                 ))}
                             </Paper>
                         )}
+
                     </Grid>
 
                     <Grid item xs={12}>
@@ -169,12 +195,14 @@ function MakeACase() {
                             name="categories"
                             control={control}
                             defaultValue={[]}
+                            rules={{ validate: value => value.length > 0 || "Please select at least one category." }}
                             render={({ field }) => (
                                 <input type="hidden" {...field} />
                             )}
                         />
                     </Grid>
                 </Grid>
+                {errors?.categories && <Alert severity="error" sx={{margin: 2}}> You must choose at least one category. </Alert>}
 
 
                 <Grid container alignItems="center" justifyContent="space-between" sx={{ width: '100%' }}>
@@ -186,6 +214,9 @@ function MakeACase() {
                 </Grid>
 
             </form>
+
+            {error && <Alert severity="error" sx={{margin: 2, width: '100%'}}> {error.message} </Alert>}
+            {data &&  <Alert severity='success' sx={{margin: 2, width: '100%'}}> Case successfully created! </Alert> }
         </>
     )
 };

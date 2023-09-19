@@ -31,14 +31,14 @@ const MainContent = () => {
     return (
         <>
             {location.pathname !== '/' && location.pathname !=='/login' && <NavBar />}
-            <div style={{ paddingTop: 49 }}>
+            <div style={{ paddingTop: (location.pathname === '/' || location.pathname === '/login' || location.pathname === '/registration') ? 0 : 49 }}>
                 <Routes>
                     {/* <Route path='/' element={isAuthenticated ? <Navigate to='/lawyer' replace /> : <Navigate to ='/login' replace />} />  */}
                     <Route path='/' element={<SplasherPage />} />
                     <Route path='/registration' element={<Registration />} />
                     <Route path='/password-reset' element={<ResetPasswordSteps />} />
                     <Route path='/reset-password' element={<ResetPasswordSteps />} />
-                    <Route path='/login' element={isAuthenticated ? <Navigate to='/lawyer' replace /> : <LoginPage />} />
+                    <Route path='/login' element={isAuthenticated ? <Navigate to='/lawyer' replace /> : <LoginPage />} style={{paddingTop: 0}} />
                     <Route path='/lawyer' element={<LawyerPage />} >
                         <Route path="browse-cases" element={<BrowseCases />} />
                         <Route path="my-cases" element={<MyCaseList />} />

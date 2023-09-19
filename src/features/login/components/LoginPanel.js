@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import {  useTheme } from '@mui/material/styles';
-import { Grid, Paper, TextField, Button, CircularProgress } from "@mui/material";
+import { Grid, Paper, TextField, Button, CircularProgress, Typography, Alert } from "@mui/material";
 import { loginPaperStyle } from "../styles/LoginStyle";
 import { useNavigate } from "react-router-dom";
 import useRequest from "../../../functions/custom hooks/useRequest";
 import loginUser from "../functions/fetch";
+
 
 function LoginPanel(){
     const navigate = useNavigate();
@@ -26,9 +27,9 @@ function LoginPanel(){
     
     const handleLogin = async () => {
         const data = await executeLogin(email, password, showPassword);
-        if (data.message === 'Email is valid.') {
+        if (data && data.message === 'Email is valid.') {
             setShowPassword(true);
-        } else if (data.success) {
+        } else if (data && data.success) {
             if (data.message === 'Email is valid.') {
                 setShowPassword(true);
             } else if (data.success) {
@@ -45,12 +46,15 @@ function LoginPanel(){
             }
         }
     };
+    console.log(error)
 
     return (
         <>
             <Grid align='center'>
                 <Paper elevation={10} sx={{ background: theme.palette.background.paper,  }} style={loginPaperStyle}>
                     <Grid container direction="column" justifyContent="center" alignItems='center' spacing={2} >
+                        {!showPassword && <Typography variant="p" sx={{ fontFamily: 'Canela', zIndex: 1, fontSize: 30}}> Enter e-mail. </Typography> }
+                        {showPassword && <Typography variant="p" sx={{ fontFamily: 'Canela', zIndex: 1, fontSize: 30}}> Enter password. </Typography> }
                         <Grid item sx={{width:'100%'}}>
                             <TextField  sx={{width:'100%'}} label="Email address" variant="outlined" value={email} onChange={handleEmailInputChange}></TextField>
                         </Grid>  
@@ -64,9 +68,9 @@ function LoginPanel(){
                                 {loading ? <CircularProgress size={24} /> : 'LOGIN'}
                             </Button>
                         </Grid>
-                        {error && !showPassword && (
-                            <Grid item xs={12} sx={{ width: '100%'}}>
-                                <span style={{ color: 'red' }}> {error} </span>
+                        {error && !showPassword || error && showPassword && (
+                            <Grid item xs={12} sx={{ width: '100%', marginTop: 2, zIndex: 1 }}>
+                                <Alert severity="error">{error.message}</Alert>
                             </Grid>
                         )}
                     </Grid>

@@ -12,7 +12,10 @@ function useRequest(requestFunction) {
             setData(response.data);
             return response.data;
         } catch(err) {
-            setError(err);
+            const errorMessage = err.response && err.response.data && err.response.data.message
+            ? err.response.data.message
+            : "An unexpected error occurred.";
+            setError({message: errorMessage });
         } finally {
             setLoading(false);
         }

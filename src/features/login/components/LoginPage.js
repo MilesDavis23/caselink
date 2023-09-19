@@ -1,12 +1,23 @@
-import React from 'react';
-import { Box, useTheme, Grid } from '@mui/material'
+import { Box, useTheme, Grid, Typography } from '@mui/material'
 import LoginPanel from './LoginPanel';
-import NavBar from '../../navbar/Navbar';
 import { loginPaperStyle } from '../styles/LoginStyle';
 import { GlobalStyles } from '@mui/material';
+/* Particles part: */
+import { useCallback } from "react";
+import Particles from "react-particles";
+import { loadSlim } from "tsparticles-slim";
+import { particlesStyle } from '../../../themes/background/particles/stylers';
 
 function LoginPage(  ) {
     const theme = useTheme();
+    const particlesInit = useCallback(async engine => {
+        console.log(engine);
+        await loadSlim(engine);
+    }, []);
+
+    const particlesLoaded = useCallback(async container => {
+        await console.log(container);
+    }, []);
 
     return (
         <>
@@ -23,15 +34,21 @@ function LoginPage(  ) {
                 '*::-webkit-scrollbar-thumb:hover': {
                     background: '#555',
                 },
-            }}/>
+            }} />
             <Box sx={{
                 backgroundColor: theme.palette.background.paper,
                 color: theme.palette.text.secondary,
                 height: '100vh',
                 overflow: 'auto',
+                position: 'relative'
             }}>
-                <Grid container direction='column' justifyContent="center" alignItems="center" sx={{ height: '100%', flexWrap: 'nowrap' }}>
-                    <Grid item style={{...loginPaperStyle, fontFamily:'Canela', fontSize: '50px'}} textAlign='center' > <h1> Please login. </h1></Grid>
+                <Particles
+                    id="tsparticles"
+                    init={particlesInit}
+                    loaded={particlesLoaded}
+                    options={particlesStyle}
+                />
+                <Grid container direction='column' justifyContent="center" alignItems="center" sx={{ height: '100%', flexWrap: 'nowrap', zIndex: 1, }}>
                     <Grid item sx={{ marginBottom: "30px" }}>
                         <LoginPanel />
                     </Grid>

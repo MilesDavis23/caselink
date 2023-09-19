@@ -1,11 +1,25 @@
 import React from 'react';
-import { Box, useTheme, Grid } from '@mui/material'
+import { Box, useTheme, Grid, Typography } from '@mui/material'
 import { loginPaperStyle } from '../../login/styles/LoginStyle';
 import { GlobalStyles } from '@mui/material';
 import SplasherPanel from '../splash panel/SplasherPanel';
+/* Particles part: */
+import { useCallback } from "react";
+import Particles from "react-particles";
+import { loadSlim } from "tsparticles-slim";
+import { particlesStyle } from '../../../themes/background/particles/stylers';
+
 
 function SplasherPage(  ) {
     const theme = useTheme();
+    const particlesInit = useCallback(async engine => {
+        console.log(engine);
+        await loadSlim(engine);
+    }, []);
+
+    const particlesLoaded = useCallback(async container => {
+        await console.log(container);
+    }, []);
 
     return (
         <>
@@ -29,11 +43,19 @@ function SplasherPage(  ) {
                 color: theme.palette.text.secondary,
                 height: '100vh',
                 overflow: 'auto',
+                position: 'relative'
             }}>
-                <Grid container sx={{ height: '100%' }}>
+                <Particles
+                    id="tsparticles"
+                    init={particlesInit}
+                    loaded={particlesLoaded}
+                    options={particlesStyle}
+                />
+                <Grid container sx={{ height: '100%', }} style={{ zIndex: 1}}>
                     <Grid item xs={7} >
-                        <Grid container direction='column' justifyContent='center' alignItems='center' sx={{ height: '100%', flexWrap:'nowrap' }}>
-                            <Grid item>
+                        <Grid container direction='column' justifyContent='center' alignItems='center' sx={{ height: '100%', flexWrap:'nowrap', zIndex: 1 }}>
+                            <Grid item style={{ zIndex: 1}}>
+                                <Typography variant="h1" sx={{fontFamily: 'Canela'}}> Welcome to </Typography>
                                 <Grid item  style={{ padding: 0}} textAlign='center' > 
                                     <h1 style={{ fontFamily: 'Canela', fontSize: '150px' }}> CaseLink! </h1>
                                 </Grid>
@@ -42,13 +64,14 @@ function SplasherPage(  ) {
                     </Grid>
                     <Grid item xs={5} >
                         <Grid container direction='column' justifyContent='center' alignItems='center' sx={{ height: '100%', flexWrap: 'nowrap', paddingRight: '300px' }}>
-                            <Grid item>
-                                <Grid item style={{ ...loginPaperStyle, fontFamily: 'Canela', fontSize: '50px' }} textAlign='center' >
-                                    <h1> Welcome to CaseLink! </h1>
+                            <Grid item style={{zIndex: 1}}>
+                                <Grid item style={{ ...loginPaperStyle, fontFamily: 'Canela', fontSize: '50px' }} alignItems='flex-start' textAlign='start' >
                                 </Grid>
-                                <Grid item style={{ ...loginPaperStyle, textAlign: 'justify' }} >
+                                <Grid item style={{ ...loginPaperStyle, textAlign: 'justify', zIndex: 1 }} >
                                     <p>
-                                        Vivamus eu malesuada neque, vitae tempor nulla. Quisque efficitur elit vitae nulla pulvinar, sed faucibus tellus semper. Nullam sed ultricies leo. Morbi elementum tellus et enim egestas vulputate. Pellentesque rutrum orci sit amet ante eleifend mollis. Ut aliquet nisl felis, eget tempor ipsum hendrerit sit amet. Praesent aliquet elit ut egestas hendrerit. In vitae nunc aliquet, finibus purus a, pellentesque lorem. In magna libero, interdum eget scelerisque non, porta ac nibh. Vestibulum iaculis mi ac libero convallis pretium. Nunc vehicula lectus et sapien dictum, ut venenatis quam gravida. Vivamus elementum egestas eleifend. Sed semper magna vitae tortor aliquam tincidunt. Nulla ut urna tempus, rhoncus orci ac, tempus risus. Donec condimentum lacus dui, eget congue felis elementum bibendum. Nunc blandit tortor congue odio convallis mollis.
+                                    In today's complex legal landscape, finding the right professional assistance can be daunting. Enter our innovative case management system, designed to bridge the gap between legal experts and those in need of legal guidance. Users can seamlessly register as lawyers or individuals, creating a dynamic ecosystem where legal challenges meet expert solutions. Individuals can present their "cases" to the platform, allowing lawyers to extend their expertise through tailored offers. But our platform goes beyond just introductions. 
+                                    <div></div>
+                                    Once connected, both parties can collaboratively manage and track the case's progress, ensuring transparency and efficiency every step of the way. Dive into a world where legal collaboration is not just a concept but a reality. Our platform is more than just a service; it's a community where every legal challenge finds its solution. Join us in redefining the future of legal collaboration.
                                     </p>
                                 </Grid>
                                 <Grid item sx={{ marginBottom: "30px" }}>
