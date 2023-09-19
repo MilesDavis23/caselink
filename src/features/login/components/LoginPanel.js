@@ -36,9 +36,9 @@ function LoginPanel(){
                 setShowPassword(true);
             } else if (data.success) {
                 if (data.role === 'lawyer') {
-                    navigate('/lawyer')
+                    navigate('/lawyer/home-page')
                 } else if ( data.role === 'client' ) {
-                    navigate('/person');
+                    navigate('/person/home-page');
                 } else if (data.role === 'admin'){
 
                 }
