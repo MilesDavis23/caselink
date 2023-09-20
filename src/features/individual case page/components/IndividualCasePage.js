@@ -30,6 +30,7 @@ import { declineOffer, acceptOffer } from '../../person/accept offer/functions/h
 import useAddToMyCases from '../functions/useAddToMyCases';
 import getToken from '../../../functions/handle token/ getToken';
 import decodeToken from '../../../functions/handle token/decodeToken';
+import getColor from '../../lawyer/mycases list/funtions/getStatusColor';
 
 
 
@@ -67,7 +68,7 @@ function IndividualCasePage() {
             setIsLawyer(true);
         };
         if (data) {
-            setIsStatusCorrect(data[0].status === 'added' || 'offer sent');
+            setIsStatusCorrect(data[0].status === 'added' || data[0].status === 'offer sent');
         } 
         /* check if status is active:  */
         if (data) {
@@ -101,11 +102,15 @@ function IndividualCasePage() {
     if (error) {
         return <p> Error: {error.message} </p>
     };
-
+    let statusColor;
+    if (data) {
+        statusColor = data[0].status
+    }
+    console.log(statusColor)
 
     return (
         <>
-            <Container justifyContent='center' alignItems="" sx={{ padding: 2, width: '100%' }}>
+            <Container justifyContent='center' alignItems="" sx={{ padding: 2, width: '100%', paddingTop: 3 }}>
                 <Grid container justifyContent="space-between" alignItems="center" sx={{ borderBottom: '1px solid white', paddingBottom: 2 }}>
                     <Grid item xs={6}>
                         <Typography variant='h5' component="div">
@@ -255,7 +260,40 @@ function IndividualCasePage() {
                     <Alert severity="info" sx={{margin: 2, widht: '100%'}}> No offer received yet. </Alert>
                 ))}
 
-                {activeStatus && <Alert severity='success' sx={{margin: 2, width: '100%'}}> You have succesfully accpeted an offer, now the case is active! </Alert> }
+                {activeStatus && !isLawyer && <Alert severity='success' sx={{ margin: 2, width: '95%' }}> You have succesfully accpeted an offer, now the case is active! </Alert>}
+                {activeStatus && isLawyer &&
+                    <>
+                        <Alert severity='success' sx={{ margin: 2, width: '95%' }}> Your offer has been accepted! </Alert>
+                        <Alert severity='info' sx={{ margin: 2, width: '95%' }}> Now you can change status according to your progress. </Alert>
+
+                    <Grid container sx={{ marginTop: '20px', marginBottom: '20px', border: '1px solid white', borderRadius: '5px' }}>
+                        <Grid item xs={12}>
+                            <Box sx={{ width: 1, bgcolor: 'background.paper' }}>
+                                <Box sx={{ width: 1, borderBottom: '1px solid white', padding: '10px' }} >
+                                    <Grid container justifyContent='space-between'>
+                                        <Grid item>
+                                            <Typography variant="h6" component="div">
+                                                Current Status:
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item sx={{ ...getColor(statusColor) }} >
+                                            <Typography variant="overline" display="block" gutterBottom sx={{fontSize: 15}}> {data && data[0].status} </Typography>
+                                        </Grid>
+                                    </Grid>
+                                </Box>
+                                <Grid container >
+                                    <Grid item xs={12} sx={{ marigin: 2, padding: 2 }} >
+                                        <Button severity="warning" component={Link} to="" variant='outlined' sx={{ width: 1 }}> Change Status </Button>
+                                    </Grid>
+                                </Grid>
+                            </Box>
+                        </Grid>
+                    </Grid>
+            </>
+
+
+                }
+
 
                 <Grid container alignItems="center" justifyContent="space-between" sx={{ width: '100%' }} >
                     <Grid item xs={5} sx={{ marginRight: 2, width: '100%' }}>
@@ -286,7 +324,7 @@ function IndividualCasePage() {
                         )}
                     </Grid>
 
-                    {!isFromMyCases &&
+                    {!isFromMyCases && !activeStatus &&
                         <Grid item xs={5} sx={{ marginRight: 0, width: '100%' }}>
                             <Button
                                 component={Link}

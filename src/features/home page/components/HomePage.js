@@ -12,15 +12,22 @@ const HomePage = () => {
 
     return (
         <>
-            <p style={{padding: 50}}>
-                Users role: {user ? user.role : 'Loading...'}, 
-                User Id: {user ? user.userId : 'Loading...'}, 
-                The User Object coming from the cookie: {JSON.stringify(user)}
-            </p>
-            <ProfilePanel />
-            <HighightedCases />
+            <div style={{ padding: 20, marginTop: 10 }}>
+                <ProfilePanel />
+                <HighightedCases />
+            </div>
         </>
     );
 };
 
 export default HomePage;
+
+/**
+ * 
+ * 
+ *             <p style={{padding: 50}}>
+                Users role: {user ? user.role : 'Loading...'}, 
+                User Id: {user ? user.userId : 'Loading...'}, 
+                The User Object coming from the cookie: {JSON.stringify(user)}
+            </p>
+ */

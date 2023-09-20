@@ -2,11 +2,9 @@ import React from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { useTheme, Grid, Box, useMediaQuery, IconButton, FormControl, MenuItem, InputLabel, Typography, Divider, Select } from '@mui/material'
 import { GlobalStyles } from "@mui/material";
-import PresistentLawyerDrawer from "../../lawyer drawer/Drawer";
 import LawyerDrawer from "../mobile/components/LawyerDrawer";
 import FilterPanel from "../../browse cases/components/FilterPanel";
 import MenuIcon from '@mui/icons-material/Menu'
-import NavBar from "../../../navbar/Navbar";
 
 
 function LawyerPage() {
@@ -58,22 +56,12 @@ function LawyerPage() {
                     </>
                 ) : isBrowseCases ? (
                     <>
-                        <PresistentLawyerDrawer open={open} handleDrawerClose={handleDrawerClose} />
                         <Grid container sx={{ height: '100%' }}>
                             <Grid item xs={3} >
                                 <Grid container alignItems="flex-start" sx={{ marginLeft: '30px', borderRight: '0 solid #FFFDF7', paddingRight: 2, height: '100%' }}>
                                     {/* Nested Grid container for IconButton and FilterPanel */}
                                     <div>
                                         <div style={{ marginLeft: '250px' }}>
-                                            <IconButton
-                                                color="inherit"
-                                                aria-label="open drawer"
-                                                onClick={handleDrawerOpen}
-                                                edge="start"
-                                                sx={{ mr: 2, ...(open && { display: 'none' }), marginTop: 2 }}
-                                            >
-                                                <MenuIcon />
-                                            </IconButton>
                                         </div>
                                     </div>
                                 </Grid>
@@ -124,22 +112,13 @@ function LawyerPage() {
                     </>
                 ) : (
                     <>
-                        <PresistentLawyerDrawer open={open} handleDrawerClose={handleDrawerClose} />
                         <Grid container sx={{ height: '100%' }}>
                             <Grid item xs={3} >
                                 <Grid container alignItems="flex-start" sx={{ marginLeft: '30px', borderRight: '0 solid #FFFDF7', paddingRight: 2, height: '100%' }}>
                                     {/* Nested Grid container for IconButton and FilterPanel */}
                                     <div>
                                         <div style={{ marginLeft: '250px' }}>
-                                            <IconButton
-                                                color="inherit"
-                                                aria-label="open drawer"
-                                                onClick={handleDrawerOpen}
-                                                edge="start"
-                                                sx={{ mr: 2, ...(open && { display: 'none' }), marginTop: 2 }}
-                                            >
-                                                <MenuIcon />
-                                            </IconButton>
+          
                                         </div>
                                     </div>
                                 </Grid>
