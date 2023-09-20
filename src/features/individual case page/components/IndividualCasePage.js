@@ -30,8 +30,7 @@ import { declineOffer, acceptOffer } from '../../person/accept offer/functions/h
 import useAddToMyCases from '../functions/useAddToMyCases';
 import getToken from '../../../functions/handle token/ getToken';
 import decodeToken from '../../../functions/handle token/decodeToken';
-import getColor from '../../lawyer/mycases list/funtions/getStatusColor';
-
+import StatusPanel from '../../lawyer/change status/component/ChangeStatus';
 
 
 function IndividualCasePage() {
@@ -232,6 +231,11 @@ function IndividualCasePage() {
 
                 }
 
+                {data && data[0].status === 'warning' && isLawyer &&  <Alert severity='info'> You have succesfully changed the status. Waiting for response.  </Alert>}
+                {data && data[0].status === 'warning' && !isLawyer &&  <Alert severity='warning'> Your lawyer sent you a message. Please check e-mails as soon as you can! </Alert>}
+
+
+
 
                 {/* This respnsible for showing the status to the user.  */}
                 {!activeStatus && !isLawyer && isStatusCorrect && (offersData && offersData.length > 0 && offersData[0].offerStatus !== 'declined' ? (
@@ -266,30 +270,8 @@ function IndividualCasePage() {
                         <Alert severity='success' sx={{ margin: 2, width: '95%' }}> Your offer has been accepted! </Alert>
                         <Alert severity='info' sx={{ margin: 2, width: '95%' }}> Now you can change status according to your progress. </Alert>
 
-                    <Grid container sx={{ marginTop: '20px', marginBottom: '20px', border: '1px solid white', borderRadius: '5px' }}>
-                        <Grid item xs={12}>
-                            <Box sx={{ width: 1, bgcolor: 'background.paper' }}>
-                                <Box sx={{ width: 1, borderBottom: '1px solid white', padding: '10px' }} >
-                                    <Grid container justifyContent='space-between'>
-                                        <Grid item>
-                                            <Typography variant="h6" component="div">
-                                                Current Status:
-                                            </Typography>
-                                        </Grid>
-                                        <Grid item sx={{ ...getColor(statusColor) }} >
-                                            <Typography variant="overline" display="block" gutterBottom sx={{fontSize: 15}}> {data && data[0].status} </Typography>
-                                        </Grid>
-                                    </Grid>
-                                </Box>
-                                <Grid container >
-                                    <Grid item xs={12} sx={{ marigin: 2, padding: 2 }} >
-                                        <Button severity="warning" component={Link} to="" variant='outlined' sx={{ width: 1 }}> Change Status </Button>
-                                    </Grid>
-                                </Grid>
-                            </Box>
-                        </Grid>
-                    </Grid>
-            </>
+                        <StatusPanel statusColor={statusColor} data={data} caseId={caseId} />
+                    </>
 
 
                 }
