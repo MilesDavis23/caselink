@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import CaseElement from "../../mycases list/components/CaseElement";
-import { Divider, Grid } from "@mui/material";
+import { Alert, Divider, Grid } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import useRequest from "../../../../functions/custom hooks/useRequest";
 import getAllCases from "../functions/axios";
@@ -14,7 +14,7 @@ function BrowseCases() {
     }
     
     if (error) {
-        return <p>Error: {error.message}</p>;
+        return <Alert severity="error" sx={{ padding: 2}}> Error: {error.message} </Alert>;
     }
 
     return (

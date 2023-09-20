@@ -3,14 +3,23 @@ import { logOut } from '../login/functions/logoutFunction';
 import { AppBar, Toolbar, Typography, Avatar, IconButton, Menu, MenuItem  } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import useRequest from '../../functions/custom hooks/useRequest';
+import MenuIcon from '@mui/icons-material/Menu'
+import PresistentLawyerDrawer from '../lawyer/lawyer drawer/Drawer';
+import PresistentPersonDrawer from '../person/person drawer/PersonDrawer';
+
+import Home from '@mui/icons-material/Home'
+import Notifications from '@mui/icons-material/Notifications'
 import getUserData from './functions/axios';
 
 import { useEffect, useState } from 'react';
+import { Badge, Button } from 'react-bootstrap';
 
 function NavBar() {
     const navigate = useNavigate();
     const {execute, data, loadin, error} = useRequest(getUserData)
     useEffect(() => { execute() },[]);
+    /* This is for drawer: */
+    const [ open, setOpen ] = useState(false);
     /* This is the menubar:  */
     const [anchorEl, setAnchorEl] = useState(null);
     const handleMenuOpen = (event) => {
@@ -28,31 +37,81 @@ function NavBar() {
         }
         setAnchorEl(null);
     };
+    const handleDrawerOpen = () => {
+        setOpen(true);
+    };
+
+    const handleDrawerClose = () => {
+        setOpen(false);
+    };
+
     const theme = useTheme();
+    /* handle home navigation: */
+    const handleHome = () => {
+        if (data && data[0].role  === 'lawyer') {
+            navigate('/lawyer/home-page')
+        } else if (data && data[0].role  === 'client') {
+            navigate('/person/home-page')
+        }
+    }
     console.log(data)
     /* user Data: */
     const profileImgUrl = data && data.length > 0 ? data[0].profile_img_url : null;
+    const indicator = data && data[0].role === 'lawyer';
+    console.log(indicator)
 
     return (
         <AppBar component="nav" position='fixed' >
-                <Toolbar sx={{ backgroundColor: theme.palette.background.paper, marginLeft: 0,}} >
-                    <Typography variant='h6' sx={{ fontFamily: 'Canela', backgroundColor: theme.palette.background.paper, marginLeft: 30 }} component='div'>
-                        CaseLink!
-                    </Typography>
-                    <div style={{ marginLeft: 'auto' }}> {/* This pushes the user segment to the right */}
-                    <IconButton onClick={handleMenuOpen} sx={{marginRight: '270px' }}>
-                        <Avatar src={profileImgUrl || 'default_image_url'} /> {/* Replace with your user avatar URL */}
+            <Toolbar sx={{ backgroundColor: theme.palette.background.paper, marginLeft: 0, }} >
+
+                <div style={{ marginBottom: 17 }}>
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        onClick={handleDrawerOpen}
+                        edge="start"
+                        sx={{ mr: 2, /*...(open && /*{ display: 'none' }) */ marginTop: 2 }}
+                    >
+                        <MenuIcon />
                     </IconButton>
+                </div>
+
+                <Typography variant='h6' sx={{ fontFamily: 'Canela', backgroundColor: theme.palette.background.paper }} component='div'>
+                    CaseLink!
+                </Typography>
+                <Typography sx={{ fontFamily: 'Canela', backgroundColor: theme.palette.background.paper }}>  </Typography>
+                <div style={{ marginLeft: 'auto' }}> {/* This pushes the user segment to the right */}
                     <Menu
                         anchorEl={anchorEl}
                         open={Boolean(anchorEl)}
                         onClose={handleMenuClose}
+                        style={{ width: '400px' }}
                     >
                         <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
                         <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
                     </Menu>
                 </div>
-                </Toolbar>
+                <IconButton>
+                    <Notifications fontSize='large' />
+                </IconButton>
+                <IconButton onClick={handleHome}>
+                    <Home fontSize='large' />
+                </IconButton>
+                <IconButton onClick={handleMenuOpen} sx={{ marginRight: '0' }}>
+                        <Avatar src={profileImgUrl || 'defaul here'} /> 
+                </IconButton>
+            </Toolbar>
+            <div>
+                {indicator ? (
+                    <>
+                        <PresistentLawyerDrawer open={open} handleDrawerClose={handleDrawerClose} />
+                    </>
+                ) : (
+                    <>
+                        <PresistentPersonDrawer open={open} handleDrawerClose={handleDrawerClose} />
+                    </>
+                )}
+            </div>
         </AppBar>
     )
 }
