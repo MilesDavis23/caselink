@@ -1,6 +1,6 @@
 import {  useTheme } from '@mui/material/styles';
 import { logOut } from '../login/functions/logoutFunction';
-import { AppBar, Toolbar, Typography, Avatar, IconButton, Menu, MenuItem  } from '@mui/material';
+import { AppBar, Toolbar, Typography, Avatar, IconButton, Menu, MenuItem, Badge  } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import useRequest from '../../functions/custom hooks/useRequest';
 import MenuIcon from '@mui/icons-material/Menu'
@@ -9,12 +9,13 @@ import PresistentPersonDrawer from '../person/person drawer/PersonDrawer';
 
 import Home from '@mui/icons-material/Home'
 import Notifications from '@mui/icons-material/Notifications'
-import getUserData from './functions/axios';
+import { getNotifcations, getUserData } from './functions/axios';
 
 import { useEffect, useState } from 'react';
-import { Badge, Button } from 'react-bootstrap';
+import { getLocationName, useGetPageTitle } from './functions/getLocation';
 
 function NavBar() {
+
     const navigate = useNavigate();
     const {execute, data, loadin, error} = useRequest(getUserData)
     useEffect(() => { execute() },[]);
@@ -54,11 +55,22 @@ function NavBar() {
             navigate('/person/home-page')
         }
     }
-    console.log(data)
+    //console.log(data)
     /* user Data: */
     const profileImgUrl = data && data.length > 0 ? data[0].profile_img_url : null;
     const indicator = data && data[0].role === 'lawyer';
-    console.log(indicator)
+    const title = useGetPageTitle();
+    /* handle notfications:  */
+    const { execute: fetchNotifications, data: notifications, loading: notificationsLoading, error: notificationsError } = useRequest(getNotifcations);
+    useEffect(() => {
+        fetchNotifications();
+        const intervalId = setInterval(fetchNotifications, 10000);
+        return () => clearInterval(intervalId);
+    }, []);
+    console.log(notifications)
+    const unreadNotificationsCount = notifications ? notifications.filter(notification => !notification.read).length : 0;
+    console.log(unreadNotificationsCount)
+
 
     return (
         <AppBar component="nav" position='fixed' >
@@ -76,9 +88,10 @@ function NavBar() {
                     </IconButton>
                 </div>
 
-                <Typography variant='h6' sx={{ fontFamily: 'Canela', backgroundColor: theme.palette.background.paper }} component='div'>
-                    CaseLink!
+                <Typography variant='h6' sx={{ marginLeft: 1, fontFamily: 'Canela', backgroundColor: theme.palette.background.paper }} component='div'>
+                    {title}
                 </Typography>
+
                 <Typography sx={{ fontFamily: 'Canela', backgroundColor: theme.palette.background.paper }}>  </Typography>
                 <div style={{ marginLeft: 'auto' }}> {/* This pushes the user segment to the right */}
                     <Menu
@@ -91,9 +104,13 @@ function NavBar() {
                         <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
                     </Menu>
                 </div>
+
                 <IconButton>
-                    <Notifications fontSize='large' />
+                    <Badge badgeContent={unreadNotificationsCount} color="error" >
+                        <Notifications />
+                    </Badge>
                 </IconButton>
+
                 <IconButton onClick={handleHome}>
                     <Home fontSize='large' />
                 </IconButton>
