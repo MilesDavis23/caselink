@@ -2,7 +2,7 @@ import React, { useEffect} from 'react';
 import profilePicture from '../images/profile/spike-spiegel-189.jpg'
 import { Avatar, Grid, Paper, Typography, Button  } from '@mui/material';
 import useRequest from '../../../functions/custom hooks/useRequest';
-import getUserData from '../../navbar/functions/axios';
+import { getUserData } from '../../navbar/functions/axios';
 
 
 function ProfilePanel() {

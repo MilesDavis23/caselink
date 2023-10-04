@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import getUserData from '../../../navbar/functions/axios';
+import useRequest from '../../../../functions/custom hooks/useRequest';
+import  Avatar  from '@mui/material/Avatar';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -18,9 +21,10 @@ function CaseElement({ data }) {
 
     useEffect(() => {
         setIsBrowseCasesPage(areWeAtBrowseCases);
+
     }, [areWeAtBrowseCases]);
 
-    const cookie = 'authToken';
+    const cookie = 'authToken'
     const link = getLinkBasedOnRole(cookie);
     /* check user: */
     const jwtoken = getToken('authToken');
@@ -39,29 +43,32 @@ function CaseElement({ data }) {
     }
 
     console.log(userRole === 'client')
-    
+
     return (
-        <Card >
+        <Card>
             <CardContent>
-                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                <Grid container justifyContent="space-between" alignItems="center">
+                    <Grid item>
+                        <Typography variant='h5' component="div">
+                            {data && data.title}
+                        </Typography>
+                    </Grid>
+                    {/* Avatar goes here */}
+                </Grid>
+                <Typography sx={{ mb: 1.5 }} color="text.secondary">
                     case id: {data && data.case_id}
                 </Typography>
-                <Typography variant='h5' component="div">
-                    {data && data.title}
-                </Typography>
-                <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    Published:
-                </Typography>
-                <Typography variant="body2">
-                    {data && data.detailed_description}
+                <Typography variant="body1">
+                    {isBrowseCasesPage && data && data.brief_description}
+                    {!isBrowseCasesPage && data && data.detailed_description}
                     <br />
-                    {'please help'}
                 </Typography>
-
+                <Typography>
+                    <strong>categories: </strong>{data && typeof data.case_category === 'string' ? JSON.parse(data.case_category).join(', ') : data.case_category}
+                </Typography>
                 {data.status && !isBrowseCasesPage && (
                     <Typography>
                         <Grid container>
-                            {/* need a different element for browse cases */}
                             <Grid item>
                                 Status:
                             </Grid>
@@ -71,14 +78,14 @@ function CaseElement({ data }) {
                         </Grid>
                     </Typography>
                 )}
-
                 <CardActions>
                     {!isBrowseCasesPage && <Button component={Link} to={`${link}/${data && data.case_id}?from=mycases`} variant="outlined" size='small' sx={{ width: '100%' }} > Go To Case </Button>}
                     {isBrowseCasesPage && <Button component={Link} to={`${link}/${data && data.case_id}`} variant="outlined" size='small' sx={{ width: '100%' }} > Go To Case </Button>}
                 </CardActions>
             </CardContent>
         </Card>
-    )
+    );
+    
 };
 
 export default CaseElement;

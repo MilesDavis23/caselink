@@ -8,6 +8,7 @@ import getAllCases from "../functions/axios";
 function BrowseCases() {
     const theme = useTheme();
     const { execute, data, loading, error } = useRequest(getAllCases);
+    console.log(data)
     useEffect(() => { execute() }, []);
     if (loading) {
         return <p>Loading...</p>;

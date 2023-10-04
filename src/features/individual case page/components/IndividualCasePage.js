@@ -42,7 +42,7 @@ function IndividualCasePage() {
     const { caseId } = useParams();
     const theme = useTheme();
     const { execute, loading, data, error } = useRequest(() => getCase(caseId));
-    const { isLoading, added, apiError, addToMyCases } = useAddToMyCases()
+    const { isLoading, added, apiError, addToMyCases } = useAddToMyCases();
     const [isLawyer, setIsLawyer] = useState(false);
     /* check if status is active: */
     const [ activeStatus, setActiveStatue ] = useState(false);
@@ -68,18 +68,19 @@ function IndividualCasePage() {
         };
         if (data) {
             setIsStatusCorrect(data[0].status === 'added' || data[0].status === 'offer sent');
-        } 
+        };
         /* check if status is active:  */
         if (data) {
             setActiveStatue(data[0].status === 'active');
-        }
+        };
+
         /* check if the site is reached from mycases */
         if (from === 'mycases') {
             setIsFromMyCases(true);
         };
         if (data && data[0].status === 'offer sent') {
             setSuccessfullySent(true);
-        }
+        };
     }, [caseId, userRole, data, from, isStatusCorrect, successfullySent, activeStatus]);
     /* helper function for form submit needed to offer send */
     const sendOffer = async (formData) => {
@@ -105,7 +106,8 @@ function IndividualCasePage() {
     if (data) {
         statusColor = data[0].status
     }
-    console.log(statusColor)
+    console.log(statusColor);
+    console.log(data);
 
     return (
         <>
@@ -121,11 +123,11 @@ function IndividualCasePage() {
                     </Grid>
                     <Grid item xs={6} container justifyContent="flex-end" alignItems="center">
                         <Grid item>
-                            <Avatar src={gandalf} sx={{ width: 30, height: 30, marginRight: 2 }}></Avatar>
+                            <Avatar src={data && data[0].profile_img_url} sx={{ width: 30, height: 30, marginRight: 2 }}></Avatar>
                         </Grid>
                         <Grid item>
                             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                                Gandalf Jones
+                                {data && data[0].username}
                             </Typography>
                         </Grid>
                     </Grid>
@@ -176,7 +178,7 @@ function IndividualCasePage() {
                         <Grid container sx={{ marginTop: '20px', marginBottom: '20px', border: '1px solid white', borderRadius: '5px' }}>
                             <Grid item xs={12}>
                                 <Box sx={{ width: 1, bgcolor: 'background.paper' }}>
-                                    <Box sx={{ width: 1, borderBottom: '1px solid white', padding: '10px' }} >
+                                    <Box sx={{ width: 1, borderBottom: '1px solid white', padding: '10px' }}>
                                         <Typography variant="h6" component="div">
                                             Send Offer
                                         </Typography>
@@ -218,7 +220,6 @@ function IndividualCasePage() {
                                 </Box>
                             </Grid>
                         </Grid>
-
                     </form>
                 }
                 {isLawyer && isStatusCorrect && isFromMyCases && successfullySent && 
@@ -248,6 +249,9 @@ function IndividualCasePage() {
                                     </Typography>
                                 </Box>
                                 <List sx={{ margin: 2 }}>
+                                    <ListItem>
+                                        <ListItemText primary= "Oferee: " secondary={ `${offersData[0].username}`} />
+                                    </ListItem>
                                     <ListItem>
                                         <ListItemText primary="Offer Amount:" secondary={`$ ${offersData[0].offerPrice}`} />
                                     </ListItem>

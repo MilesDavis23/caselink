@@ -67,10 +67,10 @@ function LawyerPage() {
                                 </Grid>
                             </Grid>
                             <Grid item xs={6} justifyContent="center" alignItems="center" sx={{ paddingLeft: 1, height: '100%', overflow: 'auto' }}>
-                                <Grid container>
-                                    <Outlet />
+                                    <Grid container>
+                                        <Outlet />
+                                    </Grid>
                                 </Grid>
-                            </Grid>
                             <Grid item xs={3}>
                                 <Grid container sx={{ borderLeft: '0 solid #FFFDF7', paddingRight: 2, height: '100%' }}>
                                     <Grid item xs={12}>

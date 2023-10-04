@@ -6,7 +6,7 @@ import VerifiedIcon from '@mui/icons-material/Verified';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import { Grid, Paper, Button, Typography } from '@mui/material';
 import useRequest from '../../../functions/custom hooks/useRequest';
-import getUserData from '../../navbar/functions/axios';
+import { getUserData } from '../../navbar/functions/axios';
 
 
 function DetailsPanel() {
