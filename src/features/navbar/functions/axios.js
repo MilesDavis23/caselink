@@ -20,8 +20,19 @@ const getNotifcations = () => {
     })
 };
 
+const markAllNotifications = () => {
+    return axios.put('http://localhost:3001/notifications/mark-as-read/all', {}, 
+    { 
+        headers: {
+            'Content-Type' : 'application/json'
+        },    
+        withCredentials: true
+    })
+}
+
 export { 
     getNotifcations, 
-    getUserData
+    getUserData, 
+    markAllNotifications
 }
 
