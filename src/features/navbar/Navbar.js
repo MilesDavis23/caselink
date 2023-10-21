@@ -55,6 +55,13 @@ function NavBar() {
             navigate('/person/home-page')
         }
     }
+    const handleNotification = () => {
+        if (data && data[0].role === 'lawyer') {
+            navigate('/lawyer/notifications')
+        } else if (data && data[0].role === 'client') {
+            navigate('/person/notifciations')
+        }
+    }
     //console.log(data)
     /* user Data: */
     const profileImgUrl = data && data.length > 0 ? data[0].profile_img_url : null;
@@ -69,8 +76,7 @@ function NavBar() {
     }, []);
     console.log(notifications)
     const unreadNotificationsCount = notifications ? notifications.filter(notification => !notification.read).length : 0;
-    console.log(unreadNotificationsCount)
-
+    console.log(unreadNotificationsCount);
 
     return (
         <AppBar component="nav" position='fixed' >
@@ -105,7 +111,7 @@ function NavBar() {
                     </Menu>
                 </div>
 
-                <IconButton>
+                <IconButton onClick={handleNotification}>
                     <Badge badgeContent={unreadNotificationsCount} color="error" >
                         <Notifications />
                     </Badge>

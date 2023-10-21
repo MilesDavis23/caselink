@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 
-function NotificationElement() {
+function NotificationElement( {data}) {
 
     return (
         <Card>
@@ -15,7 +15,7 @@ function NotificationElement() {
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                     <Grid container>
                         <Grid item>
-                            Notification Id: 242342424
+                            Notification Id: {data && data.id}
                         </Grid>
                         <Grid item sx={{ml: 2}}>
                             Title: Received notification
@@ -23,8 +23,7 @@ function NotificationElement() {
                     </Grid>
                 </Typography>
                 <Typography variant="body2">
-                    Vivamus eu malesuada neque, vitae tempor nulla. Quisque efficitur elit vitae nulla pulvinar, 
-                    sed faucibus tellus semper. Nullam sed ultricies leo. Morbi elementum tellus et enim egestas vulputate.
+                    {data && data.message}
                     <br />
                     {'please help'}
                 </Typography>
