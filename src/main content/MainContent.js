@@ -16,7 +16,6 @@ import PersonPage from '../features/person/main person page/PersonPage';
 import SendOfferCasePage from '../features/lawyer/individual case page/components/SendOfferCasePage';
 import ActiveCasePage from '../features/lawyer/individual case page/components/ActiveCase';
 import AccpetOfferCasePage from '../features/person/offer received page/components/AcceptOfferPage';
-import PersonNotificationsList from '../features/person/person notifications/components/PersonNotifications';
 import PersonMyCaseList from '../features/person/person my cases/components/PersonMyCases';
 import PersonActiveCasePage from '../features/person/person active case/components/ActivePersonCasePage';
 import SplasherPage from '../features/splash/components/SplasherPage';
@@ -56,7 +55,7 @@ const MainContent = () => {
                         <Route path="my-cases" element={<PersonMyCaseList />} />
                         <Route path="active-case-page" element={<PersonActiveCasePage />} />
                         <Route path="person-profile" element={<ProfilePage />} />
-                        <Route path="notifications-page" element={<PersonNotificationsList />} />
+                        <Route path="notifications-page" element={<NotificationsList />} />
                         <Route path="case-page/:caseId" element={<IndividualCasePage />} />
                         <Route path="home-page" element={<HomePage/>} />
                     </Route>

@@ -59,7 +59,7 @@ function NavBar() {
         if (data && data[0].role === 'lawyer') {
             navigate('/lawyer/notifications')
         } else if (data && data[0].role === 'client') {
-            navigate('/person/notifciations')
+            navigate('/person/notifications-page')
         }
     }
     //console.log(data)
