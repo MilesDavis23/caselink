@@ -9,7 +9,6 @@ import getLawyerMyCases from '../funtions/axios';
 import { useTheme } from 'styled-components';
 
 function LMyCaseList() {
-    const theme = useTheme();
     const { execute, data, loading, error } = useRequest(getLawyerMyCases);
     useEffect(() => { execute() }, []);
     if (loading) {

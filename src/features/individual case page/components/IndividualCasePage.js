@@ -18,7 +18,6 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import LibraryBooksSharpIcon from '@mui/icons-material/LibraryBooksSharp';
-import gandalf from '../../profile page/images/Screenshot 2023-08-04 at 1.28.06.png'
 import { useTheme } from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
