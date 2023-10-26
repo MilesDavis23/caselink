@@ -70,7 +70,7 @@ function PersonPage() {
                                 <Grid item xs={3}>
                                     <Grid container sx={{ borderLeft: '0 solid #FFFDF7', paddingRight: 2, height: '100%' }}>
                                         <Grid item xs={12}>
-                                            {/* You can add any component or content here */}
+                                           
                                         </Grid>
                                     </Grid>
                                 </Grid>
