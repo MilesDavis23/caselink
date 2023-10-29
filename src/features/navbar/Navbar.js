@@ -6,66 +6,70 @@ import useRequest from '../../functions/custom hooks/useRequest';
 import MenuIcon from '@mui/icons-material/Menu'
 import PresistentLawyerDrawer from '../lawyer/lawyer drawer/Drawer';
 import PresistentPersonDrawer from '../person/person drawer/PersonDrawer';
-
 import Home from '@mui/icons-material/Home'
 import Notifications from '@mui/icons-material/Notifications'
 import { getNotifcations, getUserData } from './functions/axios';
-
 import { useEffect, useState } from 'react';
-import { getLocationName, useGetPageTitle } from './functions/getLocation';
+import { useGetPageTitle } from './functions/getLocation';
 
-function NavBar() {
-
-    const navigate = useNavigate();
-    const {execute, data, loadin, error} = useRequest(getUserData)
-    useEffect(() => { execute() },[]);
-    /* This is for drawer: */
-    const [ open, setOpen ] = useState(false);
-    /* This is the menubar:  */
-    const [anchorEl, setAnchorEl] = useState(null);
-    const handleMenuOpen = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleMenuClose = (event) => { 
-        if(event.target.textContent === 'Logout') {
-            logOut()
+const ProfileMenu = ({ anchorEl, onClose, role, navigate }) => {
+    const handleMenuClick = (event) => {
+       // event.stopPropagation()
+        const clickedOption = event.target.textContent; 
+        if (clickedOption === 'Profile') {
+            if (role && role === 'lawyer') {
+                navigate('/lawyer/lawyer-profile');
+            } else if (role && role === 'client') {
+                navigate('/person/person-profile');
+            }
+        } else if ( clickedOption === 'Logout') {
+            logOut();
         }
+        onClose();
 
-        if (data && data[0].role  === 'lawyer' && event.target.textContent === 'Profile') {
-            navigate('/lawyer/lawyer-profile');
-        } else if (data && data[0].role  === 'client' && event.target.textContent === 'Profile') {
-            navigate('/person/person-profile');
-        }
-        setAnchorEl(null);
-    };
-    const handleDrawerOpen = () => {
-        setOpen(true);
     };
 
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
+    return (
+        <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={onClose} style={{width: '400px'}}>
+            <MenuItem onClick={handleMenuClick}>Profile</MenuItem>
+            <MenuItem onClick={handleMenuClick}>Logout</MenuItem>
+        </Menu>
+    );
+};
 
+const NotificationIcon = ({ onClick, unreadCount }) => (
+    <IconButton onClick={onClick}>
+        <Badge badgeContent={unreadCount} color="error">
+            <Notifications />
+        </Badge>
+    </IconButton>
+);
+
+const UserAvatar = ({ imageUrl, onClick }) => (
+    <IconButton onClick={onClick}>
+        <Avatar src={imageUrl || 'default here'} />
+    </IconButton>
+);
+
+/* a separate drawer component */
+const DrawerComponent = ({ isOpen, onClose, role }) => {
+    if (role === 'lawyer') {
+        return <PresistentLawyerDrawer open={isOpen} handleDrawerClose={onClose} />;
+    } else if (role === 'client') {
+        return <PresistentPersonDrawer open={isOpen} handleDrawerClose={onClose} />;
+    }
+    return null;
+};
+
+const NavBar = () => {
     const theme = useTheme();
-    /* handle home navigation: */
-    const handleHome = () => {
-        if (data && data[0].role  === 'lawyer') {
-            navigate('/lawyer/home-page')
-        } else if (data && data[0].role  === 'client') {
-            navigate('/person/home-page')
-        }
-    }
-    const handleNotification = () => {
-        if (data && data[0].role === 'lawyer') {
-            navigate('/lawyer/notifications')
-        } else if (data && data[0].role === 'client') {
-            navigate('/person/notifications-page')
-        }
-    }
-    //console.log(data)
-    /* user Data: */
-    const profileImgUrl = data && data.length > 0 ? data[0].profile_img_url : null;
-    const indicator = data && data[0].role === 'lawyer';
+    const navigate = useNavigate();
+    const {execute, data, loadin, error } = useRequest(getUserData);
+    useEffect(() => { execute() }, []);
+    /* state for drawer: */
+    const [open, setOpen] = useState(false);
+    /* state for menu bar: */
+    const [anchorEl, setAnchorEl] = useState(null);
     const title = useGetPageTitle();
     /* handle notfications:  */
     const { execute: fetchNotifications, data: notifications, loading: notificationsLoading, error: notificationsError } = useRequest(getNotifcations);
@@ -74,13 +78,46 @@ function NavBar() {
         const intervalId = setInterval(fetchNotifications, 10000);
         return () => clearInterval(intervalId);
     }, []);
-    console.log(notifications)
     const unreadNotificationsCount = notifications ? notifications.filter(notification => !notification.read).length : 0;
-    console.log(unreadNotificationsCount);
+    const profileImgUrl = data && data.length > 0 ? data[0].profile_img_url : null;
+
+    const handleRoleBasedNavigation = (role, pathMap) => {
+        if (role && pathMap[role]) {
+            navigate(pathMap[role]);
+        }
+    }
+
+    const handleHome = () => {
+        const homeNavigationMap = {
+            'lawyer' : '/lawyer/home-page',
+            'client' : '/person/home-page'
+        };
+        handleRoleBasedNavigation(data?.[0]?.role, homeNavigationMap);
+    };
+
+    const handleNotification = () => {
+        const notificationNavigationMap = {
+            'lawyer' : '/lawyer/notifications',
+            'client' : '/person/notifications-page'
+        };
+        handleRoleBasedNavigation(data?.[0]?.role, notificationNavigationMap);
+    };
+    const handleDrawerOpen = () => {
+        setOpen(true);
+    }
+    const handleDrawerClose = () => {
+        setOpen(false);
+    }
+    const handleMenuOpen = (event) => {
+        setAnchorEl(event.currentTarget);
+    }
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+    }
 
     return (
-        <AppBar component="nav" position='fixed' >
-            <Toolbar sx={{ backgroundColor: theme.palette.background.paper, marginLeft: 0, }} >
+        <AppBar component="nav" position='fixed'>
+            <Toolbar sx={{ backgroundColor: theme.palette.background.paper, marginLeft: 0 }}>
 
                 <div style={{ marginBottom: 17 }}>
                     <IconButton
@@ -88,7 +125,7 @@ function NavBar() {
                         aria-label="open drawer"
                         onClick={handleDrawerOpen}
                         edge="start"
-                        sx={{ mr: 2, /*...(open && /*{ display: 'none' }) */ marginTop: 2 }}
+                        sx={{ mr: 2, marginTop: 2 }}
                     >
                         <MenuIcon />
                     </IconButton>
@@ -98,45 +135,22 @@ function NavBar() {
                     {title}
                 </Typography>
 
-                <Typography sx={{ fontFamily: 'Canela', backgroundColor: theme.palette.background.paper }}>  </Typography>
-                <div style={{ marginLeft: 'auto' }}> {/* This pushes the user segment to the right */}
-                    <Menu
-                        anchorEl={anchorEl}
-                        open={Boolean(anchorEl)}
-                        onClose={handleMenuClose}
-                        style={{ width: '400px' }}
-                    >
-                        <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-                        <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
-                    </Menu>
+                <div style={{ marginLeft: 'auto' }}>
+                    <ProfileMenu anchorEl={anchorEl} onClose={handleMenuClose} role={data && data[0].role} navigate={navigate} />
                 </div>
 
-                <IconButton onClick={handleNotification}>
-                    <Badge badgeContent={unreadNotificationsCount} color="error" >
-                        <Notifications />
-                    </Badge>
-                </IconButton>
-
+                <NotificationIcon onClick={handleNotification} unreadCount={unreadNotificationsCount} />
                 <IconButton onClick={handleHome}>
-                    <Home fontSize='large' />
+                    <Home fontSize='large'/>
                 </IconButton>
-                <IconButton onClick={handleMenuOpen} sx={{ marginRight: '0' }}>
-                        <Avatar src={profileImgUrl || 'defaul here'} /> 
-                </IconButton>
+                <UserAvatar imageUrl={profileImgUrl} onClick={handleMenuOpen}/>
             </Toolbar>
-            <div>
-                {indicator ? (
-                    <>
-                        <PresistentLawyerDrawer open={open} handleDrawerClose={handleDrawerClose} />
-                    </>
-                ) : (
-                    <>
-                        <PresistentPersonDrawer open={open} handleDrawerClose={handleDrawerClose} />
-                    </>
-                )}
-            </div>
+            <DrawerComponent isOpen={open} onClose={handleDrawerClose} role={data?.[0]?.role}/>
         </AppBar>
-    )
-}
+    );
+};
 
 export default NavBar;
+
+
+
