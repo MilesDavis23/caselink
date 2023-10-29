@@ -1,6 +1,6 @@
 import {  useTheme } from '@mui/material/styles';
 import { logOut } from '../login/functions/logoutFunction';
-import { AppBar, Toolbar, Typography, Avatar, IconButton, Menu, MenuItem, Badge  } from '@mui/material';
+import { AppBar, Toolbar, Typography, Avatar, IconButton, Menu, MenuItem, Badge, Grid  } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import useRequest from '../../functions/custom hooks/useRequest';
 import MenuIcon from '@mui/icons-material/Menu'
@@ -11,6 +11,7 @@ import Notifications from '@mui/icons-material/Notifications'
 import { getNotifcations, getUserData } from './functions/axios';
 import { useEffect, useState } from 'react';
 import { useGetPageTitle } from './functions/getLocation';
+
 
 const ProfileMenu = ({ anchorEl, onClose, role, navigate }) => {
     const handleMenuClick = (event) => {
@@ -118,6 +119,59 @@ const NavBar = () => {
     return (
         <AppBar component="nav" position='fixed'>
             <Toolbar sx={{ backgroundColor: theme.palette.background.paper, marginLeft: 0 }}>
+                <Grid container>
+
+                    <Grid item xs={3}>
+                        <div>
+                            <IconButton
+                                color="inherit"
+                                aria-label="open drawer"
+                                onClick={handleDrawerOpen}
+                                edge="start"
+                                sx={{ mr: 2, marginTop: 2 }}
+                            >
+                                <MenuIcon />
+                            </IconButton>
+                        </div>
+
+                    </Grid>
+
+                    <Grid item xs={6}>
+                        <Typography variant='h6' sx={{ marginLeft: 1, backgroundColor: theme.palette.background.paper, marginTop: 2 }} component='div'>
+                            {title}
+                        </Typography>
+                    </Grid>
+
+                    <Grid item xs={3} justifyContent='flex-start'>
+                        <div style={{ marginLeft: '10px'}}>
+
+                            <UserAvatar imageUrl={profileImgUrl} onClick={handleMenuOpen} />
+
+
+                            <ProfileMenu anchorEl={anchorEl} onClose={handleMenuClose} role={data && data[0].role} navigate={navigate} />
+
+
+                            <IconButton onClick={handleHome}>
+                                <Home fontSize='large' />
+                            </IconButton>
+
+                            <NotificationIcon onClick={handleNotification} unreadCount={unreadNotificationsCount} />
+                            
+                        </div>
+                    </Grid>
+
+                </Grid>
+            </Toolbar>
+            <DrawerComponent isOpen={open} onClose={handleDrawerClose} role={data?.[0]?.role} />
+        </AppBar>
+    );
+};
+
+export default NavBar;
+
+
+
+/*
 
                 <div style={{ marginBottom: 17 }}>
                     <IconButton
@@ -144,13 +198,5 @@ const NavBar = () => {
                     <Home fontSize='large'/>
                 </IconButton>
                 <UserAvatar imageUrl={profileImgUrl} onClick={handleMenuOpen}/>
-            </Toolbar>
-            <DrawerComponent isOpen={open} onClose={handleDrawerClose} role={data?.[0]?.role}/>
-        </AppBar>
-    );
-};
 
-export default NavBar;
-
-
-
+*/

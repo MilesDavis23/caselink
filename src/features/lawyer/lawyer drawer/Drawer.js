@@ -43,7 +43,7 @@ function PresistentLawyerDrawer( {open , handleDrawerClose} ){
                 open={open}
             >
                 <DrawerHeader>
-                    <Typography variant='h6' sx={{ marginLeft: 1, fontFamily: 'Canela', backgroundColor: theme.palette.background.paper }} component='div'>
+                    <Typography variant='h6' sx={{ marginLeft: 1, backgroundColor: theme.palette.background.paper }} component='div'>
                         {title}
                     </Typography>
                     <IconButton onClick={handleDrawerClose}>
