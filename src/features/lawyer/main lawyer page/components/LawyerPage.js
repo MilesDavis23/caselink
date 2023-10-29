@@ -1,6 +1,6 @@
 import React from "react";
-import { Outlet, useLocation } from "react-router-dom";
-import { useTheme, Grid, Box, useMediaQuery, IconButton, FormControl, MenuItem, InputLabel, Typography, Divider, Select } from '@mui/material'
+import { Outlet, useLocation, Link } from "react-router-dom";
+import { useTheme, Grid, Box, Button, useMediaQuery, IconButton, FormControl, MenuItem, InputLabel, Typography, Divider, Select } from '@mui/material'
 import { GlobalStyles } from "@mui/material";
 import LawyerDrawer from "../mobile/components/LawyerDrawer";
 import FilterPanel from "../../browse cases/components/FilterPanel";
@@ -67,10 +67,10 @@ function LawyerPage() {
                                 </Grid>
                             </Grid>
                             <Grid item xs={6} justifyContent="center" alignItems="center" sx={{ paddingLeft: 1, height: '100%', overflow: 'auto' }}>
-                                    <Grid container>
-                                        <Outlet />
-                                    </Grid>
+                                <Grid container>
+                                    <Outlet />
                                 </Grid>
+                            </Grid>
                             <Grid item xs={3}>
                                 <Grid container sx={{ borderLeft: '0 solid #FFFDF7', paddingRight: 2, height: '100%' }}>
                                     <Grid item xs={12}>
@@ -113,14 +113,22 @@ function LawyerPage() {
                 ) : (
                     <>
                         <Grid container sx={{ height: '100%' }}>
-                            <Grid item xs={3} >
-                                <Grid container alignItems="flex-start" sx={{ marginLeft: '30px', borderRight: '0 solid #FFFDF7', paddingRight: 2, height: '100%' }}>
-                                    {/* Nested Grid container for IconButton and FilterPanel */}
-                                    <div>
-                                        <div style={{ marginLeft: '250px' }}>
-          
-                                        </div>
-                                    </div>
+                            <Grid item xs={3} alignItems="flex-end" >
+                                <Grid container alignItems="flex-start" sx={{ borderRight: '0 solid #FFFDF7', paddingRight: 2, height: '100%' }}>
+                                    <Grid container direction='column' justifyContent='flex-start' alignItems="flex-end" sx={{ width: '100%' }} xs={12} >
+                                        <Grid item >
+                                            <Button component={Link} to="/lawyer/browse-cases" variant="text" size='large' sx={{ my: 2 }}  >  Browse Case  </Button>
+                                        </Grid>
+                                        <Grid item>
+                                            <Button component={Link} to="/lawyer/my-cases" variant="text" size='large' sx={{ my: 2 }}  > My Cases </Button>
+                                        </Grid>
+                                        <Grid item>
+                                            <Button component={Link} to="/lawyer/notifications" variant="text" size='large' sx={{ my: 2 }}> Notifications </Button>
+                                        </Grid>
+                                        <Grid item>
+                                            <Button component={Link} to="/lawyer/lawyer-profile" variant="text" size='large' sx={{ my: 2 }}> Profile </Button>
+                                        </Grid>
+                                    </Grid>
                                 </Grid>
                             </Grid>
                             <Grid item xs={6} justifyContent="center" alignItems="center" sx={{ paddingLeft: 1, height: '100%', overflow: 'auto' }}>
