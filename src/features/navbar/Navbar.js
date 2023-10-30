@@ -3,7 +3,6 @@ import { logOut } from '../login/functions/logoutFunction';
 import { AppBar, Toolbar, Typography, Avatar, IconButton, Menu, MenuItem, Badge, Grid  } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import useRequest from '../../functions/custom hooks/useRequest';
-import MenuIcon from '@mui/icons-material/Menu'
 import PresistentLawyerDrawer from '../lawyer/lawyer drawer/Drawer';
 import PresistentPersonDrawer from '../person/person drawer/PersonDrawer';
 import Home from '@mui/icons-material/Home'
@@ -15,7 +14,6 @@ import { useGetPageTitle } from './functions/getLocation';
 
 const ProfileMenu = ({ anchorEl, onClose, role, navigate }) => {
     const handleMenuClick = (event) => {
-       // event.stopPropagation()
         const clickedOption = event.target.textContent; 
         if (clickedOption === 'Profile') {
             if (role && role === 'lawyer') {
@@ -41,7 +39,7 @@ const ProfileMenu = ({ anchorEl, onClose, role, navigate }) => {
 const NotificationIcon = ({ onClick, unreadCount }) => (
     <IconButton onClick={onClick}>
         <Badge badgeContent={unreadCount} color="error">
-            <Notifications />
+            <Notifications sx={{fontSize: 35}} />
         </Badge>
     </IconButton>
 );
@@ -50,6 +48,13 @@ const UserAvatar = ({ imageUrl, onClick }) => (
     <IconButton onClick={onClick}>
         <Avatar src={imageUrl || 'default here'} />
     </IconButton>
+);
+
+const logo = '/favicon.ico';
+const LogoAvatar = ({ logoUrl, size = 10 }) => (
+    <div  >
+        <Avatar src={logoUrl} sx={{ width: size, height: size, margin: 1, marginRight: 4 }} />
+    </div>
 );
 
 /* a separate drawer component */
@@ -121,9 +126,8 @@ const NavBar = () => {
             <Toolbar sx={{ backgroundColor: theme.palette.background.paper, marginLeft: 0 }}>
                 <Grid container>
 
-                    <Grid item xs={3}>
-
-
+                    <Grid item xs={3} sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end'}}>
+                        <LogoAvatar logoUrl={logo} size={40} />
                     </Grid>
 
                     <Grid item xs={6}>
@@ -142,7 +146,7 @@ const NavBar = () => {
 
 
                             <IconButton onClick={handleHome}>
-                                <Home fontSize='large' />
+                                <Home sx={{ fontSize: 40}} />
                             </IconButton>
 
                             <NotificationIcon onClick={handleNotification} unreadCount={unreadNotificationsCount} />
@@ -158,35 +162,3 @@ const NavBar = () => {
 };
 
 export default NavBar;
-
-
-
-/*
-
-                <div style={{ marginBottom: 17 }}>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={handleDrawerOpen}
-                        edge="start"
-                        sx={{ mr: 2, marginTop: 2 }}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                </div>
-
-                <Typography variant='h6' sx={{ marginLeft: 1, fontFamily: 'Canela', backgroundColor: theme.palette.background.paper }} component='div'>
-                    {title}
-                </Typography>
-
-                <div style={{ marginLeft: 'auto' }}>
-                    <ProfileMenu anchorEl={anchorEl} onClose={handleMenuClose} role={data && data[0].role} navigate={navigate} />
-                </div>
-
-                <NotificationIcon onClick={handleNotification} unreadCount={unreadNotificationsCount} />
-                <IconButton onClick={handleHome}>
-                    <Home fontSize='large'/>
-                </IconButton>
-                <UserAvatar imageUrl={profileImgUrl} onClick={handleMenuOpen}/>
-
-*/
