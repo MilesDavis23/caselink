@@ -18,6 +18,22 @@ const darkTheme = createTheme({
     }
 });
 
+/* scrollbar style: */
+const scrollbarStyle = {
+    '*::-webkit-scrollbar': {
+        width: '0px',
+    },
+    '*::-webkit-scrollbar-track': {
+        background: '#f1f1f1',
+    },
+    '*::-webkit-scrollbar-thumb': {
+        background: '#888',
+    },
+    '*::-webkit-scrollbar-thumb:hover': {
+        background: '#555',
+    },
+}
+
 /*
 primary is used for primary interface elements for the user.
 background.default is the default background color.
@@ -27,5 +43,6 @@ text.secondary is the text color that is second in line for emphasis.
 */
 
 export {
-    darkTheme
-} ;
+    darkTheme,
+    scrollbarStyle
+};

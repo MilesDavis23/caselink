@@ -122,17 +122,7 @@ const NavBar = () => {
                 <Grid container>
 
                     <Grid item xs={3}>
-                        <div>
-                            <IconButton
-                                color="inherit"
-                                aria-label="open drawer"
-                                onClick={handleDrawerOpen}
-                                edge="start"
-                                sx={{ mr: 2, marginTop: 2 }}
-                            >
-                                <MenuIcon />
-                            </IconButton>
-                        </div>
+
 
                     </Grid>
 

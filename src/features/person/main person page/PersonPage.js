@@ -1,8 +1,9 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
-import { useTheme, Grid, Box, useMediaQuery, IconButton } from '@mui/material'
+import { Outlet, Link } from 'react-router-dom';
+import { useTheme, Grid, Box, useMediaQuery, IconButton, Button } from '@mui/material'
 import { GlobalStyles } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu'
+import { scrollbarStyle } from '../../../themes/main-theme/darkTheme';
 
 function PersonPage() {
     const theme = useTheme();
@@ -19,21 +20,7 @@ function PersonPage() {
 
     return (
         <>
-            <GlobalStyles styles={{
-                /* This is the global style for the scroll bar. Current set up makes it dissapear */
-                '*::-webkit-scrollbar': {
-                    width: '0px',
-                },
-                '*::-webkit-scrollbar-track': {
-                    background: '#f1f1f1',
-                },
-                '*::-webkit-scrollbar-thumb': {
-                    background: '#888',
-                },
-                '*::-webkit-scrollbar-thumb:hover': {
-                    background: '#555',
-                },
-            }} />
+            <GlobalStyles styles={scrollbarStyle} />
             <Box sx={{
                 backgroundColor: theme.palette.background.paper,
                 color: theme.palette.text.secondary,
@@ -51,15 +38,23 @@ function PersonPage() {
                 ) : (
                         <>
                             <Grid container sx={{ height: '100%' }}>
-                                <Grid item xs={3} >
-                                    <Grid container alignItems="flex-start" sx={{ marginLeft: '30px', borderRight: '0 solid #FFFDF7', paddingRight: 2, height: '100%' }}>
-                                        {/* Nested Grid container for IconButton and FilterPanel */}
-                                        <div>
-                                            <div style={{ marginLeft: '250px' }}>
-    
-    
-                                            </div>
-                                        </div>
+                                <Grid item xs={3} alignItems="flex-end" >
+                                    <Grid container alignItems="flex-start" sx={{ borderRight: '0 solid #FFFDF7', paddingRight: 2, height: '100%' }}>
+
+                                        <Grid container direction='column' justifyContent='flex-start' alignItems="flex-end" sx={{ width: '100%' }} >
+                                            <Grid item >
+                                                <Button component={Link} to="/person/make-a-case" variant="text" size='large' sx={{ my: 2 }}  > Make A Case </Button>
+                                            </Grid>
+                                            <Grid item>
+                                                <Button component={Link} to="/person/my-cases" variant="text" size='large' sx={{ my: 2 }} > My Cases </Button>
+                                            </Grid>
+                                            <Grid item>
+                                                <Button component={Link} to="/person/notifications-page" variant="text" size='large' sx={{ my: 2 }} > Notifications </Button>
+                                            </Grid>
+                                            <Grid item>
+                                                <Button component={Link} to="/person/person-profile" variant="text" size='large' sx={{ my: 2 }} > Profile </Button>
+                                            </Grid>
+                                        </Grid>
                                     </Grid>
                                 </Grid>
                                 <Grid item xs={6} justifyContent="center" alignItems="center" sx={{ paddingLeft: 1, height: '100%', overflow: 'auto', }}>
