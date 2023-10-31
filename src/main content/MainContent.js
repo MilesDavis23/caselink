@@ -1,4 +1,5 @@
 import React, {useContext} from 'react';
+import { useMediaQuery, useTheme } from '@mui/material';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthContext } from '../features/login/authentication/AuthContext';
 import { useLocation } from 'react-router-dom';
@@ -20,13 +21,15 @@ import HomePage from '../features/home page/components/HomePage';
 import NavBar from '../features/navbar/Navbar';
 
 const MainContent = () => {
+    const theme = useTheme();
     const { isAuthenticated } = useContext(AuthContext)
+    const isSmallScreen = useMediaQuery(theme.breakpoints.between('xs', 'md'))
     const location = useLocation();
 
     return (
         <>
+            <div style={{ paddingTop: (location.pathname === '/' || location.pathname === '/login' || location.pathname === '/registration') ? 0 : 49}}>
             {location.pathname !== '/' && location.pathname !=='/login' && location.pathname !== '/registration' && location.pathname !== '/reset-password' && <NavBar />}
-            <div style={{ paddingTop: (location.pathname === '/' || location.pathname === '/login' || location.pathname === '/registration') ? 0 : 49 }}>
                 <Routes>
                     {/* <Route path='/' element={isAuthenticated ? <Navigate to='/lawyer' replace /> : <Navigate to ='/login' replace />} />  */}
                     <Route path='/' element={<SplasherPage />} />
@@ -34,7 +37,7 @@ const MainContent = () => {
                     <Route path='/password-reset' element={<ResetPasswordSteps />} />
                     <Route path='/reset-password' element={<ResetPasswordSteps />} />
                     <Route path='/login' element={isAuthenticated ? <Navigate to='/lawyer' replace /> : <LoginPage />} style={{paddingTop: 0}} />
-                    <Route path='/lawyer' element={<LawyerPage />} >
+                    <Route path='/lawyer' element={<LawyerPage isSmallScreen={isSmallScreen} />} >
                         <Route path="browse-cases" element={<BrowseCases />} />
                         <Route path="my-cases" element={<MyCaseList />} />
                         <Route path="notifications" element={<NotificationsList />} />
@@ -57,5 +60,7 @@ const MainContent = () => {
     );
 };
 
+/* {location.pathname !== '/' && location.pathname !=='/login' && location.pathname !== '/registration' && location.pathname !== '/reset-password' && <NavBar />}
+ */
 
 export default MainContent;
