@@ -6,6 +6,7 @@ import useRequest from '../../functions/custom hooks/useRequest';
 import PresistentLawyerDrawer from '../lawyer/lawyer drawer/Drawer';
 import PresistentPersonDrawer from '../person/person drawer/PersonDrawer';
 import Home from '@mui/icons-material/Home'
+import MenuIcon from '@mui/icons-material/Menu'
 import Notifications from '@mui/icons-material/Notifications'
 import { getNotifcations, getUserData } from './functions/axios';
 import { useEffect, useState } from 'react';
@@ -66,6 +67,17 @@ const DrawerComponent = ({ isOpen, onClose, role }) => {
     }
     return null;
 };
+const DrawerIcon = ({ handleDrawerOpen }) => (
+    <IconButton
+        color="inherit"
+        aria-label="open drawer"
+        onClick={handleDrawerOpen}
+        edge="start"
+        sx={{ mr: 2, marginTop: 2 }}
+    >
+        <MenuIcon />
+    </IconButton>
+)
 
 const NavBar = () => {
     const theme = useTheme();
@@ -99,7 +111,7 @@ const NavBar = () => {
             'client' : '/person/home-page'
         };
         handleRoleBasedNavigation(data?.[0]?.role, homeNavigationMap);
-    };
+    }; 
 
     const handleNotification = () => {
         const notificationNavigationMap = {
@@ -128,39 +140,37 @@ const NavBar = () => {
     return (
         <AppBar component="nav" position='fixed'>
             <Toolbar sx={{ backgroundColor: theme.palette.background.paper, marginLeft: 0 }}>
-                <Grid container>
-
-                    <Grid item xs={3} sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end'}}>
-                        <LogoAvatar logoUrl={logo} size={40} />
+                <Grid container justifyContent="space-between">
+                    <Grid item xs={6} >
+                        <Grid container alignItems="center">
+                                <DrawerComponent isOpen={open} onClose={handleDrawerClose} role={data?.[0]?.role} />
+                            <Grid item>
+                                <DrawerIcon handleDrawerOpen={handleDrawerOpen} />
+                            </Grid>
+                            <Grid item xs>
+                                <Typography variant='h6' sx={{ marginLeft: 0, backgroundColor: theme.palette.background.paper, marginTop: 2 }}>
+                                    {title}
+                                </Typography>
+                            </Grid>
+                        </Grid>
                     </Grid>
 
-                    <Grid item xs={6}>
-                        <Typography variant='h6' sx={{ marginLeft: 1, backgroundColor: theme.palette.background.paper, marginTop: 2 }} component='div'>
-                            {title}
-                        </Typography>
-                    </Grid>
-
-                    <Grid item xs={3} justifyContent='flex-start'>
-                        <div style={{ marginLeft: '10px'}}>
-
-                            <UserAvatar imageUrl={profileImgUrl} onClick={handleMenuOpen} />
-
-
-                            <ProfileMenu anchorEl={anchorEl} onClose={handleMenuClose} role={data && data[0].role} navigate={navigate} />
-
-
-                            <IconButton onClick={handleHome}>
-                                <Home sx={{ fontSize: 40}} />
-                            </IconButton>
+                    <Grid item xs={6} sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end'}}>
+                        <div style={{ marginLeft: '10px', marginTop: '10px' }}>
 
                             <NotificationIcon onClick={handleNotification} unreadCount={unreadNotificationsCount} />
-                            
+
+                            <IconButton onClick={handleHome}>
+                                <Home sx={{ fontSize: 40 }} />
+                            </IconButton>
+
+                            <ProfileMenu anchorEl={anchorEl} onClose={handleMenuClose} role={data && data[0].role} navigate={navigate} />
+                            <UserAvatar imageUrl={profileImgUrl} onClick={handleMenuOpen} />
+
                         </div>
                     </Grid>
-
                 </Grid>
             </Toolbar>
-            <DrawerComponent isOpen={open} onClose={handleDrawerClose} role={data?.[0]?.role} />
         </AppBar>
     );
 };

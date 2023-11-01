@@ -6,12 +6,10 @@ import { useLocation } from 'react-router-dom';
 import LoginPage from '../features/login/components/LoginPage';
 import BrowseCases from '../features/lawyer/browse cases/components/BrowseCasesPage';
 import NotificationsList from '../features/lawyer/notifications/components/NorificationsList';
-import LawyerPage from '../features/lawyer/main lawyer page/components/LawyerPage';
 import MyCaseList from '../features/lawyer/mycases list/components/MyCaseList';
 import ProfilePage from '../features/profile page/components/ProfilePage';
 import IndividualCasePage from '../features/individual case page/components/IndividualCasePage';
 import MakeACase from '../features/person/make a case/components/MakeACasePage';
-import PersonPage from '../features/person/main person page/PersonPage';
 import SendOfferCasePage from '../features/lawyer/individual case page/components/SendOfferCasePage';
 import PersonMyCaseList from '../features/person/person my cases/components/PersonMyCases';
 import SplasherPage from '../features/splash/components/SplasherPage';
@@ -19,6 +17,7 @@ import Registration from '../features/registration/components/Registration';
 import ResetPasswordSteps from '../features/reset password/components/ResetFlow';
 import HomePage from '../features/home page/components/HomePage';
 import NavBar from '../features/navbar/Navbar';
+import MainLanderPage from '../features/main page/components/MainPage';
 
 const MainContent = () => {
     const theme = useTheme();
@@ -28,8 +27,8 @@ const MainContent = () => {
 
     return (
         <>
-            <div style={{ paddingTop: (location.pathname === '/' || location.pathname === '/login' || location.pathname === '/registration') ? 0 : 49}}>
-            {location.pathname !== '/' && location.pathname !=='/login' && location.pathname !== '/registration' && location.pathname !== '/reset-password' && <NavBar />}
+            <div style={{paddingTop: (!isSmallScreen || location.pathname === '/' || location.pathname === '/login' || location.pathname === '/registration') ? 0 : 49}}>
+            {isSmallScreen && location.pathname !== '/' && location.pathname !=='/login' && location.pathname !== '/registration' && location.pathname !== '/reset-password' && <NavBar />}
                 <Routes>
                     {/* <Route path='/' element={isAuthenticated ? <Navigate to='/lawyer' replace /> : <Navigate to ='/login' replace />} />  */}
                     <Route path='/' element={<SplasherPage />} />
@@ -37,7 +36,7 @@ const MainContent = () => {
                     <Route path='/password-reset' element={<ResetPasswordSteps />} />
                     <Route path='/reset-password' element={<ResetPasswordSteps />} />
                     <Route path='/login' element={isAuthenticated ? <Navigate to='/lawyer' replace /> : <LoginPage />} style={{paddingTop: 0}} />
-                    <Route path='/lawyer' element={<LawyerPage isSmallScreen={isSmallScreen} />} >
+                    <Route path='/lawyer' element={<MainLanderPage isSmallScreen={isSmallScreen} />} >
                         <Route path="browse-cases" element={<BrowseCases />} />
                         <Route path="my-cases" element={<MyCaseList />} />
                         <Route path="notifications" element={<NotificationsList />} />
@@ -46,7 +45,7 @@ const MainContent = () => {
                         <Route path="send-offer-case-page" element={<SendOfferCasePage />} />
                         <Route path="home-page" element={<HomePage/>} />
                     </Route>
-                    <Route path='/person' element={<PersonPage />}>
+                    <Route path='/person' element={<MainLanderPage isSmallScreen={isSmallScreen} />}>
                         <Route path="make-a-case" element={<MakeACase />} />
                         <Route path="my-cases" element={<PersonMyCaseList />} />
                         <Route path="person-profile" element={<ProfilePage />} />
