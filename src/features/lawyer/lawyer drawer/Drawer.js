@@ -11,7 +11,7 @@ import Divider from '@mui/material/Divider';
 import { IconButton } from '@mui/material';
 import { useGetPageTitle } from '../../navbar/functions/getLocation';
 
-const drawerWidth = 345; 
+const drawerWidth = 222; 
 
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
