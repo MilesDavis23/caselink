@@ -18,7 +18,6 @@ import { useTheme } from '@mui/material/styles';
 import { useForm, Controller } from 'react-hook-form';
 import useRequest from '../../../../functions/custom hooks/useRequest';
 import createACase from '../functions/axios';
-
 /* Give title to the case: */
 const TitleInput = ({ control, errors }) => (
     <>
@@ -96,6 +95,7 @@ const LongDescription = ({ control, errors }) => (
 /* Tags: */
 const CategoryTags = ({ control, errors }) => {
     const [inputValue, setInputValue] = useState('');
+    //console.log(inputValue)
 
     const handleSubmitKey = (event, field) => {
         if (event.key === 'Enter') {
@@ -106,6 +106,8 @@ const CategoryTags = ({ control, errors }) => {
                 setInputValue('');
             }
         }
+        //console.log(field)
+
     };
 
     const handleDelete = (field, tagToDelete) => () => {
@@ -203,22 +205,30 @@ const MakeACase = () => {
     const categories = ['Criminal', 'Civil', 'Labour', 'Property Law', 'Human Rigths', 'Traffic Law']
 
     const onSubmit = async (data) => {
-        if (Object.keys(error).length > 0) {
+        //console.log(data)
+        if (Object.keys(errors).length > 0) {
+            //console.log(Object.keys(errors))
             //validations:
             setGeneralError('Please correct the errors before submitting.');
             return;
         }
+        console.log(data)
         try {
+            const timestamp = new Date().toISOString();
+            console.log(data.categoryTags)
             const response = await execute(
                 /* tags and the modifed categories are not added */
                 data.title, 
                 data.shortDescription, 
                 data.longDescription, 
                 JSON.stringify(data.categories),
-                JSON.stringify(data.categoryTags) // category tags as JSON 
+                JSON.stringify(data.categoryTags), // category tags as JSON
+                timestamp
             );
             console.log('Case created.', response)
         } catch (error) {
+            console.error('Error creating case:', error )
+
             setGeneralError(error.message || 'An unexpected error occurred.');
         }
     };
@@ -261,6 +271,8 @@ const MakeACase = () => {
                         <Button type="submit" variant='contained' sx={{ width: 1 }}>
                             Submit Case
                         </Button>
+                        {error && <Alert severity="error" sx={{margin: 2, width: '100%'}}> {error.message} </Alert>}
+                        {data &&  <Alert severity='success' sx={{margin: 2, width: '100%'}}> Case successfully created! </Alert> }
                     </Grid>
                 </Grid>
             </form>
