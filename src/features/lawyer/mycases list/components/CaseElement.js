@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import getUserData from '../../../navbar/functions/axios';
-import useRequest from '../../../../functions/custom hooks/useRequest';
-import  Avatar  from '@mui/material/Avatar';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';

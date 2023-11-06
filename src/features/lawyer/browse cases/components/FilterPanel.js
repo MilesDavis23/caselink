@@ -1,29 +1,41 @@
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Box, Select, MenuItem, FormControl, InputLabel, TextField, Chip, Input, Grid, Typography} from '@mui/material'
 import { MenuProps, getStyles } from "../../individual case page/style/ChipStyle";
 import { useTheme } from "@mui/material";
+import CaseContext from "../context/caseContext";
 
+const categoryList = ['Criminal', 'Civil', 'Labour', 'Property Law', 'Human Rigths', 'Traffic Law'];
 const CategoryList = () => (
     <FormControl sx={{ width: '100%' }}>
         <InputLabel> Category </InputLabel>
         <Select sx={{ width: '100%' }} label="Category">
-            <MenuItem value="category1"> Property Law </MenuItem>
-            <MenuItem value="category2"> Corporate Law </MenuItem>
-            <MenuItem value="category3"> Trademarks </MenuItem>
+            {categoryList.map((category, index) => (
+                <MenuItem key={index} value={category}>
+                     {category} 
+                </MenuItem>
+            ))}
         </Select>
     </FormControl>
 );
 
-const UploadDate = () => (
-    <FormControl fullWidth variant="filled" sx={{ mb: 2 }}>
-        <InputLabel>Upload Date</InputLabel>
-        <Select>
-            <MenuItem value="latest">Latest</MenuItem>
-            <MenuItem value="oldest">Oldest</MenuItem>
-        </Select>
-    </FormControl>
-);
+
+const UploadDate = ({ sortFunction }) => {
+    const handleSortChange = (event) => {
+        sortFunction(event.target.value);
+    }
+
+    return (
+        <FormControl fullWidth variant="filled" sx={{ mb: 2 }}>
+            <InputLabel>Upload Date</InputLabel>
+            <Select onChange={handleSortChange}>
+                <MenuItem value="latest">Latest</MenuItem>
+                <MenuItem value="oldest">Oldest</MenuItem>
+            </Select>
+        </FormControl>
+    );
+};
+
 
 const SearchBar = () => (
     <TextField
@@ -78,6 +90,7 @@ const Tags = ({personName , setPersonName, theme}) => {
 
 const FilterPanel = () => {
     const theme = useTheme();
+    const { cases:data, loading, error, sortCasesByDate } = useContext(CaseContext);
     const [personName, setPersonName] = useState([]);
 
     return (
@@ -93,7 +106,7 @@ const FilterPanel = () => {
                 </Grid>
 
                 <Grid item>
-                    <UploadDate/>
+                    <UploadDate sortFunction={sortCasesByDate}/>
                 </Grid>
 
                 <Grid item>
@@ -106,7 +119,7 @@ const FilterPanel = () => {
 
             </Grid>
         </>
-    )
-}
+    );
+};
 
 export default FilterPanel;
