@@ -1,7 +1,6 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import { useMediaQuery, useTheme } from '@mui/material';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthContext } from '../features/login/authentication/AuthContext';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import LoginPage from '../features/login/components/LoginPage';
 import BrowseCases from '../features/lawyer/browse cases/components/BrowseCasesPage';
@@ -18,10 +17,10 @@ import ResetPasswordSteps from '../features/reset password/components/ResetFlow'
 import HomePage from '../features/home page/components/HomePage';
 import NavBar from '../features/navbar/Navbar';
 import MainLanderPage from '../features/main page/components/MainPage';
+import { CaseContextProvider } from '../features/lawyer/browse cases/context/caseContext';
 
 const MainContent = () => {
     const theme = useTheme();
-    const { isAuthenticated } = useContext(AuthContext)
     const isSmallScreen = useMediaQuery(theme.breakpoints.between('xs', 'md'))
     const location = useLocation();
 
@@ -35,9 +34,9 @@ const MainContent = () => {
                     <Route path='/registration' element={<Registration />} />
                     <Route path='/password-reset' element={<ResetPasswordSteps />} />
                     <Route path='/reset-password' element={<ResetPasswordSteps />} />
-                    <Route path='/login' element={isAuthenticated ? <Navigate to='/lawyer' replace /> : <LoginPage />} style={{paddingTop: 0}} />
+                    <Route path='/login' element={<LoginPage />} style={{paddingTop: 0}} />
                     <Route path='/lawyer' element={<MainLanderPage isSmallScreen={isSmallScreen} />} >
-                        <Route path="browse-cases" element={<BrowseCases />} />
+                        <Route path="browse-cases" element={ <BrowseCases /> } />
                         <Route path="my-cases" element={<MyCaseList />} />
                         <Route path="notifications" element={<NotificationsList />} />
                         <Route path="case-page/:caseId" element={<IndividualCasePage />} />
