@@ -29,7 +29,6 @@ function NotificationsList(){
     if (error) {
         return <p> Error: {error.message} </p>
     }
-    console.log(data)
     return (
         <>
             <Grid container sx={{ width: '100%'}}>

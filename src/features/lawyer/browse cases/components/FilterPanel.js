@@ -1,28 +1,40 @@
 
-import React, { useContext, useState } from "react";
-import { Box, Select, MenuItem, FormControl, InputLabel, TextField, Chip, Input, Grid, Typography} from '@mui/material'
-import { MenuProps, getStyles } from "../../individual case page/style/ChipStyle";
+import React, { useContext, useEffect, useState } from "react";
+import { Box, Select, MenuItem, FormControl, InputLabel, TextField, Chip, Input, Grid, Typography, ListItemText, Checkbox} from '@mui/material'
 import { useTheme } from "@mui/material";
 import CaseContext from "../context/caseContext";
 
-const categoryList = ['Criminal', 'Civil', 'Labour', 'Property Law', 'Human Rigths', 'Traffic Law'];
-const CategoryList = () => (
-    <FormControl sx={{ width: '100%' }}>
-        <InputLabel> Category </InputLabel>
-        <Select sx={{ width: '100%' }} label="Category">
-            {categoryList.map((category, index) => (
-                <MenuItem key={index} value={category}>
-                     {category} 
-                </MenuItem>
-            ))}
-        </Select>
-    </FormControl>
-);
 
+const categoryList = ['Criminal', 'Civil', 'Labour', 'Property Law', 'Human Rigths', 'Traffic Law'];
+const CategoryList = ({ filterCasesByCategory }) => {
+    const [categoryInput, setCategoryInput] = useState([]);
+    const handleChange = (event) => {
+        const { target: { value } } = event;
+        const newCategoryInput = typeof value === 'string' ? value.split(',') : value;
+        setCategoryInput(newCategoryInput)
+        console.log('categoryInput in filterPanel:' , categoryInput)
+        filterCasesByCategory(newCategoryInput);
+    };
+
+    return (
+        <FormControl sx={{ width: '100%'}}>
+            <Select fullWidth sx={{width: '100%'}} multiple renderValue={(selected) => selected.join(', ')} onChange={handleChange} value={categoryInput} >
+                {categoryList.map((category) => (
+
+                    <MenuItem key={category} value={category}>
+                        <Checkbox checked={categoryInput.indexOf(category) > -1}/>
+                        <ListItemText primary={category} />
+                    </MenuItem>
+                ))}
+            </Select>
+        </FormControl>
+    )
+};
 
 const UploadDate = ({ sortFunction }) => {
     const handleSortChange = (event) => {
         sortFunction(event.target.value);
+
     }
 
     return (
@@ -36,7 +48,6 @@ const UploadDate = ({ sortFunction }) => {
     );
 };
 
-
 const SearchBar = () => (
     <TextField
         fullWidth
@@ -46,52 +57,68 @@ const SearchBar = () => (
     />
 );
 
-const Tags = ({personName , setPersonName, theme}) => {
-    const names = [ 'Due Payment', 'ASAP', 'English speaking'];
-    const handleChange = (event) => {
-        const {
-            target: { value },
-        } = event;
-        setPersonName(
-            typeof value === 'string' ? value.split(',') : value,
-        )
+const Tags = ({ filterCasesByTags }) => {
+    const [tags, setTags] = useState([]);
+    const [inputValue, setInputValue] = useState('');
+    console.log(tags);
+
+    const handleSubmitKey = (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault()
+            const value = event.target.value.trim();
+            if (value && !tags.includes(value)) {
+                setTags([...tags, value]);
+                setInputValue('');
+            }
+        }
     };
+    const handleDelete = (tagToDelete) => () => {
+        setTags((tags) => tags.filter((tag) => tag !== tagToDelete));
+    };
+    useEffect(() => { filterCasesByTags(tags) }, [tags]);
+
     return (
-        <FormControl sx={{ width: '100%' }}>
-            <Select
-                labelId="demo-multiple-chip-labe"
-                id=''
-                multiple
-                value={personName}
-                onChange={handleChange}
-                input={<Input id="select-multiple-chip" label="Chip" />}
-                renderValue={(selected) => (
-                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, overflow: 'auto' }}>
-                        {selected.map((value) => (
-                            <Chip key={value} label={value} />
-                        ))}
-                    </Box>
-                )}
-                MenuProps={MenuProps}
-            >
-                {names.map((name) => (
-                    <MenuItem
-                        key={name}
-                        value={name}
-                        style={getStyles(name, personName, theme)}
-                    >
-                        {name}
-                    </MenuItem>
-                ))}
-            </Select>
-        </FormControl>
+        <>
+            <FormControl fullWidth>
+                <TextField
+                    id="category-input"
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    onKeyDown={handleSubmitKey}
+                    placeholder="Type and press 'Enter' to add categories"
+                    fullWidth
+                    margin="normal"
+                    variant="standard"
+                />
+            </FormControl>
+            {tags && tags.length > 0 && (
+                <Box sx={{
+                    backgroundColor: 'transparent',
+                    display: 'flex',
+                    justifyContent: 'flex-start',
+                    flexWrap: 'wrap',
+                    listStyle: 'none',
+                    p: 0.5,
+                    m: 0.5
+                }} component="ul">
+                    {tags.map((data) => (
+                        <li key={data} sx={{margin: 1, paddingTop: 1}}>
+                            <Chip
+                                sx={{marginRight: 1, marginTop:1}}
+                                label={data}
+                                onDelete={handleDelete(data)}
+                            />
+                        </li>
+                    ))}
+                </Box>
+            )}
+        </>
     );
 };
 
 const FilterPanel = () => {
     const theme = useTheme();
-    const { cases:data, loading, error, sortCasesByDate } = useContext(CaseContext);
-    const [personName, setPersonName] = useState([]);
+    const { cases:data, loading, error, sortCasesByDate, filterCasesByCategory, filterCasesByTags  } = useContext(CaseContext);
 
     return (
         <>
@@ -102,19 +129,19 @@ const FilterPanel = () => {
                 </Grid>
 
                 <Grid item>
-                    <CategoryList/>
-                </Grid>
-
-                <Grid item>
-                    <UploadDate sortFunction={sortCasesByDate}/>
-                </Grid>
-
-                <Grid item>
                     <SearchBar/>
                 </Grid>
 
                 <Grid item>
-                    <Tags personName={personName} setPersonName={setPersonName} theme={theme}/>
+                    <UploadDate sortFunction={sortCasesByDate} />
+                </Grid>
+
+                <Grid item>
+                    <CategoryList filterCasesByCategory={filterCasesByCategory}/>
+                </Grid>
+
+                <Grid item>
+                    <Tags filterCasesByTags={filterCasesByTags} />
                 </Grid>
 
             </Grid>

@@ -38,9 +38,6 @@ function CaseElement({ data }) {
             clinetStatus = data.status
         }
     }
-
-    console.log(userRole === 'client')
-
     return (
         <Card>
             <CardContent>
