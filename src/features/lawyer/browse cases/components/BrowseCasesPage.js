@@ -8,7 +8,7 @@ const BrowseCases = () => {
     const theme = useTheme();
     const { cases:data, loading, error } = useContext(CaseContext);
 
-    console.log('Browse cases data:', data);
+    //console.log('Browse cases data:', data);
 
     return (
 
