@@ -271,8 +271,10 @@ const MakeACase = () => {
                         <Button type="submit" variant='contained' sx={{ width: 1 }}>
                             Submit Case
                         </Button>
-                        {error && <Alert severity="error" sx={{margin: 2, width: '100%'}}> {error.message} </Alert>}
-                        {data &&  <Alert severity='success' sx={{margin: 2, width: '100%'}}> Case successfully created! </Alert> }
+                        <div>
+                            {error && <Alert severity="error" sx={{margin: 2}}> {error.message} </Alert>}
+                            {data &&  <Alert severity='success' sx={{margin: 2}}> Case successfully created! </Alert> }
+                        </div>
                     </Grid>
                 </Grid>
             </form>
