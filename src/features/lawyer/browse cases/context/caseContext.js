@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import getAllCases from "../functions/axios";
 import useRequest from "../../../../functions/custom hooks/useRequest";
-import { filterByCategories, sortCases, filterByTags } from "../functions/filterFunctions";
+import { filterByCategories, sortCases, filterByTags, searchCases } from "../functions/filterFunctions";
 
 const CaseContext = createContext();
 
@@ -33,12 +33,16 @@ export const CaseContextProvider = ({ children }) => {
     const filterCasesByTags = (tagInput) => {
         const filteredCases = filterByTags(originalCaseData, tagInput);
         setCases(filteredCases);
+    };
+    const searchCasesByText = (textInput) => {
+        const filteredBySearch = searchCases(originalCaseData, textInput);
+        setCases(filteredBySearch);
     }
     useEffect(() => {setCases(originalCaseData)}, [originalCaseData]); //if the original data changes, reset 
 
 
     return (
-        <CaseContext.Provider value={{ cases, loading, error, sortCasesByDate, filterCasesByCategory, filterCasesByTags }}>
+        <CaseContext.Provider value={{ cases, loading, error, sortCasesByDate, filterCasesByCategory, filterCasesByTags, searchCasesByText }}>
             {children}
         </CaseContext.Provider>
     );

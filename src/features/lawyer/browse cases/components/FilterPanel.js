@@ -48,14 +48,30 @@ const UploadDate = ({ sortFunction }) => {
     );
 };
 
-const SearchBar = () => (
-    <TextField
-        fullWidth
-        variant="outlined"
-        label="Search"
-        sx={{ mb: 2 }}
-    />
-);
+const SearchBar = ({ contextFunction }) => {
+    const [searchInput, setSearchInput] = useState('');
+    const handleTextInput = (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            const value = event.target.value.trim();
+            if (value) {
+                setSearchInput(value)
+            }
+
+        };
+    };
+    useEffect(() => { contextFunction(searchInput) }, [searchInput]);
+    
+    return (
+        <TextField
+            fullWidth
+            variant="outlined"
+            onKeyDown={handleTextInput}
+            label="Search"
+            sx={{ mb: 2 }}
+        />
+    )
+};
 
 const Tags = ({ filterCasesByTags }) => {
     const [tags, setTags] = useState([]);
@@ -64,7 +80,7 @@ const Tags = ({ filterCasesByTags }) => {
 
     const handleSubmitKey = (event) => {
         if (event.key === 'Enter') {
-            event.preventDefault()
+            event.preventDefault();
             const value = event.target.value.trim();
             if (value && !tags.includes(value)) {
                 setTags([...tags, value]);
@@ -118,7 +134,7 @@ const Tags = ({ filterCasesByTags }) => {
 
 const FilterPanel = () => {
     const theme = useTheme();
-    const { cases:data, loading, error, sortCasesByDate, filterCasesByCategory, filterCasesByTags  } = useContext(CaseContext);
+    const { cases:data, loading, error, sortCasesByDate, filterCasesByCategory, filterCasesByTags, searchCasesByText  } = useContext(CaseContext);
 
     return (
         <>
@@ -129,7 +145,7 @@ const FilterPanel = () => {
                 </Grid>
 
                 <Grid item>
-                    <SearchBar/>
+                    <SearchBar contextFunction={searchCasesByText} />
                 </Grid>
 
                 <Grid item>

@@ -43,15 +43,12 @@ const filterByCategories = (cases, categoryInput) => {
 };
 
 const filterByTags = (cases, tagInput) => {
-    console.log(tagInput)
     if (tagInput.length < 1 || !tagInput) return cases;
     const filteredByTags = cases.filter(caseItem => {
         let caseTags = [];
 
         try {
-            if (caseItem.Tags) {
-                caseTags = JSON.parse(caseItem.Tags);
-            }
+            if (caseItem.Tags) caseTags = JSON.parse(caseItem.Tags);
             console.log('Parse tags:', caseTags);
         } catch (error) {
             console.error('Parsing error for caseTags:' , caseItem.Tags);
@@ -71,17 +68,51 @@ const filterByTags = (cases, tagInput) => {
         return lowerCaseTags.some(tag => lowerCaseTagInput.includes(tag));
 
     });
-    console.log('Filtered categories result:', filteredByTags);
+
     return filteredByTags
 
 };
 
 const searchCases = (cases, searchInput) => {
+    if (searchInput.length < 1) return cases;
+    const queriedByText = cases.filter(caseItem => {
+        let caseText = '';
 
+        try {
+            if (caseItem.detailed_description) {
+                //let detailedDescription = JSON.parse(caseItem.detailed_description);
+                caseText += caseItem.detailed_description;
+            }
+            if (caseItem.brief_description) {
+                //let shortDescription = JSON.parse(caseItem.brief_description);
+                caseText += caseItem.brief_description;
+            }
+        } catch (error) {
+            console.error('Reading error for case texts:', caseItem.detailed_description,  caseItem.brief_description)
+            return false;
+        }
+
+        const lowerCaseTexts = caseText.toLowerCase();
+        const lowerCaseTextInput = searchInput.toLowerCase();
+
+        return  lowerCaseTexts.includes(lowerCaseTextInput);
+    })
+
+    return queriedByText;
 };
 
 export { 
     sortCases, 
     filterByCategories,
-    filterByTags
-}
+    filterByTags, 
+    searchCases
+};
+
+
+
+
+
+
+
+const test = 'Parsing error for caseTags:Filtered categories result:'
+console.log(test.includes('r c'))
