@@ -51,22 +51,21 @@ const UploadDate = ({ sortFunction }) => {
 const SearchBar = ({ contextFunction }) => {
     const [searchInput, setSearchInput] = useState('');
     const handleTextInput = (event) => {
-        if (event.key === 'Enter') {
+
             event.preventDefault();
             const value = event.target.value.trim();
-            if (value) {
-                setSearchInput(value)
-            }
+            console.log(value)
+            setSearchInput(value)
 
-        };
     };
+    console.log(searchInput)
     useEffect(() => { contextFunction(searchInput) }, [searchInput]);
     
     return (
         <TextField
             fullWidth
             variant="outlined"
-            onKeyDown={handleTextInput}
+            onChange={handleTextInput}
             label="Search"
             sx={{ mb: 2 }}
         />

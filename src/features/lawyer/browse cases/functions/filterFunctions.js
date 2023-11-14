@@ -74,7 +74,7 @@ const filterByTags = (cases, tagInput) => {
 };
 
 const searchCases = (cases, searchInput) => {
-    if (searchInput.length < 1) return cases;
+    if (searchInput.length === '') return cases;
     const queriedByText = cases.filter(caseItem => {
         let caseText = '';
 
